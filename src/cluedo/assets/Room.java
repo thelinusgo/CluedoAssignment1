@@ -19,4 +19,12 @@ public class Room {
 	public String toString(){
 		return "[Room: " + name + " | Weapon: " + weapon.weaponName() + "]";
 	}
+	
+	/**
+	 * Gets the weapon being held in this current room.
+	 * @return
+	 */
+	public Weapon getWeapon(){
+		return this.weapon;
+	}
 }

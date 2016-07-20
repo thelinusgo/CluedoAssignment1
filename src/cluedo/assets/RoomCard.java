@@ -16,5 +16,9 @@ public class RoomCard implements Card{
 	public String getName(){
 		return this.room.toString();
 	}
-	
+
+	@Override
+	public Room getObject(){
+		return this.room;
+	}
 }

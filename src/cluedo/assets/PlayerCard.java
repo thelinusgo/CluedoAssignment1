@@ -16,4 +16,10 @@ public class PlayerCard implements Card{
 	public String getName() {
 		return player.toString();
 	}
+	@Override
+	public Player getObject() {
+		return this.player;
+	}
+	
+	
 }

@@ -15,4 +15,9 @@ public class WeaponCard implements Card{
 	
 	@Override
 	public String getName(){ return weapon.weaponName();}
+
+	@Override
+	public Weapon getObject() {
+		return this.weapon;
+	}
 }
