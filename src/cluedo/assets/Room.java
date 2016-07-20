@@ -17,6 +17,6 @@ public class Room {
 	 */
 	@Override
 	public String toString(){
-		return "Room: " + name + " Weapon: " + weapon;
+		return "[Room: " + name + " | Weapon: " + weapon.weaponName() + "]";
 	}
 }

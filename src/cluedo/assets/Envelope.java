@@ -1,8 +1,10 @@
 package cluedo.assets;
 /**
- * Class that holds three Cards. They are stored in the fields of this class and 
- * filled out when this class is instantiated (someone makes a new instance of this class.)
- * @author linus 
+ * Class that holds three Cards. They are stored in the fields of this class.
+ * @param A - playerCard
+ * @param B - roomCard
+ * @param C - weaponCard 
+ * 
  */
 public class Envelope <A extends PlayerCard,B extends RoomCard,C extends WeaponCard> {
 	private A playerCard;

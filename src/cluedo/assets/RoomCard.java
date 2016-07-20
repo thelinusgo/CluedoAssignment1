@@ -11,6 +11,10 @@ public class RoomCard implements Card{
 		this.room = room;
 	}
 	public String toString(){return "Card: " + this.room.toString();}
-
+	
+	@Override
+	public String getName(){
+		return this.room.toString();
+	}
 	
 }

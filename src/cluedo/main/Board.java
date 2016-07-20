@@ -4,8 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
+import cluedo.assets.Card;
+import cluedo.assets.Player;
+import cluedo.assets.PlayerCard;
 import cluedo.assets.Room;
+import cluedo.assets.RoomCard;
 import cluedo.assets.Weapon;
+import cluedo.assets.WeaponCard;
 /**
  * Class that represents the Board. Contains fields and methods regarding setting up the board.
  * @author linus & casey
@@ -13,15 +19,44 @@ import cluedo.assets.Weapon;
  */
 public class Board {
 
-	/*List of Rooms and their Weapons. */
+	/*Lists that hold components of the board.. */
 	
 	private static List<Room> rooms = new ArrayList<>();
 	private static List<Weapon> weapons = new ArrayList<>();
+	private static List<Card> cards = new ArrayList<>();
+	private static List<Player> players = new ArrayList<>();
 	
+	private static Card[] envelope = new Card[3]; //Array of Cards.
 	/**
 	 * Construct a new Board
 	 */
 	public Board(){
+		
+		initializeData();
+		
+		/*Iterate over the cards arrayList. */
+		/*Grab the first instance of a given card from the arrayList, and insert it into the envelope. */
+		//TODO: look up if weapon in room == murder weapon (??)
+		for(int i = 0; i != cards.size(); i++){
+			if(cards.get(i) instanceof RoomCard){
+				envelope[0] = cards.get(i);
+//			}else if(cards.get(i) instanceof WeaponCard){
+//				if(cards.get(i).getName() == (null)) continue;
+//				else{
+//				envelope[1] = cards.get(i);
+//				}
+			}else if(cards.get(i) instanceof PlayerCard){
+				envelope[2] = cards.get(i);
+			}
+		}
+		
+		
+		
+	}
+	/**
+	 * Initializes all of the data in the arraylists.
+	 */
+	public void initializeData(){
 		/*Fill the arraylist with weapons*/
 		weapons.add(new Weapon("Candlestick"));
 		weapons.add(new Weapon("Dagger"));
@@ -47,15 +82,38 @@ public class Board {
 		rooms.add(new Room("Study", weapons.get(5)));
 		rooms.add(new Room("Hall", weapons.get(6)));
 		rooms.add(new Room("Lounge", weapons.get(7)));
+		Collections.shuffle(rooms, new Random(seed)); //shuffle it
+
+		/*Fill the ArrayList with people.. */
+		players.add(new Player("Miss Scarlett"));
+		players.add(new Player("Colonel Mustard"));
+		players.add(new Player("Mrs. White"));
+		players.add(new Player("The Reverend Green"));
+		players.add(new Player("Mrs. Peacock"));
+		players.add(new Player("Professor Plum"));
+		Collections.shuffle(players, new Random(seed)); //shuffle it
+
+		
+		/*Fill the cards arrayList with Room Cards */
+		for(Room r : rooms){
+			cards.add(new RoomCard(r));
+		}
+		/*Fill the cards arrayList with Weapon Cards */
+		for(Weapon w : weapons){
+			cards.add(new WeaponCard(w));
+		}
+		
+		/*Fill the cards ArrayList with Player Cards */
+		for(Player p : players){
+			cards.add(new PlayerCard(p));
+		}
 	}
-	
 	
 	
 	
 	/*Very small test class */
 	public static void main(String[] argv){
 		new Board();
-
 		System.out.println("ROOM ARRAYLIST: ");
 		int index = 0;
 		for(Room r : rooms){
@@ -69,6 +127,14 @@ public class Board {
 			System.out.println(index + ": " +w.toString());
 			index++;
 		}
+		System.out.println("----------------");
+		for(Card c: envelope){
+			System.out.println("[ENVELOPE] : " + c.toString() + "");
+		}
+		
+		
+		
+		
 	}
 	
 	

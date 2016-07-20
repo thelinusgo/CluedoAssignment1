@@ -11,4 +11,9 @@ public class PlayerCard implements Card{
 		this.player = player;
 	}
 	public String toString(){return "Card: " + this.player.toString();}
+	
+	@Override
+	public String getName() {
+		return player.toString();
+	}
 }

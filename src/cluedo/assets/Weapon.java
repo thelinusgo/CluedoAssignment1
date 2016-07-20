@@ -14,6 +14,8 @@ public class Weapon{
 	}
 	@Override
 	public String toString(){
-		return this.weaponName;
+		return "Weapon: " + this.weaponName;
 	}
+	
+	public String weaponName(){return this.weaponName;}
 }

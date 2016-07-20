@@ -11,6 +11,8 @@ public class WeaponCard implements Card{
 		this.weapon = w;
 	}
 	
-	public String toString(){return this.weapon.toString();}
+	public String toString(){return weapon.toString();}
 	
+	@Override
+	public String getName(){ return weapon.weaponName();}
 }

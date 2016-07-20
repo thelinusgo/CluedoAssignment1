@@ -8,4 +8,7 @@ public interface Card {
 	//Returns a toString representation of this card.
 	public String toString();
 	
+	//Returns the name of this card.
+	public String getName();
+	
 }
