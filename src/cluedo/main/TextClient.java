@@ -28,6 +28,7 @@ public class TextClient {
 		drawConservatory();
 		drawBallroom();
 		drawCluedo();
+		//doMove
 		for(int x = 0; x < board.length; x++){
 			for(int y = 0; y < board.length; y++){
 				System.out.print(board[y][x]);
