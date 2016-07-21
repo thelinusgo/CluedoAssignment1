@@ -5,7 +5,15 @@ package cluedo.assets;
  *
  */
 public class Room {
+	
+	/**
+	 * The name of the Room.
+	 */
 	private String name;
+	
+	/**
+	 * The weapon that the room is in.
+	 */
 	private Weapon weapon;
 	
 	/*
