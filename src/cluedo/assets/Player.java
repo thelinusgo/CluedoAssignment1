@@ -11,7 +11,10 @@ public class Player {
 	public Player(String name){
 		this.name = name;
 	}
-	
+	/**
+	 * Returns the name
+	 * @return
+	 */
 	public String getName(){
 		switch(this.name){
 			case "Miss Scarlett": return "S";
