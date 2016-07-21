@@ -28,8 +28,9 @@ public class Board {
 	private static List<Weapon> weapons = new ArrayList<>();
 	private static List<Card> cards = new ArrayList<>();
 	private static List<Character> players = new ArrayList<>();
-
-	private static Envelope<CharacterCard, RoomCard, WeaponCard> envelope;
+	
+	private static Envelope envelope = new Envelope();
+	
 	/**
 	 * An Array representing an envelope of cards.
 	 * The first element will always be a Room, second will be a weapon, and third will always be a card.
@@ -42,22 +43,26 @@ public class Board {
 		initializeData();
 
 		RoomCard roomCard = null;
-		CharacterCard playerCard = null;
+		CharacterCard characterCard = null;
 		WeaponCard weaponCard = null;
 
 		for(int i = 0 ; i != cards.size(); i++){
 			Card currentCard = cards.get(i);
 			if(currentCard instanceof RoomCard){
 				roomCard = (RoomCard) currentCard;
+//				if(roomCard.getObject().getWeapon() == null){
+//					
+//				}
 				if(roomCard.getObject().getWeapon() != null){
 					weaponCard = new WeaponCard(roomCard.getObject().getWeapon());
 				}
 			}else if(currentCard instanceof CharacterCard){
-				playerCard = (CharacterCard) currentCard;
+				characterCard = (CharacterCard) currentCard;
 			}
 		}
-
-		envelope = new Envelope(playerCard, roomCard, weaponCard);
+		envelope.add(weaponCard);
+		envelope.add(characterCard);
+		envelope.add(roomCard);
 	}
 	/**
 	 * Initializes all of the data in the arraylists.
@@ -114,6 +119,7 @@ public class Board {
 			cards.add(new CharacterCard(p));
 		}
 	}
+	
 	/*Very small test class */
 	public static void main(String[] argv){
 		new Board();
@@ -131,8 +137,8 @@ public class Board {
 			index++;
 		}
 		System.out.println("----------------");
-		for(int i = 0 ; i < envelope.toArray().length; i++){
-			System.out.println("[ENVELOPE] : " + envelope.toArray()[i].toString() + "");
+		for(int i = 0 ; i < 3; i++){
+			System.out.println("[ENVELOPE] : " + envelope.get(i).toString() + " ");
 		}
 
 

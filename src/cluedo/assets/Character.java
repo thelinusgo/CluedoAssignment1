@@ -12,7 +12,7 @@ public class Character {
 		this.name = name;
 	}
 	/**
-	 * Returns the name
+	 * Returns the name of the character.
 	 * @return
 	 */
 	public String getName(){
