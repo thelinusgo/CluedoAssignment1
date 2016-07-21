@@ -122,7 +122,7 @@ public class Board {
 
 		for(int i = 0 ; i != cards.size(); i++){
 			Card currentCard = cards.get(i);
-			if(weaponCard == null){ //if room does not have a weapon, the for loop will keep searching and 
+			/*if(weaponCard == null){ //if room does not have a weapon, the for loop will keep searching and 
 									//going through this if statement until it has found a room with a weapon
 				if(currentCard instanceof RoomCard){
 					roomCard = (RoomCard) currentCard;
@@ -132,11 +132,15 @@ public class Board {
 					}
 				}
 			}else if(characterCard == null){
-				if(currentCard instanceof CharacterCard){
-					characterCard = (CharacterCard) currentCard;
-				}
+			*/	
+			if(currentCard instanceof RoomCard){
+				roomCard = (RoomCard) currentCard;
+			}else if(currentCard instanceof WeaponCard){
+				weaponCard = (WeaponCard) currentCard;
+			}else if(currentCard instanceof CharacterCard){
+				characterCard = (CharacterCard) currentCard;
 			}
-
+			
 			if(roomCard != null && characterCard != null && weaponCard != null){
 				break;
 			}
