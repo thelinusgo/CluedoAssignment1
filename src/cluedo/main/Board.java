@@ -22,20 +22,16 @@ import cluedo.assets.WeaponCard;
  */
 public class Board {
 
-	/*Lists that hold components of the board.. */
-
+	/**Lists that hold components of the board */
 	private static List<Room> rooms = new ArrayList<>();
 	private static List<Weapon> weapons = new ArrayList<>();
 	private static List<Card> cards = new ArrayList<>();
 	private static List<Character> characters = new ArrayList<>();
-
 	private static Envelope envelope = new Envelope();
+	
+	/** This helps generating a random shuffle for the lists */
 	private long seed = System.nanoTime();
-
-	/**
-	 * An Array representing an envelope of cards.
-	 * The first element will always be a Room, second will be a weapon, and third will always be a card.
-	 */
+	
 	/**
 	 * Construct a new Board
 	 */
@@ -45,8 +41,9 @@ public class Board {
 		initializeCharacters();
 		initializeEnvelope();
 	}
+	
 	/**
-	 * Initializes all of the data in the arraylists.
+	 * Initializes the weapons list.
 	 */
 	public void initializeWeapons(){
 		/*Fill the arraylist with weapons*/
@@ -61,6 +58,10 @@ public class Board {
 
 		Collections.shuffle(weapons, new Random(seed)); //shuffle it
 	}
+	
+	/**
+	 * Initializes the rooms list.
+	 */
 	public void initializeRooms(){
 		/*Fill the arraylist with rooms */
 		/*NB: not all rooms have weapons.  */
@@ -79,6 +80,9 @@ public class Board {
 		}
 	}
 
+	/**
+	 * Initializes the characters list.
+	 */
 	public void initializeCharacters(){
 
 		/*Fill the ArrayList with people.. */
@@ -106,6 +110,9 @@ public class Board {
 		}
 	}
 
+	/**
+	 * Initializes the envelope list.
+	 */
 	public void initializeEnvelope(){
 
 		RoomCard roomCard = null;
@@ -165,14 +172,5 @@ public class Board {
 		for(int i = 0 ; i < 3; i++){
 			System.out.println("[ENVELOPE] : " + envelope.get(i).toString() + " ");
 		}
-
-
-
-
 	}
-
-
-
-
-
 }

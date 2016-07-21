@@ -13,16 +13,22 @@ public class Player {
 	private List<Card> hand;
 	private boolean isOut = false;
 	private String name;
+	private String characterName;
+	private int x;
+	private int y;
 	
 	/**
 	 * Create a Player with a given name, a hand and a current character.
 	 * @param n
 	 * @param hand
 	 */
-	public Player(Character ch, List<Card> h){
-		this.name = ch.getName();
+	public Player(String name, Character c, List<Card> h){
+		this.name = name;
 		this.hand = h;
+		this.characterName = c.getName();
 	}
+	
+	
 	
 	/**
 	 * Return name of player

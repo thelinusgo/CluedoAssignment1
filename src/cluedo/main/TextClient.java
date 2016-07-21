@@ -22,7 +22,15 @@ public class TextClient {
 			board[0][i] = "|_|";
 		}
 		
-		//fill board with rooms
+		initialiseBoard();
+		drawBoard();
+	}
+	
+	/**
+	 * Fill board with rooms
+	 */
+	public void initialiseBoard(){
+		drawBoarder();
 		drawKitchen();
 		drawDiningRoom();
 		drawLounge();
@@ -33,11 +41,28 @@ public class TextClient {
 		drawConservatory();
 		drawBallroom();
 		drawCluedo();
-		
-		//doMove
-		
+		drawStart();
+	}
+	
+	/**
+	 * Draws the boarder.
+	 */
+	private void drawBoarder(){
+		for(int i = 0; i < this.board.length; i++){
+			board[i][0] = "#|";
+			board[i][board.length-1] = "#|";
+		}
+		for(int i = 0; i < this.board.length; i++){
+			board[0][i] = "|#|";
+			board[board.length-1][i] = "#|";
+		}
+		board[6][1] = "#|";
+		board[17][1] = "#|";
 	}
 
+	/**
+	 * Draws the kitchen.
+	 */
 	private void drawKitchen(){
 		int size = 6;
 		int x = 0;
@@ -75,6 +100,9 @@ public class TextClient {
 		board[4][6] = "D|";
 	}
 
+	/**
+	 * Draws the dining room.
+	 */
 	private void drawDiningRoom(){
 		int width = 8;
 		int height = 7;
@@ -128,6 +156,9 @@ public class TextClient {
 		board[width-2][y+height-1] = "D|";
 	}
 
+	/**
+	 * Draws the lounge.
+	 */
 	private void drawLounge(){
 		int x = 0;
 		int y = 19;
@@ -170,6 +201,9 @@ public class TextClient {
 		board[x+1][y+1] = "3 ";
 	}
 
+	/**
+	 * Draws the hall.
+	 */
 	private void drawHall() {
 		int x = 9;
 		int y = 18;
@@ -214,6 +248,9 @@ public class TextClient {
 		board[x+1][y+1] = "4 ";
 	}
 
+	/**
+	 * Draws the study room.
+	 */
 	private void drawStudy() {
 		int x = 17;
 		int y = 21;
@@ -257,9 +294,12 @@ public class TextClient {
 		board[x+1][y+1] = "5 ";
 	}
 
+	/**
+	 * Draws the library.
+	 */
 	private void drawLibrary() {
 		int x = 18;
-		int y = 15;
+		int y = 14;
 		int width = 7;
 		int height = 5;
 
@@ -300,6 +340,9 @@ public class TextClient {
 		board[x+1][y+1] = "6 ";
 	}
 
+	/**
+	 * Draws the billiard room.
+	 */
 	private void drawBilliard() {
 		int x = 19;
 		int y = 8;
@@ -343,6 +386,9 @@ public class TextClient {
 		board[x+1][y+1] = "7 ";
 	}
 
+	/**
+	 * Draws the conservatory.
+	 */
 	private void drawConservatory() {
 		int x = 18;
 		int y = 1;
@@ -386,6 +432,9 @@ public class TextClient {
 		board[x+1][y+1] = "8 ";
 	}
 
+	/**
+	 * Draws the ballroom.
+	 */
 	private void drawBallroom() {
 		int x = 8;
 		int y = 1;
@@ -432,6 +481,9 @@ public class TextClient {
 		board[x+2][y+1] = "9 ";
 	}
 
+	/**
+	 * Draws the solution room.
+	 */
 	private void drawCluedo() {
 		int x = 10;
 		int y = 10;
@@ -446,7 +498,26 @@ public class TextClient {
 		}
 	}
 	
+	/**
+	 * Draws the start spaces.
+	 */
+	private void drawStart(){
+		board[9][0] = "/|";
+		board[14][0] = "/|";
+		board[board.length-1][6] = "/|";
+		board[board.length-1][board.length-5] = "/|";
+		board[7][board.length-1] = "/|";
+		board[0][7] = "|/|";
+	}
+	
+	/**
+	 * Moves player.
+	 * @param x
+	 * @param y
+	 * @param p
+	 */
 	public void move(int x, int y, Player p){
+		
 		board[x][y] = p.getName();
 	}
 	
