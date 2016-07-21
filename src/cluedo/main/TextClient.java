@@ -4,6 +4,9 @@ import java.util.*;
 import cluedo.assets.*;
 
 public class TextClient {
+	/**
+	 * Represents the board in 2d array form.
+	 */
 	String[][] board = new String[25][25];
 
 	public TextClient(){
