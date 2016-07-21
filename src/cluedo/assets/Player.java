@@ -11,7 +11,6 @@ import java.util.List;
 public class Player {
 	
 	private List<Card> hand;
-	private Character currentCharacter;
 	private boolean isOut = false;
 	private String name;
 	
@@ -20,18 +19,25 @@ public class Player {
 	 * @param n
 	 * @param hand
 	 */
-	public Player(String n, List<Card> h, Character c){
-		this.name = n;
+	public Player(Character ch, List<Card> h){
+		this.name = ch.getName();
 		this.hand = h;
-		this.currentCharacter = c;
 	}
 	
 	/**
-	 * Create a Player with just a given name and a current Character.
+	 * Return name of player
+	 * @return
 	 */
-	public Player(String n, Character ch){
-		this.name = n;
-		this.currentCharacter = ch;
+	public String getName(){
+		return this.name;
+	}
+	
+	/**
+	 * Return list of cards of player
+	 * @return
+	 */
+	public List<Card> getCards(){
+		return this.hand;
 	}
 	
 	/**
@@ -40,9 +46,4 @@ public class Player {
 	public void setOut(){
 		this.isOut = true;
 	}
-
-	
-	
-	
-	
 }

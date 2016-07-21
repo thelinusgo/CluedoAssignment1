@@ -27,10 +27,11 @@ public class Board {
 	private static List<Room> rooms = new ArrayList<>();
 	private static List<Weapon> weapons = new ArrayList<>();
 	private static List<Card> cards = new ArrayList<>();
-	private static List<Character> players = new ArrayList<>();
-	
+	private static List<Character> characters = new ArrayList<>();
+
 	private static Envelope envelope = new Envelope();
-	
+	private long seed = System.nanoTime();
+
 	/**
 	 * An Array representing an envelope of cards.
 	 * The first element will always be a Room, second will be a weapon, and third will always be a card.
@@ -39,35 +40,15 @@ public class Board {
 	 * Construct a new Board
 	 */
 	public Board(){
-
-		initializeData();
-
-		RoomCard roomCard = null;
-		CharacterCard characterCard = null;
-		WeaponCard weaponCard = null;
-
-		for(int i = 0 ; i != cards.size(); i++){
-			Card currentCard = cards.get(i);
-			if(currentCard instanceof RoomCard){
-				roomCard = (RoomCard) currentCard;
-//				if(roomCard.getObject().getWeapon() == null){
-//					
-//				}
-				if(roomCard.getObject().getWeapon() != null){
-					weaponCard = new WeaponCard(roomCard.getObject().getWeapon());
-				}
-			}else if(currentCard instanceof CharacterCard){
-				characterCard = (CharacterCard) currentCard;
-			}
-		}
-		envelope.add(weaponCard);
-		envelope.add(characterCard);
-		envelope.add(roomCard);
+		initializeWeapons();
+		initializeRooms();
+		initializeCharacters();
+		initializeEnvelope();
 	}
 	/**
 	 * Initializes all of the data in the arraylists.
 	 */
-	public void initializeData(){
+	public void initializeWeapons(){
 		/*Fill the arraylist with weapons*/
 		weapons.add(new Weapon("Candlestick"));
 		weapons.add(new Weapon("Dagger"));
@@ -75,34 +56,39 @@ public class Board {
 		weapons.add(new Weapon("Revolver"));
 		weapons.add(new Weapon("Rope"));
 		weapons.add(new Weapon("Spanner"));
-		weapons.add(new Weapon(null)); //7
-		weapons.add(new Weapon(null)); //8
-		weapons.add(new Weapon(null)); //9
 
 		/*Shuffle it so that a weapon will be in a random room each time. */
-		long seed = System.nanoTime();
-		Collections.shuffle(weapons, new Random(seed)); //shuffle it
 
+		Collections.shuffle(weapons, new Random(seed)); //shuffle it
+	}
+	public void initializeRooms(){
 		/*Fill the arraylist with rooms */
 		/*NB: not all rooms have weapons.  */
-		rooms.add(new Room("Kitchen",weapons.get(0)));
-		rooms.add(new Room("Ball Room",weapons.get(1)));
-		rooms.add(new Room("Conservatory",weapons.get(2)));
-		rooms.add(new Room("Billiard Room", weapons.get(3)));
-		rooms.add(new Room("Library", weapons.get(4)));
-		rooms.add(new Room("Study", weapons.get(5)));
-		rooms.add(new Room("Hall", weapons.get(6)));
-		rooms.add(new Room("Lounge", weapons.get(7)));
-		Collections.shuffle(rooms, new Random(seed)); //shuffle it
+		rooms.add(new Room("Kitchen"));
+		rooms.add(new Room("Ball Room"));
+		rooms.add(new Room("Conservatory"));
+		rooms.add(new Room("Billiard Room"));
+		rooms.add(new Room("Library"));
+		rooms.add(new Room("Study"));
+		rooms.add(new Room("Hall"));
+		rooms.add(new Room("Lounge"));
+		Collections.shuffle(rooms); //shuffle it
+
+		for(int i = 0; i < weapons.size(); i++){
+			rooms.get(i).addWeapon(weapons.get(i));
+		}
+	}
+
+	public void initializeCharacters(){
 
 		/*Fill the ArrayList with people.. */
-		players.add(new Character("Miss Scarlett"));
-		players.add(new Character("Colonel Mustard"));
-		players.add(new Character("Mrs. White"));
-		players.add(new Character("The Reverend Green"));
-		players.add(new Character("Mrs. Peacock"));
-		players.add(new Character("Professor Plum"));
-		Collections.shuffle(players, new Random(seed)); //shuffle it
+		characters.add(new Character("Miss Scarlett"));
+		characters.add(new Character("Colonel Mustard"));
+		characters.add(new Character("Mrs. White"));
+		characters.add(new Character("The Reverend Green"));
+		characters.add(new Character("Mrs. Peacock"));
+		characters.add(new Character("Professor Plum"));
+		Collections.shuffle(characters, new Random(seed)); //shuffle it
 
 
 		/*Fill the cards arrayList with Room Cards */
@@ -115,11 +101,43 @@ public class Board {
 		}
 
 		/*Fill the cards ArrayList with Player Cards */
-		for(Character p : players){
+		for(Character p : characters){
 			cards.add(new CharacterCard(p));
 		}
 	}
-	
+
+	public void initializeEnvelope(){
+
+		RoomCard roomCard = null;
+		CharacterCard characterCard = null;
+		WeaponCard weaponCard = null;
+		Weapon weapon = null;
+
+		for(int i = 0 ; i != cards.size(); i++){
+			Card currentCard = cards.get(i);
+			if(weaponCard == null){
+				if(currentCard instanceof RoomCard){
+					roomCard = (RoomCard) currentCard;
+					weapon = roomCard.getObject().getWeapon();
+					if(weapon != null){
+						weaponCard = new WeaponCard(weapon);
+					}
+				}
+			}else if(characterCard == null){
+				if(currentCard instanceof CharacterCard){
+					characterCard = (CharacterCard) currentCard;
+				}
+			}
+
+			if(roomCard != null && characterCard != null && weaponCard != null){
+				break;
+			}
+		}
+		envelope.add(weaponCard);
+		envelope.add(characterCard);
+		envelope.add(roomCard);
+	}
+
 	/*Very small test class */
 	public static void main(String[] argv){
 		new Board();

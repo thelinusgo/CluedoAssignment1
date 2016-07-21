@@ -17,7 +17,8 @@ public class CornerRoom extends Room{
 	 * @param Room other
 	 */
 	public CornerRoom(String n, Weapon w, Room other){
-		super(n,w);
+		super(n);
+		super.addWeapon(w);
 		if(other != null){
 			this.other = other;
 		}

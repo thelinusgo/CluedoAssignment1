@@ -35,13 +35,7 @@ public class TextClient {
 		drawCluedo();
 		
 		//doMove
-		for(int x = 0; x < board.length; x++){
-			for(int y = 0; y < board.length; y++){
-				System.out.print(board[y][x]);
-			}
-			System.out.println();
-		}
-
+		
 	}
 
 	private void drawKitchen(){
@@ -452,11 +446,19 @@ public class TextClient {
 		}
 	}
 	
-	public void move(int x, int y, Character p){
+	public void move(int x, int y, Player p){
 		board[x][y] = p.getName();
 	}
 	
-
+	public void drawBoard(){
+		for(int x = 0; x < board.length; x++){
+			for(int y = 0; y < board.length; y++){
+				System.out.print(board[y][x]);
+			}
+			System.out.println();
+		}
+	}
+	
 	/**
 	 * Get string from System.in
 	 */

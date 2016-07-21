@@ -10,6 +10,7 @@ public class Weapon{
 	 * the name of the weapon.
 	 */
 	private String weaponName;
+	
 	/**
 	 * Create a new weapon. The string name cannot be null.
 	 * @param w
@@ -19,13 +20,14 @@ public class Weapon{
 		this.weaponName = w;
 	}
 	
-	@Override
-	public String toString(){
-		return "Weapon: " + this.weaponName;
-	}
 	/**
 	 * Returns the weaponName of this weapon.
 	 * @return
 	 */
 	public String weaponName(){return this.weaponName;}
+	
+	@Override
+	public String toString(){
+		return "Weapon: " + this.weaponName;
+	}
 }

@@ -14,13 +14,20 @@ public class Room {
 	/**
 	 * The weapon that the room is in.
 	 */
-	private Weapon weapon;
+	private Weapon weapon = null;
 	
 	/*
 	 * Construct a Room.
 	 */
-	public Room(String n, Weapon w){
+	public Room(String n){
 		this.name = n;
+	}
+	
+	/**
+	 * Add weapon to room
+	 * @param w
+	 */
+	public void addWeapon(Weapon w){
 		this.weapon = w;
 	}
 	
@@ -29,7 +36,10 @@ public class Room {
 	 */
 	@Override
 	public String toString(){
-		return "[Room: " + name + " | Weapon: " + weapon.weaponName() + "]";
+		if(this.weapon != null){
+			return "[Room: " + name + " | Weapon: " + weapon.weaponName() + "]";
+		}
+		return "[Room: " + name + " | Weapon: null]";
 	}
 	
 	/**
