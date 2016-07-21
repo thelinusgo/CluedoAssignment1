@@ -19,7 +19,7 @@ public interface Card<E> {
 	public String getName();
 	
 	/**
-	 * Gets the item being currently held by this card.
+	 * Gets the item being currently held by this card. For example, a RoomCard's getObject() call would return a Room object.
 	 * @return
 	 */
 	public E getObject();

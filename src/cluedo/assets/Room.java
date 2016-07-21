@@ -1,5 +1,9 @@
 package cluedo.assets;
-
+/**
+ * Room Class. Stores the name of the room, and the weapon it is currently holding.
+ * @author linus
+ *
+ */
 public class Room {
 	private String name;
 	private Weapon weapon;

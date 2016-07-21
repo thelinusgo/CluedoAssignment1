@@ -10,6 +10,7 @@ public class PlayerCard implements Card{
 	public PlayerCard(Player player){
 		this.player = player;
 	}
+	
 	public String toString(){return "Card: " + this.player.toString();}
 	
 	@Override

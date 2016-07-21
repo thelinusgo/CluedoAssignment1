@@ -34,7 +34,6 @@ public class Board {
 	 * An Array representing an envelope of cards.
 	 * The first element will always be a Room, second will be a weapon, and third will always be a card.
 	 */
-	//private static Card[] envelope = new Card[3]; //Array of Cards.
 	/**
 	 * Construct a new Board
 	 */
@@ -42,30 +41,12 @@ public class Board {
 
 		initializeData();
 
-		/*Iterate over the cards arrayList. */
-		/*Grab the first instance of a given card from the arrayList, and insert it into the envelope. */
-		//TODO: look up if weapon in room == murder weapon (??)
-		//		for(int i = 0; i != cards.size(); i++){
-		//			Card currentCard = cards.get(i);
-		//			if(currentCard instanceof RoomCard){
-		//				envelope[0] = currentCard;
-		//			}else if(currentCard instanceof WeaponCard){
-		//				if(currentCard.getName() == (null)) continue;
-		//				else{
-		//				envelope[1] = currentCard;
-		//				}
-		//			}else if(currentCard instanceof PlayerCard){
-		//				envelope[2] = currentCard;
-		//			}
-		//		}
-
 		RoomCard roomCard = null;
 		PlayerCard playerCard = null;
 		WeaponCard weaponCard = null;
 
 		for(int i = 0 ; i != cards.size(); i++){
 			Card currentCard = cards.get(i);
-
 			if(currentCard instanceof RoomCard){
 				roomCard = (RoomCard) currentCard;
 				if(roomCard.getObject().getWeapon() != null){
@@ -77,9 +58,6 @@ public class Board {
 		}
 
 		envelope = new Envelope(playerCard, roomCard, weaponCard);
-
-
-
 	}
 	/**
 	 * Initializes all of the data in the arraylists.

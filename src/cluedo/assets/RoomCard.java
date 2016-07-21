@@ -12,6 +12,10 @@ public class RoomCard implements Card{
 	}
 	public String toString(){return "Card: " + this.room.toString();}
 	
+	
+	/**
+	 * Gets the name of this current object.
+	 */
 	@Override
 	public String getName(){
 		return this.room.toString();
