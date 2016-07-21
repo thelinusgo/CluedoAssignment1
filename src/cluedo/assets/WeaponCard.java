@@ -14,6 +14,7 @@ public class WeaponCard implements Card{
 		assert w!= null;
 		this.weapon = w;
 	}
+	
 	@Override
 	public String toString(){return weapon.toString();}
 	
