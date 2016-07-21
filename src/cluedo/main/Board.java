@@ -137,6 +137,12 @@ public class Board {
 		envelope.add(weaponCard);
 		envelope.add(characterCard);
 		envelope.add(roomCard);
+	
+		/*Finally, remove these cards from their arraylist */
+		rooms.remove(roomCard);
+		weapons.remove(weaponCard);
+		characters.remove(characterCard);
+	
 	}
 
 	/*Very small test class */
