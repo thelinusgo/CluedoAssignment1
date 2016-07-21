@@ -10,14 +10,18 @@ public class TextClient {
 	String[][] board = new String[25][25];
 
 	public TextClient(){
+		//filling up the board so it does not contain any null values
 		for(int x = 0; x < board.length; x++){
 			for(int y = 0; y < board.length; y++){
 				board[x][y] = "_|";
 			}
 		}
+		
+		//fills up the side of the board
 		for(int i = 0; i < board.length; i++){
 			board[0][i] = "|_|";
 		}
+		
 		drawKitchen();
 		drawDiningRoom();
 		drawLounge();
