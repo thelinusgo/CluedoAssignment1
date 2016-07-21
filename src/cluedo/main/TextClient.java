@@ -22,6 +22,7 @@ public class TextClient {
 			board[0][i] = "|_|";
 		}
 		
+		//fill board with rooms
 		drawKitchen();
 		drawDiningRoom();
 		drawLounge();
@@ -32,6 +33,7 @@ public class TextClient {
 		drawConservatory();
 		drawBallroom();
 		drawCluedo();
+		
 		//doMove
 		for(int x = 0; x < board.length; x++){
 			for(int y = 0; y < board.length; y++){
@@ -450,7 +452,7 @@ public class TextClient {
 		}
 	}
 	
-	public void move(int x, int y, Player p){
+	public void move(int x, int y, Character p){
 		board[x][y] = p.getName();
 	}
 	

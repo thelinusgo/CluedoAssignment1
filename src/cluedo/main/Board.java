@@ -9,8 +9,8 @@ import java.util.Random;
 import java.util.Scanner;
 import cluedo.assets.Card;
 import cluedo.assets.Envelope;
-import cluedo.assets.Player;
-import cluedo.assets.PlayerCard;
+import cluedo.assets.Character;
+import cluedo.assets.CharacterCard;
 import cluedo.assets.Room;
 import cluedo.assets.RoomCard;
 import cluedo.assets.Weapon;
@@ -27,9 +27,9 @@ public class Board {
 	private static List<Room> rooms = new ArrayList<>();
 	private static List<Weapon> weapons = new ArrayList<>();
 	private static List<Card> cards = new ArrayList<>();
-	private static List<Player> players = new ArrayList<>();
+	private static List<Character> players = new ArrayList<>();
 
-	private static Envelope<PlayerCard, RoomCard, WeaponCard> envelope;
+	private static Envelope<CharacterCard, RoomCard, WeaponCard> envelope;
 	/**
 	 * An Array representing an envelope of cards.
 	 * The first element will always be a Room, second will be a weapon, and third will always be a card.
@@ -42,7 +42,7 @@ public class Board {
 		initializeData();
 
 		RoomCard roomCard = null;
-		PlayerCard playerCard = null;
+		CharacterCard playerCard = null;
 		WeaponCard weaponCard = null;
 
 		for(int i = 0 ; i != cards.size(); i++){
@@ -52,8 +52,8 @@ public class Board {
 				if(roomCard.getObject().getWeapon() != null){
 					weaponCard = new WeaponCard(roomCard.getObject().getWeapon());
 				}
-			}else if(currentCard instanceof PlayerCard){
-				playerCard = (PlayerCard) currentCard;
+			}else if(currentCard instanceof CharacterCard){
+				playerCard = (CharacterCard) currentCard;
 			}
 		}
 
@@ -91,12 +91,12 @@ public class Board {
 		Collections.shuffle(rooms, new Random(seed)); //shuffle it
 
 		/*Fill the ArrayList with people.. */
-		players.add(new Player("Miss Scarlett"));
-		players.add(new Player("Colonel Mustard"));
-		players.add(new Player("Mrs. White"));
-		players.add(new Player("The Reverend Green"));
-		players.add(new Player("Mrs. Peacock"));
-		players.add(new Player("Professor Plum"));
+		players.add(new Character("Miss Scarlett"));
+		players.add(new Character("Colonel Mustard"));
+		players.add(new Character("Mrs. White"));
+		players.add(new Character("The Reverend Green"));
+		players.add(new Character("Mrs. Peacock"));
+		players.add(new Character("Professor Plum"));
 		Collections.shuffle(players, new Random(seed)); //shuffle it
 
 
@@ -110,8 +110,8 @@ public class Board {
 		}
 
 		/*Fill the cards ArrayList with Player Cards */
-		for(Player p : players){
-			cards.add(new PlayerCard(p));
+		for(Character p : players){
+			cards.add(new CharacterCard(p));
 		}
 	}
 	/*Very small test class */

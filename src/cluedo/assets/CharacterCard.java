@@ -4,10 +4,10 @@ package cluedo.assets;
  * @author linus
  *
  */
-public class PlayerCard implements Card{
-	private Player player;
+public class CharacterCard implements Card{
+	private Character player;
 	
-	public PlayerCard(Player player){
+	public CharacterCard(Character player){
 		this.player = player;
 	}
 	
@@ -18,7 +18,7 @@ public class PlayerCard implements Card{
 		return player.toString();
 	}
 	@Override
-	public Player getObject() {
+	public Character getObject() {
 		return this.player;
 	}
 	

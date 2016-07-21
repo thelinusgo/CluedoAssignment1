@@ -7,7 +7,7 @@ package cluedo.assets;
  * @param C - weaponCard 
  * 
  */
-public class Envelope <A extends PlayerCard,B extends RoomCard,C extends WeaponCard>{
+public class Envelope <A extends CharacterCard,B extends RoomCard,C extends WeaponCard>{
 	/*These store the three types of Cards required for this envelope */
 	
 	private A playerCard;
