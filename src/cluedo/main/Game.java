@@ -23,14 +23,16 @@ public class Game {
 	 * Sets up the board and an instance of the textClient.
 	 */
 	public void initialSetup(){
-		boolean fail = false;
-		if(!fail){
-		System.out.println("Please enter the amount of players: ");
+		boolean success = false;
+		
+		while(!success){
+		System.out.println("How many players are playing?: ");
 		Scanner scan = new Scanner(System.in);
 		numPlayers = scan.nextInt();
 		if(numPlayers > 6 || numPlayers < 3){
-			System.out.println("ERROR: you must have at least 3 players and at most 6 players.");
-			fail = true;
+			System.out.println("ERROR: Cluedo must have 3-6 players.");
+		}else{ 
+			success = true;
 		}
 		}
 	}
