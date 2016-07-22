@@ -28,10 +28,10 @@ public class Board {
 	private static List<Card> cards = new ArrayList<>();
 	private static List<Character> characters = new ArrayList<>();
 	private static Envelope envelope = new Envelope();
-	
+
 	/** This helps generating a random shuffle for the lists */
 	private long seed = System.nanoTime();
-	
+
 	/**
 	 * Construct a new Board
 	 */
@@ -39,9 +39,10 @@ public class Board {
 		initializeWeapons();
 		initializeRooms();
 		initializeCharacters();
+		fillList();
 		initializeEnvelope();
 	}
-	
+
 	/**
 	 * Initializes the weapons list.
 	 */
@@ -55,10 +56,9 @@ public class Board {
 		weapons.add(new Weapon("Spanner"));
 
 		/*Shuffle it so that a weapon will be in a random room each time. */
-
 		Collections.shuffle(weapons, new Random(seed)); //shuffle it
 	}
-	
+
 	/**
 	 * Initializes the rooms list.
 	 */
@@ -78,13 +78,14 @@ public class Board {
 		for(int i = 0; i < weapons.size(); i++){
 			rooms.get(i).addWeapon(weapons.get(i));
 		}
+		
+		Collections.shuffle(weapons, new Random(seed));
 	}
 
 	/**
 	 * Initializes the characters list.
 	 */
 	public void initializeCharacters(){
-
 		/*Fill the ArrayList with people.. */
 		characters.add(new Character("Miss Scarlett"));
 		characters.add(new Character("Colonel Mustard"));
@@ -93,12 +94,17 @@ public class Board {
 		characters.add(new Character("Mrs. Peacock"));
 		characters.add(new Character("Professor Plum"));
 		Collections.shuffle(characters, new Random(seed)); //shuffle it
-
-
+	}
+	
+	/**
+	 * Put all cards in cards list.
+	 */
+	public void fillList(){
 		/*Fill the cards arrayList with Room Cards */
 		for(Room r : rooms){
 			cards.add(new RoomCard(r));
 		}
+		
 		/*Fill the cards arrayList with Weapon Cards */
 		for(Weapon w : weapons){
 			cards.add(new WeaponCard(w));
@@ -108,6 +114,8 @@ public class Board {
 		for(Character p : characters){
 			cards.add(new CharacterCard(p));
 		}
+		
+		Collections.shuffle(cards, new Random(seed)); 
 	}
 
 	/**
@@ -118,29 +126,23 @@ public class Board {
 		RoomCard roomCard = null;
 		CharacterCard characterCard = null;
 		WeaponCard weaponCard = null;
-		Weapon weapon = null;
 
 		for(int i = 0 ; i != cards.size(); i++){
 			Card currentCard = cards.get(i);
-			/*if(weaponCard == null){ //if room does not have a weapon, the for loop will keep searching and 
-									//going through this if statement until it has found a room with a weapon
+			if(roomCard == null){
 				if(currentCard instanceof RoomCard){
 					roomCard = (RoomCard) currentCard;
-					weapon = roomCard.getObject().getWeapon();
-					if(weapon != null){ //check for if the room does have a weapon inside
-						weaponCard = new WeaponCard(weapon);
-					}
+				}
+			}else if(weaponCard == null){
+				if(currentCard instanceof WeaponCard){
+					weaponCard = (WeaponCard) currentCard;
 				}
 			}else if(characterCard == null){
-			*/	
-			if(currentCard instanceof RoomCard){
-				roomCard = (RoomCard) currentCard;
-			}else if(currentCard instanceof WeaponCard){
-				weaponCard = (WeaponCard) currentCard;
-			}else if(currentCard instanceof CharacterCard){
-				characterCard = (CharacterCard) currentCard;
+				if(currentCard instanceof CharacterCard){
+					characterCard = (CharacterCard) currentCard;
+				}
 			}
-			
+
 			if(roomCard != null && characterCard != null && weaponCard != null){
 				break;
 			}
@@ -148,12 +150,12 @@ public class Board {
 		envelope.add(weaponCard);
 		envelope.add(characterCard);
 		envelope.add(roomCard);
-	
-		/*Finally, remove these cards from their arraylist */
+
+		/*Finally, remove these cards from their arrayList */
 		rooms.remove(roomCard);
 		weapons.remove(weaponCard);
 		characters.remove(characterCard);
-	
+
 	}
 
 	/*Very small test class */
