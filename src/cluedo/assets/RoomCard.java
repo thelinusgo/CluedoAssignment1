@@ -4,25 +4,9 @@ package cluedo.assets;
  * @author linus
  *
  */
-public class RoomCard implements Card{
-	private Room room;
-	
-	public RoomCard(Room room){
-		this.room = room;
-	}
-	public String toString(){return "Card: " + this.room.toString();}
-	
-	
-	/**
-	 * Gets the name of this current object.
-	 */
-	@Override
-	public String getName(){
-		return this.room.toString();
+public class RoomCard extends Card<Room>{
+	public RoomCard(Room r){
+		super(r);
 	}
 
-	@Override
-	public Room getObject(){
-		return this.room;
-	}
 }

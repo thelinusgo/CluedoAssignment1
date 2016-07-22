@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+
 import cluedo.assets.Card;
 import cluedo.assets.Envelope;
 import cluedo.assets.Character;
@@ -25,6 +26,7 @@ public class Initializer {
 	/**Lists that hold components of the board */
 	private static List<Room> rooms = new ArrayList<>();
 	private static List<Weapon> weapons = new ArrayList<>();
+	//private static List<Card> cards = new ArrayList<>();
 	private static List<Card> cards = new ArrayList<>();
 	private static List<Character> characters = new ArrayList<>();
 	private static Envelope envelope = new Envelope();

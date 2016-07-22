@@ -4,23 +4,10 @@ package cluedo.assets;
  * @author linus
  *
  */
-public class CharacterCard implements Card{
-	private Character player;
+public class CharacterCard extends Card<Character>{
 	
-	public CharacterCard(Character player){
-		this.player = player;
+	public CharacterCard(Character itm) {
+		super(itm);
 	}
-	
-	public String toString(){return "Card: " + this.player.toString();}
-	
-	@Override
-	public String getName() {
-		return player.toString();
-	}
-	@Override
-	public Character getObject() {
-		return this.player;
-	}
-	
 	
 }
