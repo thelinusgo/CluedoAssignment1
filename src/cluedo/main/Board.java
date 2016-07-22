@@ -8,6 +8,11 @@ public class Board {
 	 * Represents the board in 2d array form.
 	 */
 	String[][] board = new String[25][25];
+	
+	List<Position> startPos = new ArrayList<Position>();
+	
+	/** This helps generating a random shuffle for the lists */
+	private long seed = System.nanoTime();
 
 	public Board(){
 		//filling up the board so it does not contain any null values
@@ -16,16 +21,16 @@ public class Board {
 				board[x][y] = "_|";
 			}
 		}
-		
+
 		//fills up the side of the board
 		for(int i = 0; i < board.length; i++){
 			board[0][i] = "|_|";
 		}
-		
+
 		initialiseBoard();
 		drawBoard();
 	}
-	
+
 	/**
 	 * Fill board with rooms
 	 */
@@ -43,7 +48,7 @@ public class Board {
 		drawCluedo();
 		drawStart();
 	}
-	
+
 	/**
 	 * Draws the boarder.
 	 */
@@ -256,7 +261,7 @@ public class Board {
 		int y = 21;
 		int width = 8;
 		int height = 4;
-		
+
 		/*Boarder*/
 		//top
 		for(int i = x; i < width+x; i++){
@@ -334,7 +339,7 @@ public class Board {
 		for(int i = y+1; i < y+height-1; i++){
 			board[x+width-2][i] = " |";
 		}
-		
+
 		board[x][y+2] = "D|";
 		board[x+3][y] = "D|";
 		board[x+1][y+1] = "6 ";
@@ -348,7 +353,7 @@ public class Board {
 		int y = 8;
 		int width = 6;
 		int height = 5;
-		
+
 		/*Boarder*/
 		//top
 		for(int i = x; i < width+x; i++){
@@ -380,7 +385,7 @@ public class Board {
 		for(int i = y+1; i < y+height-1; i++){
 			board[x+width-2][i] = " |";
 		}
-		
+
 		board[x][y+1] = "D|";
 		board[x+width-2][y+height-1] = "D|";
 		board[x+1][y+1] = "7 ";
@@ -394,7 +399,7 @@ public class Board {
 		int y = 1;
 		int width = 7;
 		int height = 5;
-		
+
 		/*Boarder*/
 		//top
 		for(int i = x; i < width+x; i++){
@@ -426,7 +431,7 @@ public class Board {
 		for(int i = y+1; i < y+height-1; i++){
 			board[x+width-2][i] = " |";
 		}
-		
+
 		board[x][y+height-2] = "D|";
 		board[x+width-2][y+height-1] = "S|";
 		board[x+1][y+1] = "8 ";
@@ -440,13 +445,13 @@ public class Board {
 		int y = 1;
 		int width = 8;
 		int height = 7;
-		
+
 		/*Boarder*/
 		//top
 		for(int i = x+2; i < width+x-2; i++){
 			board[i][y] = "X|";
 		}
-		
+
 		//bottom
 		for(int i = x; i < width+x; i++){
 			board[i][y+height-1] = "X|";
@@ -472,7 +477,7 @@ public class Board {
 		for(int i = y+1; i < y+height-1; i++){
 			board[x+width-2][i] = " |";
 		}
-		
+
 		board[x][y+height-2] = "D|";
 		board[x+width-2][y+height-1] = "S|";
 		board[x+1][y+1] = "X|";
@@ -489,7 +494,7 @@ public class Board {
 		int y = 10;
 		int width = 6;
 		int height = 7;
-		
+
 		//area
 		for(int i = x; i < width+x; i++){
 			for(int j = y; j < height+y; j++){
@@ -497,19 +502,28 @@ public class Board {
 			}
 		}
 	}
-	
+
 	/**
 	 * Draws the start spaces.
 	 */
 	private void drawStart(){
-		board[9][0] = "/|";
-		board[14][0] = "/|";
-		board[board.length-1][6] = "/|";
-		board[board.length-1][board.length-5] = "/|";
-		board[7][board.length-1] = "/|";
-		board[0][7] = "|/|";
+		startPos.add(new Position(9, 0));
+		startPos.add(new Position(14, 0));
+		startPos.add(new Position(0, 17));
+		startPos.add(new Position(7, board.length-1));
+		startPos.add(new Position(board.length-1, board.length-6));
+		startPos.add(new Position(board.length-1, 6));
+		
+		for(int i = 0; i < startPos.size(); i++){
+			int x = startPos.get(i).getX();
+			int y = startPos.get(i).getY();
+			board[x][y] = "/|";
+			if(x == 0 && y == 17){
+				board[x][y] = "|/|";
+			}
+		}
 	}
-	
+
 	/**
 	 * Moves player.
 	 * @param x
@@ -520,7 +534,10 @@ public class Board {
 		p.setPos(directionX, directionY);
 		board[p.getX()][p.getY()] = p.getCharacterName() + "|";
 	}
-	
+
+	/**
+	 * Prints out the board.
+	 */
 	public void drawBoard(){
 		for(int x = 0; x < board.length; x++){
 			for(int y = 0; y < board.length; y++){
@@ -529,7 +546,16 @@ public class Board {
 			System.out.println();
 		}
 	}
-	
+
+	public void setPlayerPosition(List<Player> currentPlayers){
+		Collections.shuffle(startPos, new Random(seed)); 
+		for(int i = 0; i < currentPlayers.size(); i++){
+			int x = startPos.get(i).getX();
+			int y = startPos.get(i).getY();
+			board[x][y] = currentPlayers.get(i).getCharacterName();
+		}
+	}
+
 	public static void main(String[] args) {
 		new Board();
 	}
