@@ -12,6 +12,8 @@ public class Game {
 	private Board board;
 	private int numPlayers = 0;
 	private List<Player> currentPlayers;
+	private TextClient textClient;
+	private boolean success;
 	
 	/** This helps generating a random shuffle for the lists */
 	private long seed = System.nanoTime();
@@ -26,12 +28,10 @@ public class Game {
 	 * Sets up the board and an instance of the textClient.
 	 */
 	public void initialSetup(){
-		boolean success = false;
+		success = false;
 
 		while(!success){
-			System.out.println("How many players are playing?: ");
-			Scanner scan = new Scanner(System.in);
-			numPlayers = scan.nextInt();
+			numPlayers = textClient.inputNumber("How many players are playing?: ");
 			if(numPlayers > 6 || numPlayers < 3){
 				System.out.println("ERROR: Cluedo must have 3-6 players.");
 			}else{ 
@@ -43,6 +43,12 @@ public class Game {
 	public void setPlayerPosition(){
 		Collections.shuffle(currentPlayers, new Random(seed)); 
 		board.setPlayerPosition(currentPlayers);
+	}
+	
+	public void runGame(){
+		if(success){
+			
+		}
 	}
 
 	public static void main(String[] args){

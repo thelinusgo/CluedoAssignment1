@@ -9,7 +9,7 @@ public class TextClient {
 	/**
 	 * Get string from System.in
 	 */
-	private static String inputString(String msg) {
+	public static String inputString(String msg) {
 		System.out.print(msg + " ");
 		while (true) {
 			BufferedReader input = new BufferedReader(new InputStreamReader(
@@ -25,7 +25,7 @@ public class TextClient {
 	/**
 	 * Get integer from System.in
 	 */
-	private static int inputNumber(String msg) {
+	public static int inputNumber(String msg) {
 		System.out.print(msg + " ");
 		while (true) {
 			BufferedReader input = new BufferedReader(new InputStreamReader(
