@@ -8,14 +8,14 @@ import cluedo.assets.*;
  */
 public class Game {
 	
-	private Board board;
-	private TextClient text;
+	private Initializer initializer;
+	private Board text;
 	private int numPlayers = 0;
 	private List<Player> currentPlayers;
 	
 	public Game(){
-		board = new Board();
-		text = new TextClient();
+		initializer = new Initializer();
+		text = new Board();
 		currentPlayers = new ArrayList<Player>();
 		initialSetup();
 	}

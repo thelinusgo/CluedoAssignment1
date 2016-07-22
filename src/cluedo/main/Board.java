@@ -1,182 +1,538 @@
 package cluedo.main;
+import java.io.*;
+import java.util.*;
+import cluedo.assets.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Scanner;
-import cluedo.assets.Card;
-import cluedo.assets.Envelope;
-import cluedo.assets.Character;
-import cluedo.assets.CharacterCard;
-import cluedo.assets.Room;
-import cluedo.assets.RoomCard;
-import cluedo.assets.Weapon;
-import cluedo.assets.WeaponCard;
-/**
- * Class that represents the Board. Contains fields and methods regarding setting up the board.
- * @author linus & casey
- *
- */
 public class Board {
-
-	/**Lists that hold components of the board */
-	private static List<Room> rooms = new ArrayList<>();
-	private static List<Weapon> weapons = new ArrayList<>();
-	private static List<Card> cards = new ArrayList<>();
-	private static List<Character> characters = new ArrayList<>();
-	private static Envelope envelope = new Envelope();
-
-	/** This helps generating a random shuffle for the lists */
-	private long seed = System.nanoTime();
-
 	/**
-	 * Construct a new Board
+	 * Represents the board in 2d array form.
 	 */
+	String[][] board = new String[25][25];
+
 	public Board(){
-		initializeWeapons();
-		initializeRooms();
-		initializeCharacters();
-		fillList();
-		initializeEnvelope();
-	}
-
-	/**
-	 * Initializes the weapons list.
-	 */
-	public void initializeWeapons(){
-		/*Fill the arraylist with weapons*/
-		weapons.add(new Weapon("Candlestick"));
-		weapons.add(new Weapon("Dagger"));
-		weapons.add(new Weapon("Lead Pipe"));
-		weapons.add(new Weapon("Revolver"));
-		weapons.add(new Weapon("Rope"));
-		weapons.add(new Weapon("Spanner"));
-
-		/*Shuffle it so that a weapon will be in a random room each time. */
-		Collections.shuffle(weapons, new Random(seed)); //shuffle it
-	}
-
-	/**
-	 * Initializes the rooms list.
-	 */
-	public void initializeRooms(){
-		/*Fill the arraylist with rooms */
-		/*NB: not all rooms have weapons.  */
-		rooms.add(new Room("Kitchen"));
-		rooms.add(new Room("Ball Room"));
-		rooms.add(new Room("Conservatory"));
-		rooms.add(new Room("Billiard Room"));
-		rooms.add(new Room("Library"));
-		rooms.add(new Room("Study"));
-		rooms.add(new Room("Hall"));
-		rooms.add(new Room("Lounge"));
-		Collections.shuffle(rooms); //shuffle it
-
-		for(int i = 0; i < weapons.size(); i++){
-			rooms.get(i).addWeapon(weapons.get(i));
+		//filling up the board so it does not contain any null values
+		for(int x = 0; x < board.length; x++){
+			for(int y = 0; y < board.length; y++){
+				board[x][y] = "_|";
+			}
 		}
 		
-		Collections.shuffle(weapons, new Random(seed));
-	}
-
-	/**
-	 * Initializes the characters list.
-	 */
-	public void initializeCharacters(){
-		/*Fill the ArrayList with people.. */
-		characters.add(new Character("Miss Scarlett"));
-		characters.add(new Character("Colonel Mustard"));
-		characters.add(new Character("Mrs. White"));
-		characters.add(new Character("The Reverend Green"));
-		characters.add(new Character("Mrs. Peacock"));
-		characters.add(new Character("Professor Plum"));
-		Collections.shuffle(characters, new Random(seed)); //shuffle it
+		//fills up the side of the board
+		for(int i = 0; i < board.length; i++){
+			board[0][i] = "|_|";
+		}
+		
+		initialiseBoard();
+		drawBoard();
 	}
 	
 	/**
-	 * Put all cards in cards list.
+	 * Fill board with rooms
 	 */
-	public void fillList(){
-		/*Fill the cards arrayList with Room Cards */
-		for(Room r : rooms){
-			cards.add(new RoomCard(r));
+	public void initialiseBoard(){
+		drawBoarder();
+		drawKitchen();
+		drawDiningRoom();
+		drawLounge();
+		drawHall();
+		drawStudy();
+		drawLibrary();
+		drawBilliard();
+		drawConservatory();
+		drawBallroom();
+		drawCluedo();
+		drawStart();
+	}
+	
+	/**
+	 * Draws the boarder.
+	 */
+	private void drawBoarder(){
+		for(int i = 0; i < this.board.length; i++){
+			board[i][0] = "#|";
+			board[i][board.length-1] = "#|";
 		}
-		
-		/*Fill the cards arrayList with Weapon Cards */
-		for(Weapon w : weapons){
-			cards.add(new WeaponCard(w));
+		for(int i = 0; i < this.board.length; i++){
+			board[0][i] = "|#|";
+			board[board.length-1][i] = "#|";
 		}
-
-		/*Fill the cards ArrayList with Player Cards */
-		for(Character p : characters){
-			cards.add(new CharacterCard(p));
-		}
-		
-		Collections.shuffle(cards, new Random(seed)); 
+		board[6][1] = "#|";
+		board[17][1] = "#|";
 	}
 
 	/**
-	 * Initializes the envelope list.
+	 * Draws the kitchen.
 	 */
-	public void initializeEnvelope(){
-
-		RoomCard roomCard = null;
-		CharacterCard characterCard = null;
-		WeaponCard weaponCard = null;
-
-		for(int i = 0 ; i != cards.size(); i++){
-			Card currentCard = cards.get(i);
-			if(roomCard == null){
-				if(currentCard instanceof RoomCard){
-					roomCard = (RoomCard) currentCard;
-				}
-			}else if(weaponCard == null){
-				if(currentCard instanceof WeaponCard){
-					weaponCard = (WeaponCard) currentCard;
-				}
-			}else if(characterCard == null){
-				if(currentCard instanceof CharacterCard){
-					characterCard = (CharacterCard) currentCard;
-				}
-			}
-
-			if(roomCard != null && characterCard != null && weaponCard != null){
-				break;
+	private void drawKitchen(){
+		int size = 6;
+		int x = 0;
+		int y = 1;
+		/*Boarder*/
+		//top
+		for(int i = 0; i < size; i++){
+			board[i][y] = "X|";
+		}
+		//bottom
+		for(int i = 0; i < size; i++){
+			board[i][y+size-1] = "X|";
+		}
+		//left
+		for(int i = y; i < size+y; i++){
+			board[x][i] = "|X|";
+		}
+		//right
+		for(int i = y; i < size; i++){
+			board[x+size-1][i] = "X|";
+		}
+		//area
+		for(int i = x+1; i < size-1; i++){
+			for(int j = y+1; j < size; j++){
+				board[i][j] = "  ";
 			}
 		}
-		envelope.add(weaponCard);
-		envelope.add(characterCard);
-		envelope.add(roomCard);
 
-		/*Finally, remove these cards from their arrayList */
-		rooms.remove(roomCard);
-		weapons.remove(weaponCard);
-		characters.remove(characterCard);
+		for(int i = y+1; i < size; i++){
+			board[size-2][i] = " |";
+		}
 
+		board[1][2] = "1 ";
+		board[5][1] = "S|";
+		board[4][6] = "D|";
 	}
 
-	/*Very small test class */
-	public static void main(String[] argv){
+	/**
+	 * Draws the dining room.
+	 */
+	private void drawDiningRoom(){
+		int width = 8;
+		int height = 7;
+		int x = 0;
+		int y = 9;
+
+		/*Boarder*/
+		//top
+		for(int i = 0; i < 5; i++){
+			board[i][y] = "X|";
+		}
+		for(int i = 4; i < width; i++){
+			board[i][y+1] = "X|";
+		}
+		board[x+4][y+1] = " |";
+
+		//bottom
+		for(int i = 0; i < width; i++){
+			board[i][y+height-1] = "X|";
+		}
+		//left
+		for(int i = y; i < height + y; i++){
+			board[x][i] = "|X|";
+		}
+		//right
+		for(int i = y+2; i < height + y; i++){
+			board[x+width-1][i] = "X|";
+		}
+
+		//area
+		for(int i = x+1; i < 4; i++){
+			for(int j = y+1; j < y+height-1; j++){
+				board[i][j] = "  ";
+
+			}
+		}
+
+		for(int i = 4; i < width-1; i++){
+			for(int j = y+2; j < y+height-1; j++){
+				board[i][j] = "  ";
+
+			}
+		}
+
+		for(int i = y+2; i < height + y; i++){
+			board[x+width-2][i] = " |";
+		}
+
+		board[1][10] = "2 ";
+		board[width-1][12] = "D|";
+		board[width-2][y+height-1] = "D|";
+	}
+
+	/**
+	 * Draws the lounge.
+	 */
+	private void drawLounge(){
+		int x = 0;
+		int y = 19;
+		int width = 7;
+		int height = 6;
+		/*Boarder*/
+		//top
+		for(int i = 0; i < width; i++){
+			board[i][y] = "X|";
+		}
+
+		//bottom
+		for(int i = 0; i < width; i++){
+			board[i][y+height-1] = "X|";
+		}
+
+		//left
+		for(int i = y; i < y+height; i++){
+			board[x][i] = "|X|";
+		}
+
+		//right
+		for(int i = y+1; i < y+height; i++){
+			board[x+width-1][i] = "X|";
+		}
+
+		//area
+		for(int i = x+1; i < width-1; i++){
+			for(int j = y+1; j < y+height-1; j++){
+				board[i][j] = "  ";
+			}
+		}
+
+		for(int i = y+1; i < y+height-1; i++){
+			board[x+width-2][i] = " |";
+		}
+
+		board[x+width-1][y] = "D|";
+		board[x][y] = "|S|";
+		board[x+1][y+1] = "3 ";
+	}
+
+	/**
+	 * Draws the hall.
+	 */
+	private void drawHall() {
+		int x = 9;
+		int y = 18;
+		int width = 6;
+		int height = 7;
+
+		/*Boarder*/
+		//top
+		for(int i = x; i < width+x; i++){
+			board[i][y] = "X|";
+		}
+
+		//bottom
+		for(int i = x; i < width+x; i++){
+			board[i][y+height-1] = "X|";
+		}
+
+		//left
+		for(int i = y; i < height+y; i++){
+			board[x][i] = "X|";
+		}
+
+		//right
+		for(int i = y+1; i < height+y-1; i++){
+			board[x+width-1][i] = "X|";
+		}
+
+		//area
+		for(int i = x+1; i < width+x-1; i++){
+			for(int j = y+1; j < height+y-1; j++){
+				board[i][j] = "  ";
+			}
+		}
+
+		for(int i = y+1; i < y+height-1; i++){
+			board[x+width-2][i] = " |";
+		}
+
+		board[x+2][y] = "D|";
+		board[x+3][y] = "D|";
+		board[x+width-1][y+2] = "D|";
+		board[x+1][y+1] = "4 ";
+	}
+
+	/**
+	 * Draws the study room.
+	 */
+	private void drawStudy() {
+		int x = 17;
+		int y = 21;
+		int width = 8;
+		int height = 4;
+		
+		/*Boarder*/
+		//top
+		for(int i = x; i < width+x; i++){
+			board[i][y] = "X|";
+		}
+
+		//bottom
+		for(int i = x; i < width+x; i++){
+			board[i][y+height-1] = "X|";
+		}
+
+		//left
+		for(int i = y; i < height+y; i++){
+			board[x][i] = "X|";
+		}
+
+		//right
+		for(int i = y; i < height+y; i++){
+			board[x+width-1][i] = "X|";
+		}
+
+		//area
+		for(int i = x+1; i < width+x-1; i++){
+			for(int j = y+1; j < height+y-1; j++){
+				board[i][j] = "  ";
+			}
+		}
+
+		for(int i = y+1; i < y+height-1; i++){
+			board[x+width-2][i] = " |";
+		}
+
+		board[x][y] = "D|";
+		board[x+width-1][y] = "S|";
+		board[x+1][y+1] = "5 ";
+	}
+
+	/**
+	 * Draws the library.
+	 */
+	private void drawLibrary() {
+		int x = 18;
+		int y = 14;
+		int width = 7;
+		int height = 5;
+
+		/*Boarder*/
+		//top
+		for(int i = x+1; i < width+x-1; i++){
+			board[i][y] = "X|";
+		}
+
+		//bottom
+		for(int i = x+1; i < width+x-1; i++){
+			board[i][y+height-1] = "X|";
+		}
+
+		//left
+		for(int i = y+1; i < height+y-1; i++){
+			board[x][i] = "X|";
+		}
+
+		//right
+		for(int i = y+1; i < height+y-1; i++){
+			board[x+width-1][i] = "X|";
+		}
+
+		//area
+		for(int i = x+1; i < width+x-1; i++){
+			for(int j = y+1; j < height+y-1; j++){
+				board[i][j] = "  ";
+			}
+		}
+
+		for(int i = y+1; i < y+height-1; i++){
+			board[x+width-2][i] = " |";
+		}
+		
+		board[x][y+2] = "D|";
+		board[x+3][y] = "D|";
+		board[x+1][y+1] = "6 ";
+	}
+
+	/**
+	 * Draws the billiard room.
+	 */
+	private void drawBilliard() {
+		int x = 19;
+		int y = 8;
+		int width = 6;
+		int height = 5;
+		
+		/*Boarder*/
+		//top
+		for(int i = x; i < width+x; i++){
+			board[i][y] = "X|";
+		}
+
+		//bottom
+		for(int i = x; i < width+x; i++){
+			board[i][y+height-1] = "X|";
+		}
+
+		//left
+		for(int i = y; i < height+y; i++){
+			board[x][i] = "X|";
+		}
+
+		//right
+		for(int i = y; i < height+y; i++){
+			board[x+width-1][i] = "X|";
+		}
+
+		//area
+		for(int i = x+1; i < width+x-1; i++){
+			for(int j = y+1; j < height+y-1; j++){
+				board[i][j] = "  ";
+			}
+		}
+
+		for(int i = y+1; i < y+height-1; i++){
+			board[x+width-2][i] = " |";
+		}
+		
+		board[x][y+1] = "D|";
+		board[x+width-2][y+height-1] = "D|";
+		board[x+1][y+1] = "7 ";
+	}
+
+	/**
+	 * Draws the conservatory.
+	 */
+	private void drawConservatory() {
+		int x = 18;
+		int y = 1;
+		int width = 7;
+		int height = 5;
+		
+		/*Boarder*/
+		//top
+		for(int i = x; i < width+x; i++){
+			board[i][y] = "X|";
+		}
+
+		//bottom
+		for(int i = x+1; i < width+x-1; i++){
+			board[i][y+height-1] = "X|";
+		}
+
+		//left
+		for(int i = y; i < height+y-1; i++){
+			board[x][i] = "X|";
+		}
+
+		//right
+		for(int i = y; i < height+y-1; i++){
+			board[x+width-1][i] = "X|";
+		}
+
+		//area
+		for(int i = x+1; i < width+x-1; i++){
+			for(int j = y+1; j < height+y-1; j++){
+				board[i][j] = "  ";
+			}
+		}
+
+		for(int i = y+1; i < y+height-1; i++){
+			board[x+width-2][i] = " |";
+		}
+		
+		board[x][y+height-2] = "D|";
+		board[x+width-2][y+height-1] = "S|";
+		board[x+1][y+1] = "8 ";
+	}
+
+	/**
+	 * Draws the ballroom.
+	 */
+	private void drawBallroom() {
+		int x = 8;
+		int y = 1;
+		int width = 8;
+		int height = 7;
+		
+		/*Boarder*/
+		//top
+		for(int i = x+2; i < width+x-2; i++){
+			board[i][y] = "X|";
+		}
+		
+		//bottom
+		for(int i = x; i < width+x; i++){
+			board[i][y+height-1] = "X|";
+		}
+
+		//left
+		for(int i = y+1; i < height+y; i++){
+			board[x][i] = "X|";
+		}
+
+		//right
+		for(int i = y+1; i < height+y; i++){
+			board[x+width-1][i] = "X|";
+		}
+
+		//area
+		for(int i = x+1; i < width+x-1; i++){
+			for(int j = y+1; j < height+y-1; j++){
+				board[i][j] = "  ";
+			}
+		}
+
+		for(int i = y+1; i < y+height-1; i++){
+			board[x+width-2][i] = " |";
+		}
+		
+		board[x][y+height-2] = "D|";
+		board[x+width-2][y+height-1] = "S|";
+		board[x+1][y+1] = "X|";
+		board[x+width-2][y+1] = "X|";
+		board[x+width-3][y+1] = " |";
+		board[x+2][y+1] = "9 ";
+	}
+
+	/**
+	 * Draws the solution room.
+	 */
+	private void drawCluedo() {
+		int x = 10;
+		int y = 10;
+		int width = 6;
+		int height = 7;
+		
+		//area
+		for(int i = x; i < width+x; i++){
+			for(int j = y; j < height+y; j++){
+				board[i][j] = "*|";
+			}
+		}
+	}
+	
+	/**
+	 * Draws the start spaces.
+	 */
+	private void drawStart(){
+		board[9][0] = "/|";
+		board[14][0] = "/|";
+		board[board.length-1][6] = "/|";
+		board[board.length-1][board.length-5] = "/|";
+		board[7][board.length-1] = "/|";
+		board[0][7] = "|/|";
+	}
+	
+	/**
+	 * Moves player.
+	 * @param x
+	 * @param y
+	 * @param p
+	 */
+	public void move(int directionX, int directionY, Player p){
+		p.setPos(directionX, directionY);
+		board[p.getX()][p.getY()] = p.getCharacterName() + "|";
+	}
+	
+	public void drawBoard(){
+		for(int x = 0; x < board.length; x++){
+			for(int y = 0; y < board.length; y++){
+				System.out.print(board[y][x]);
+			}
+			System.out.println();
+		}
+	}
+	
+	public static void main(String[] args) {
 		new Board();
-		System.out.println("ROOM ARRAYLIST: ");
-		int index = 0;
-		for(Room r : rooms){
-			System.out.println(index + ": " + r.toString());
-			index++;
-		}
-		System.out.println("----------------");
-		System.out.println("WEAPON ARRAYLIST: ");
-		index =0;
-		for(Weapon w : weapons){
-			System.out.println(index + ": " +w.toString());
-			index++;
-		}
-		System.out.println("----------------");
-		for(int i = 0 ; i < 3; i++){
-			System.out.println("[ENVELOPE] : " + envelope.get(i).toString() + " ");
-		}
 	}
+
+
 }
