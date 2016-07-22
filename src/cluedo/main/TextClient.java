@@ -9,7 +9,6 @@ public class TextClient {
 	/**
 	 * Get string from System.in
 	 */
-	
 	private static String inputString(String msg) {
 		System.out.print(msg + " ");
 		while (true) {
