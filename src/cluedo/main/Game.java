@@ -7,7 +7,7 @@ import cluedo.assets.*;
  *
  */
 public class Game {
-
+ //aaa
 	private Initializer initializer;
 	private Board board;
 	private int numPlayers = 0;
@@ -28,16 +28,29 @@ public class Game {
 	 * Sets up the board and an instance of the textClient.
 	 */
 	public void initialSetup(){
-		success = false;
-
-		while(!success){
-			numPlayers = textClient.inputNumber("How many players are playing?: ");
-			if(numPlayers > 6 || numPlayers < 3){
-				System.out.println("ERROR: Cluedo must have 3-6 players.");
-			}else{ 
-				success = true;
-			}
-		}
+		drawAsciiArt();
+		String playerSequence = textClient.askPlayers();
+		System.out.println(playerSequence);
+	}
+	/**
+	 * Fun little thing I tried doing. It works!
+	 * This method draws "CLUEDO GAME" in ascii representative form.
+	 * @author Linus Go
+	 */
+	public void drawAsciiArt(){
+	String art = "";
+	art+="+===========================================================================+\n";
+	art+="|| #####          by CASEY & LINUS              #####                       ||\n";
+	art+="||#     # #      #    # ###### #####   ####    #     #   ##   #    # ###### ||\n";
+	art+="||#       #      #    # #      #    # #    #   #        #  #  ##  ## #      ||\n";
+	art+="||#       #      #    # #####  #    # #    #   #  #### #    # # ## # #####  ||\n";
+	art+="||#       #      #    # #      #    # #    #   #     # ###### #    # #      ||\n";
+	art+="||#     # #      #    # #      #    # #    #   #     # #    # #    # #      ||\n";
+	art+="|| #####  ######  ####  ###### #####   ####     #####  #    # #    # ###### ||\n";
+	art+="+===========================================================================+\n";
+	System.out.println(art);
+	System.out.println("Welcome to the Cluedo Game.");
+	
 	}
 
 	public void setPlayerPosition(){

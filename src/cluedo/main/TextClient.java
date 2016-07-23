@@ -3,6 +3,10 @@ package cluedo.main;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 
 public class TextClient {
 
@@ -21,7 +25,47 @@ public class TextClient {
 			}
 		}
 	}
-
+	
+	/**
+	 * Ask for initial players, and their names.
+	 * Returns a list of players. Sequence begins and ends with a backslash "/".
+	 * @return String of players.
+	 */
+	public static String askPlayers(){
+		//a
+		/*Local variables */
+		int amount = 0;
+		String singleName = "";
+		String appendedNames = "/\n";
+		boolean right = false;
+		
+		/*Use a scanner. */
+		Scanner sc = new Scanner(System.in);
+		/*Now, ask for user input. */
+		while(!right){
+			System.out.println("How many players would you like?");
+			amount = sc.nextInt();
+			
+			if(amount > 6 || amount < 3){
+				System.out.println("Cluedo needs 3-6 players.");
+			}else{
+				right = true;
+			}
+			
+			for(int i = 0 ; i != amount; ++i){
+				System.out.println("Please enter Player "  + i+1 + "'s name.");
+				singleName = sc.next();
+				appendedNames += singleName + "\n";
+			}
+		}
+		appendedNames += "/";
+		return appendedNames;
+		
+	}
+	
+	
+	
+	
 	/**
 	 * Get integer from System.in
 	 */

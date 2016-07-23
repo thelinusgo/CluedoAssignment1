@@ -13,7 +13,7 @@ public class Board {
 	
 	/** This helps generating a random shuffle for the lists */
 	private long seed = System.nanoTime();
-
+	//aa
 	public Board(){
 		//filling up the board so it does not contain any null values
 		for(int x = 0; x < board.length; x++){

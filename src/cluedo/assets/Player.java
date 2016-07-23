@@ -26,19 +26,33 @@ public class Player {
 	 * @param x
 	 * @param y
 	 */
-	public Player(String name, Character c, List<Card> h, int x, int y){
+	public Player(String name){
 		this.name = name;
-		this.hand = h;
+	}
+	
+	public void setCharacter(Character c){
 		this.characterName = c.getName();
+	}
+	
+	public void setCards(List<Card> h){
+		this.hand = h;
+	}
+	
+	/**
+	 * Set player's X and Y position.
+	 * @param x
+	 * @param y
+	 */
+	public void setPos(int x, int y){
 		this.x = x;
 		this.y = y;
 	}
 
 	/**
-	 * Set player's X and Y position.
+	 * Change player's X and Y position.
 	 * @param x
 	 */
-	public void setPos(int x, int y){
+	public void changePos(int x, int y){
 		this.x = this.x + x;
 		this.y = this.y + y;
 	}
