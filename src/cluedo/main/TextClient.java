@@ -31,12 +31,11 @@ public class TextClient {
 	 * Returns a list of players. Sequence begins and ends with a backslash "/".
 	 * @return String of players.
 	 */
-	public static String askPlayers(){
-		//a
+	public static void askPlayers(){
 		/*Local variables */
 		int amount = 0;
 		String singleName = "";
-		String appendedNames = "/\n";
+		//String appendedNames = "/\n";
 		boolean right = false;
 		
 		/*Use a scanner. */
@@ -53,13 +52,15 @@ public class TextClient {
 			}
 			
 			for(int i = 0 ; i != amount; ++i){
-				System.out.println("Please enter Player "  + i+1 + "'s name.");
+				System.out.println("Please enter Player "  + i+1 + "'s name");
 				singleName = sc.next();
-				appendedNames += singleName + "\n";
+				Game.addPlayer(singleName);
+				//appendedNames += singleName + "\n";
 			}
+			System.out.println("Please note that every player will be assigned a random character.");
 		}
-		appendedNames += "/";
-		return appendedNames;
+		//appendedNames += "/";
+		//return appendedNames;
 		
 	}
 	

@@ -103,4 +103,8 @@ public class Player {
 	public void setOut(){
 		this.isOut = true;
 	}
+	
+	public String toString(){
+		return "Name: " + this.name + ", Character Piece" + this.characterName;
+	}
 }

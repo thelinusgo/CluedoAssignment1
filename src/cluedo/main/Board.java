@@ -451,7 +451,7 @@ public class Board {
 	}
 
 	/**
-	 * Draws the ballroom.
+	 * Draws the ball room.
 	 */
 	private void drawBallroom() {
 		int x = 8;
@@ -562,11 +562,22 @@ public class Board {
 		int x = p.getX() + directionX;
 		int y = p.getY() + directionY;
 		if(board[x][y].equals("|#|") || board[x][y].equals("#|")){
-			System.out.println("Cannot move into wall");
+			System.out.println("Cannot move into wall.");
 			return;
 		}else if(board[x][y].equals("|X|") || board[x][y].equals("X|")){
-			System.out.println("Cannot move into wall");
+			System.out.println("Cannot move into wall.");
 			return;
+		}else{
+			for(int i = 0; i < doors.size(); i++){
+				Door d = doors.get(i);
+				if(!d.isHorizontal() && x == d.getX() && y == d.getY() && directionY == 0 && directionX > 1){
+					System.out.println("Going through door the wrong way!");
+					return;
+				}else if(d.isHorizontal() && x == d.getX() && y == d.getY() && directionY > 1 && directionX == 0){
+					System.out.println("Going through door the wrong way!");
+					return;
+				}
+			}
 		}
 		p.setPos(directionX, directionY);
 		board[p.getX()][p.getY()] = p.getCharacterName() + "|";

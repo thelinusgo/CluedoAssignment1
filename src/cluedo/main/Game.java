@@ -10,7 +10,7 @@ public class Game {
 	private Initializer initializer;
 	private Board board;
 	private int numPlayers = 0;
-	private List<Player> currentPlayers;
+	private static List<Player> currentPlayers;
 	private TextClient textClient;
 	private boolean success;
 	
@@ -25,12 +25,22 @@ public class Game {
 	}
 	
 	/**
+	 * Add new player to current players.
+	 * @param name
+	 */
+	public static void addPlayer(String name){
+		currentPlayers.add(new Player(name));
+	}
+	
+	/**
 	 * Sets up the board and an instance of the textClient.
 	 */
 	public void initialSetup(){
 		drawAsciiArt();
-		String playerSequence = textClient.askPlayers();
-		System.out.println(playerSequence);
+		System.out.println("Players: ");
+		for(int i = 0; i < currentPlayers.size(); i++){
+			System.out.println(currentPlayers.get(i));
+		}
 	}
 	/**
 	 * Fun little thing I tried doing. It works!
