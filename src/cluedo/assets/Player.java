@@ -105,6 +105,6 @@ public class Player {
 	}
 	
 	public String toString(){
-		return "Name: " + this.name + ", Character Piece" + this.characterName;
+		return "Name: " + this.name + ", Character Piece: " + this.characterName;
 	}
 }

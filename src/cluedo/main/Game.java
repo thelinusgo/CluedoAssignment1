@@ -20,8 +20,8 @@ public class Game {
 	public Game(){
 		board = new Board();
 		currentPlayers = new ArrayList<Player>();
-		initialSetup();
 		initializer = new Initializer();
+		initialSetup();
 	}
 	
 	/**
@@ -46,7 +46,8 @@ public class Game {
 	public void initialSetup(){
 		drawAsciiArt();
 		System.out.println("Players: ");
-		textClient.askPlayers();
+		TextClient.askPlayers();
+		initializer.distributeCharacters();
 		for(int i = 0; i < currentPlayers.size(); i++){
 			System.out.println(currentPlayers.get(i));
 		}
