@@ -18,10 +18,10 @@ public class Game {
 	private long seed = System.nanoTime();
 
 	public Game(){
-		initializer = new Initializer();
 		board = new Board();
 		currentPlayers = new ArrayList<Player>();
 		initialSetup();
+		initializer = new Initializer();
 	}
 	
 	/**
