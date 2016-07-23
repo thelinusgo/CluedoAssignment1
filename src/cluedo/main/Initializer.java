@@ -22,7 +22,7 @@ import cluedo.assets.WeaponCard;
  *
  */
 public class Initializer {
-
+    //a
 	/**Lists that hold components of the board */
 	private static List<Room> rooms = new ArrayList<>();
 	private static List<Weapon> weapons = new ArrayList<>();
@@ -160,7 +160,7 @@ public class Initializer {
 
 	}
 
-	/*Very small test class */
+	/*Very small test class. TODO need to remove in the final release. */
 	public static void main(String[] argv){
 		new Initializer();
 		System.out.println("ROOM ARRAYLIST: ");
