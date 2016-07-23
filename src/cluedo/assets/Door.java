@@ -19,7 +19,7 @@ public class Door {
 	
 	/**
 	 * Returns which direction the door is facing.
-	 * @return
+	 * @return 
 	 */
 	public boolean isHorizontal(){
 		return this.isHorizontal;
