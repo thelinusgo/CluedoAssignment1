@@ -8,14 +8,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 
-import cluedo.assets.Card;
-import cluedo.assets.Envelope;
+import cluedo.assets.*;
 import cluedo.assets.Character;
-import cluedo.assets.CharacterCard;
-import cluedo.assets.Room;
-import cluedo.assets.RoomCard;
-import cluedo.assets.Weapon;
-import cluedo.assets.WeaponCard;
 /**
  * Class that represents the Board. Contains fields and methods regarding setting up the board.
  * @author linus & casey
@@ -43,6 +37,7 @@ public class Initializer {
 		initializeCharacters();
 		fillList();
 		initializeEnvelope();
+		distributeCharacters();
 	}
 
 	/**
@@ -158,7 +153,14 @@ public class Initializer {
 		rooms.remove(roomCard);
 		weapons.remove(weaponCard);
 		characters.remove(characterCard);
-
+	}
+	
+	public void distributeCharacters(){
+		Collections.shuffle(characters, new Random(seed)); 
+		for(int i = 0; i < Game.getCurrentPlayers().size(); i++){
+			Player p = Game.getCurrentPlayers().get(i);
+			p.setCharacter(characters.get(i));
+		}
 	}
 
 	/*Very small test class. TODO need to remove in the final release. */

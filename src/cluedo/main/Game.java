@@ -33,6 +33,14 @@ public class Game {
 	}
 	
 	/**
+	 * Returns currentPlayers list.
+	 * @param name
+	 */
+	public static List<Player> getCurrentPlayers(){
+		return currentPlayers;
+	}
+	
+	/**
 	 * Sets up the board and an instance of the textClient.
 	 */
 	public void initialSetup(){
@@ -43,6 +51,7 @@ public class Game {
 			System.out.println(currentPlayers.get(i));
 		}
 	}
+	
 	/**
 	 * Fun little thing I tried doing. It works!
 	 * This method draws "CLUEDO GAME" in ascii representative form.
