@@ -32,7 +32,7 @@ public class TextClient {
 	 * @return String of players.
 	 */
 	public static String askPlayers(){
-		
+		//a
 		/*Local variables */
 		int amount = 0;
 		String singleName = "";

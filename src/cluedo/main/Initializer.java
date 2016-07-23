@@ -22,7 +22,7 @@ import cluedo.assets.WeaponCard;
  *
  */
 public class Initializer {
-
+    //a
 	/**Lists that hold components of the board */
 	private static List<Room> rooms = new ArrayList<>();
 	private static List<Weapon> weapons = new ArrayList<>();
