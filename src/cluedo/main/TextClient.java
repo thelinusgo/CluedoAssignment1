@@ -63,9 +63,6 @@ public class TextClient {
 		
 	}
 	
-	
-	
-	
 	/**
 	 * Get integer from System.in
 	 */

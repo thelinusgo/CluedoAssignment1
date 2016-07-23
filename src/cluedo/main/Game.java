@@ -7,7 +7,6 @@ import cluedo.assets.*;
  *
  */
 public class Game {
- //aaa
 	private Initializer initializer;
 	private Board board;
 	private int numPlayers = 0;
@@ -24,6 +23,7 @@ public class Game {
 		currentPlayers = new ArrayList<Player>();
 		initialSetup();
 	}
+	
 	/**
 	 * Sets up the board and an instance of the textClient.
 	 */
@@ -67,6 +67,4 @@ public class Game {
 	public static void main(String[] args){
 		new Game();
 	}
-
-
 }
