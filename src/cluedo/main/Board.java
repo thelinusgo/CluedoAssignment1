@@ -8,12 +8,20 @@ public class Board {
 	 * Represents the board in 2d array form.
 	 */
 	String[][] board = new String[25][25];
-	
+
+	/**
+	 * Stores the list of doors on the board.
+	 */
+	List<Door> doors = new ArrayList<Door>();
+
+	/**
+	 * Stores the starting positions of each player.
+	 */
 	List<Position> startPos = new ArrayList<Position>();
-	
+
 	/** This helps generating a random shuffle for the lists */
 	private long seed = System.nanoTime();
-	//aa
+
 	public Board(){
 		//filling up the board so it does not contain any null values
 		for(int x = 0; x < board.length; x++){
@@ -46,6 +54,7 @@ public class Board {
 		drawConservatory();
 		drawBallroom();
 		drawCluedo();
+		drawDoors();
 		drawStart();
 	}
 
@@ -102,7 +111,8 @@ public class Board {
 
 		board[1][2] = "1 ";
 		board[5][1] = "S|";
-		board[4][6] = "D|";
+		
+		doors.add(new Door(false, 4, 6));
 	}
 
 	/**
@@ -157,8 +167,9 @@ public class Board {
 		}
 
 		board[1][10] = "2 ";
-		board[width-1][12] = "D|";
-		board[width-2][y+height-1] = "D|";
+		
+		doors.add(new Door(true, width-1, 12));
+		doors.add(new Door(true, width-2, y+height-1));
 	}
 
 	/**
@@ -201,9 +212,10 @@ public class Board {
 			board[x+width-2][i] = " |";
 		}
 
-		board[x+width-1][y] = "D|";
 		board[x][y] = "|S|";
 		board[x+1][y+1] = "3 ";
+		
+		doors.add(new Door(false, x+width-1, y));
 	}
 
 	/**
@@ -247,10 +259,11 @@ public class Board {
 			board[x+width-2][i] = " |";
 		}
 
-		board[x+2][y] = "D|";
-		board[x+3][y] = "D|";
-		board[x+width-1][y+2] = "D|";
 		board[x+1][y+1] = "4 ";
+		
+		doors.add(new Door(true, x+width-1, y+2));
+		doors.add(new Door(true, x+3, y));
+		doors.add(new Door(true, x+2, y));
 	}
 
 	/**
@@ -293,10 +306,11 @@ public class Board {
 		for(int i = y+1; i < y+height-1; i++){
 			board[x+width-2][i] = " |";
 		}
-
-		board[x][y] = "D|";
+		
 		board[x+width-1][y] = "S|";
 		board[x+1][y+1] = "5 ";
+		
+		doors.add(new Door(false, x, y));
 	}
 
 	/**
@@ -339,10 +353,10 @@ public class Board {
 		for(int i = y+1; i < y+height-1; i++){
 			board[x+width-2][i] = " |";
 		}
-
-		board[x][y+2] = "D|";
-		board[x+3][y] = "D|";
 		board[x+1][y+1] = "6 ";
+		
+		doors.add(new Door(true, x, y+2));
+		doors.add(new Door(true, x+3, y));
 	}
 
 	/**
@@ -385,10 +399,10 @@ public class Board {
 		for(int i = y+1; i < y+height-1; i++){
 			board[x+width-2][i] = " |";
 		}
-
-		board[x][y+1] = "D|";
-		board[x+width-2][y+height-1] = "D|";
 		board[x+1][y+1] = "7 ";
+		
+		doors.add(new Door(true, x, y+1));
+		doors.add(new Door(false, x+width-2, y+height-1));
 	}
 
 	/**
@@ -431,10 +445,9 @@ public class Board {
 		for(int i = y+1; i < y+height-1; i++){
 			board[x+width-2][i] = " |";
 		}
-
-		board[x][y+height-2] = "D|";
 		board[x+width-2][y+height-1] = "S|";
 		board[x+1][y+1] = "8 ";
+		doors.add(new Door(false, x, y+height-2));
 	}
 
 	/**
@@ -478,8 +491,11 @@ public class Board {
 			board[x+width-2][i] = " |";
 		}
 
-		board[x][y+height-2] = "D|";
-		board[x+width-2][y+height-1] = "S|";
+		doors.add(new Door(true, x, 5));
+		doors.add(new Door(true, x+width-1, 5));
+		doors.add(new Door(false, x+1, y+height-1));
+		doors.add(new Door(false, x+width-2, y+height-1));
+		
 		board[x+1][y+1] = "X|";
 		board[x+width-2][y+1] = "X|";
 		board[x+width-3][y+1] = " |";
@@ -502,6 +518,18 @@ public class Board {
 			}
 		}
 	}
+	
+	/**
+	 * Draws the doors.
+	 */
+	private void drawDoors(){
+		for(int i = 0; i < doors.size(); i++){
+			Door d = doors.get(i);
+			int x = d.getX();
+			int y = d.getY();
+			board[x][y] = "D|";
+		}
+	}
 
 	/**
 	 * Draws the start spaces.
@@ -513,7 +541,7 @@ public class Board {
 		startPos.add(new Position(7, board.length-1));
 		startPos.add(new Position(board.length-1, board.length-6));
 		startPos.add(new Position(board.length-1, 6));
-		
+
 		for(int i = 0; i < startPos.size(); i++){
 			int x = startPos.get(i).getX();
 			int y = startPos.get(i).getY();
@@ -531,6 +559,15 @@ public class Board {
 	 * @param p
 	 */
 	public void move(int directionX, int directionY, Player p){
+		int x = p.getX() + directionX;
+		int y = p.getY() + directionY;
+		if(board[x][y].equals("|#|") || board[x][y].equals("#|")){
+			System.out.println("Cannot move into wall");
+			return;
+		}else if(board[x][y].equals("|X|") || board[x][y].equals("X|")){
+			System.out.println("Cannot move into wall");
+			return;
+		}
 		p.setPos(directionX, directionY);
 		board[p.getX()][p.getY()] = p.getCharacterName() + "|";
 	}
@@ -547,6 +584,10 @@ public class Board {
 		}
 	}
 
+	/**
+	 * Initializes each player's position.
+	 * @param currentPlayers
+	 */
 	public void setPlayerPosition(List<Player> currentPlayers){
 		Collections.shuffle(startPos, new Random(seed)); 
 		for(int i = 0; i < currentPlayers.size(); i++){
@@ -559,6 +600,5 @@ public class Board {
 	public static void main(String[] args) {
 		new Board();
 	}
-
 
 }
