@@ -7,9 +7,14 @@ package cluedo.assets;
  */
 public abstract class Card<E> {
 	
-	private E item;
+	private E item; //This represents the Item being held in the card.
 	
+	/**
+	 * Construct a new Card with the given item inside.
+	 * @param itm
+	 */
 	public Card(E itm){
+		assert itm != null : "Item in card CANNOT be null!";
 		this.item = itm;
 	}
 	
@@ -18,7 +23,7 @@ public abstract class Card<E> {
 	 * @return
 	 */
 	public String toString(){
-		return "Card: " + item.toString();
+		return "Card: [" + item.toString() + "]";
 	}
 	
 	/**

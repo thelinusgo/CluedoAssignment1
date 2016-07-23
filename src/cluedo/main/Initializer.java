@@ -160,7 +160,7 @@ public class Initializer {
 
 	}
 
-	/*Very small test class */
+	/*Very small test class. TODO need to remove in the final release. */
 	public static void main(String[] argv){
 		new Initializer();
 		System.out.println("ROOM ARRAYLIST: ");
