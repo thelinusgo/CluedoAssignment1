@@ -38,6 +38,7 @@ public class Game {
 	public void initialSetup(){
 		drawAsciiArt();
 		System.out.println("Players: ");
+		textClient.askPlayers();
 		for(int i = 0; i < currentPlayers.size(); i++){
 			System.out.println(currentPlayers.get(i));
 		}

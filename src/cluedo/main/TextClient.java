@@ -52,7 +52,7 @@ public class TextClient {
 			}
 			
 			for(int i = 0 ; i != amount; ++i){
-				System.out.println("Please enter Player "  + i+1 + "'s name");
+				System.out.println("Please enter Player "  + String.valueOf(i+1) + "'s name");
 				singleName = sc.next();
 				Game.addPlayer(singleName);
 				//appendedNames += singleName + "\n";
