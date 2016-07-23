@@ -37,26 +37,28 @@ public class Room {
 	private int height;
 	
 	/**
+	 * Determines whether this room has stairs or not
+	 */
+	private boolean hasStairs;
+	
+	/**
 	 * Construct a Room.
 	 */
 	public Room(String n){
 		this.name = n;
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
 	}
 	
 	
 	/**
-	 * Construct a Room with x, y coordinates and its width and height
+	 * Construct a Room with x, y coordinates, its width and height and whether it has stairs or not.
 	 */
-	public Room(String n, int x, int y, int width, int height){
+	public Room(String n, int x, int y, int width, int height, boolean hasStairs){
 		this.name = n;
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		this.hasStairs = hasStairs;
 	}
 	
 	/**

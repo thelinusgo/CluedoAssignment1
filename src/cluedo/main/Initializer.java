@@ -67,15 +67,15 @@ public class Initializer {
 	public void initializeRooms(){
 		/*Fill the arraylist with rooms */
 		/*NB: not all rooms have weapons.  */
-		rooms.add(new Room("Kitchen", 0, 1, 6, 6));
-		rooms.add(new Room("Dining Room", 0, 9, 8, 7));
-		rooms.add(new Room("Ball Room", 8, 1, 8, 7));
-		rooms.add(new Room("Conservatory", 18, 1, 7, 5));
-		rooms.add(new Room("Billiard Room", 19, 8, 6, 5));
-		rooms.add(new Room("Library", 18, 14, 7, 5));
-		rooms.add(new Room("Study", 17, 21, 8, 4));
-		rooms.add(new Room("Hall", 9, 18, 6, 7));
-		rooms.add(new Room("Lounge", 0, 19, 7, 6));
+		rooms.add(new Room("Kitchen", 0, 1, 6, 6, true));
+		rooms.add(new Room("Dining Room", 0, 9, 8, 7, false));
+		rooms.add(new Room("Ball Room", 8, 1, 8, 7, false));
+		rooms.add(new Room("Conservatory", 18, 1, 7, 5, true));
+		rooms.add(new Room("Billiard Room", 19, 8, 6, 5, false));
+		rooms.add(new Room("Library", 18, 14, 7, 5, false));
+		rooms.add(new Room("Study", 17, 21, 8, 4, true));
+		rooms.add(new Room("Hall", 9, 18, 6, 7, false));
+		rooms.add(new Room("Lounge", 0, 19, 7, 6, true));
 		Collections.shuffle(rooms); //shuffle it
 
 		for(int i = 0; i < weapons.size(); i++){
