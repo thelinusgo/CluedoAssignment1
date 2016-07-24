@@ -1,6 +1,6 @@
 package cluedo.assets;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Class that represents a player in Cluedo.
@@ -28,6 +28,7 @@ public class Player {
 	 */
 	public Player(String name){
 		this.name = name;
+		hand = new ArrayList<>();
 	}
 	
 	public void setCharacter(Character c){

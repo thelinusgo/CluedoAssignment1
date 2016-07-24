@@ -9,4 +9,7 @@ public class RoomCard extends Card<Room>{
 		super(r);
 	}
 
+	public String toStirng(){
+		return "Card: " + super.getName();
+	}
 }

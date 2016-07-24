@@ -176,10 +176,6 @@ public class Initializer {
 	}
 
 	public void distributeCards(){
-		RoomCard roomCard = null;
-		CharacterCard characterCard = null;
-		WeaponCard weaponCard = null;
-
 		Collections.shuffle(roomCards, new Random(seed)); 
 		Collections.shuffle(weaponCards, new Random(seed)); 
 		Collections.shuffle(characterCards, new Random(seed)); 
