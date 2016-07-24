@@ -87,4 +87,8 @@ public class Room {
 		}
 		return "[Room: " + name + " | Weapon: null]";
 	}
+	
+	public String stringName(){
+		return "[Room: " + name + "]";
+	}
 }

@@ -29,7 +29,7 @@ public class Character {
 	
 	@Override
 	public String toString(){
-		return "Player: " + name;
+		return "Character: " + name;
 	}
 	
 }

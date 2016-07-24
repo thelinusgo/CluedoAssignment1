@@ -184,25 +184,27 @@ public class Initializer {
 				i = 0;
 			}
 			Player currentPlayer = Game.getCurrentPlayers().get(i);
-			currentPlayer.addCard(roomCards.get(i));
+			currentPlayer.addCard(roomCards.get(j));
 		}
 		for(int i = 0, j = 0; j < weaponCards.size(); i++, j++){
 			if(i == Game.getCurrentPlayers().size()){
 				i = 0;
 			}
 			Player currentPlayer = Game.getCurrentPlayers().get(i);
-			currentPlayer.addCard(weaponCards.get(i));
+			currentPlayer.addCard(weaponCards.get(j));
 		}
 		for(int i = 0, j = 0; j < characterCards.size(); i++, j++){
 			if(i == Game.getCurrentPlayers().size()){
 				i = 0;
 			}
 			Player currentPlayer = Game.getCurrentPlayers().get(i);
-			currentPlayer.addCard(characterCards.get(i));
+			currentPlayer.addCard(characterCards.get(j));
 		}
 		
 		for(Player p : Game.getCurrentPlayers()){
-			System.out.println(p.getCards());
+			for(Card c : p.getCards()){
+				System.out.println(c);
+			}
 		}
 	}
 

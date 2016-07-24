@@ -23,6 +23,9 @@ public abstract class Card<E> {
 	 * @return
 	 */
 	public String toString(){
+		if(item instanceof Room){
+			return "Card: " + ((Room) item).stringName();
+		}
 		return "Card: [" + item.toString() + "]";
 	}
 	
