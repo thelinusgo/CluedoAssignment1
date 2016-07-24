@@ -34,8 +34,8 @@ public class Player {
 		this.characterName = c.getName();
 	}
 	
-	public void setCards(List<Card> h){
-		this.hand = h;
+	public void addCard(Card c){
+		this.hand.add(c);
 	}
 	
 	/**

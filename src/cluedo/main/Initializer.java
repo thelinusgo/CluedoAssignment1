@@ -16,14 +16,16 @@ import cluedo.assets.Character;
  *
  */
 public class Initializer {
-    //a
+	//a
 	/**Lists that hold components of the board */
 	private static List<Room> rooms = new ArrayList<>();
 	private static List<Weapon> weapons = new ArrayList<>();
-	//private static List<Card> cards = new ArrayList<>();
 	private static List<Card> cards = new ArrayList<>();
 	private static List<Character> characters = new ArrayList<>();
 	private static Envelope envelope = new Envelope();
+	private static List<RoomCard> roomCards = new ArrayList<>();
+	private static List<WeaponCard> weaponCards = new ArrayList<>();
+	private static List<CharacterCard> characterCards = new ArrayList<>();
 
 	/** This helps generating a random shuffle for the lists */
 	private long seed = System.nanoTime();
@@ -37,6 +39,8 @@ public class Initializer {
 		initializeCharacters();
 		fillList();
 		initializeEnvelope();
+		distributeCharacters();
+		distributeCards();
 	}
 
 	/**
@@ -75,7 +79,7 @@ public class Initializer {
 		for(int i = 0; i < weapons.size(); i++){
 			rooms.get(i).addWeapon(weapons.get(i));
 		}
-		
+
 		Collections.shuffle(weapons, new Random(seed));
 	}
 
@@ -92,7 +96,7 @@ public class Initializer {
 		characters.add(new Character("Professor Plum"));
 		Collections.shuffle(characters, new Random(seed)); //shuffle it
 	}
-	
+
 	/**
 	 * Put all cards in cards list.
 	 */
@@ -101,7 +105,7 @@ public class Initializer {
 		for(Room r : rooms){
 			cards.add(new RoomCard(r));
 		}
-		
+
 		/*Fill the cards arrayList with Weapon Cards */
 		for(Weapon w : weapons){
 			cards.add(new WeaponCard(w));
@@ -112,6 +116,16 @@ public class Initializer {
 			cards.add(new CharacterCard(p));
 		}
 		
+		for(Card c : cards){
+			if(c instanceof RoomCard){
+				roomCards.add((RoomCard) c);
+			}else if(c instanceof WeaponCard){
+				weaponCards.add((WeaponCard) c);
+			}else if(c instanceof CharacterCard){
+				characterCards.add((CharacterCard) c);
+			}
+		}
+
 		Collections.shuffle(cards, new Random(seed)); 
 	}
 
@@ -124,19 +138,18 @@ public class Initializer {
 		CharacterCard characterCard = null;
 		WeaponCard weaponCard = null;
 
-		for(int i = 0 ; i != cards.size(); i++){
-			Card currentCard = cards.get(i);
+		for(Card c : cards){
 			if(roomCard == null){
-				if(currentCard instanceof RoomCard){
-					roomCard = (RoomCard) currentCard;
+				if(c instanceof RoomCard){
+					roomCard = (RoomCard) c;
 				}
 			}else if(weaponCard == null){
-				if(currentCard instanceof WeaponCard){
-					weaponCard = (WeaponCard) currentCard;
+				if(c instanceof WeaponCard){
+					weaponCard = (WeaponCard) c;
 				}
 			}else if(characterCard == null){
-				if(currentCard instanceof CharacterCard){
-					characterCard = (CharacterCard) currentCard;
+				if(c instanceof CharacterCard){
+					characterCard = (CharacterCard) c;
 				}
 			}
 
@@ -149,16 +162,51 @@ public class Initializer {
 		envelope.add(roomCard);
 
 		/*Finally, remove these cards from their arrayList */
-		rooms.remove(roomCard);
-		weapons.remove(weaponCard);
-		characters.remove(characterCard);
+		cards.remove(roomCard);
+		cards.remove(weaponCard);
+		cards.remove(characterCard);
 	}
-	
+
 	public void distributeCharacters(){
 		Collections.shuffle(characters, new Random(seed)); 
 		for(int i = 0; i < Game.getCurrentPlayers().size(); i++){
 			Player p = Game.getCurrentPlayers().get(i);
 			p.setCharacter(characters.get(i));
+		}
+	}
+
+	public void distributeCards(){
+		RoomCard roomCard = null;
+		CharacterCard characterCard = null;
+		WeaponCard weaponCard = null;
+
+		Collections.shuffle(roomCards, new Random(seed)); 
+		Collections.shuffle(weaponCards, new Random(seed)); 
+		Collections.shuffle(characterCards, new Random(seed)); 
+		for(int i = 0, j = 0; j < roomCards.size(); i++, j++){
+			if(i == Game.getCurrentPlayers().size()){
+				i = 0;
+			}
+			Player currentPlayer = Game.getCurrentPlayers().get(i);
+			currentPlayer.addCard(roomCards.get(i));
+		}
+		for(int i = 0, j = 0; j < weaponCards.size(); i++, j++){
+			if(i == Game.getCurrentPlayers().size()){
+				i = 0;
+			}
+			Player currentPlayer = Game.getCurrentPlayers().get(i);
+			currentPlayer.addCard(weaponCards.get(i));
+		}
+		for(int i = 0, j = 0; j < characterCards.size(); i++, j++){
+			if(i == Game.getCurrentPlayers().size()){
+				i = 0;
+			}
+			Player currentPlayer = Game.getCurrentPlayers().get(i);
+			currentPlayer.addCard(characterCards.get(i));
+		}
+		
+		for(Player p : Game.getCurrentPlayers()){
+			System.out.println(p.getCards());
 		}
 	}
 
