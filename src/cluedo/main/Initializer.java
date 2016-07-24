@@ -39,8 +39,8 @@ public class Initializer {
 		initializeCharacters();
 		fillList();
 		initializeEnvelope();
-		distributeCharacters();
-		distributeCards();
+		//distributeCharacters();
+		//distributeCards();
 	}
 
 	/**

@@ -13,7 +13,7 @@ public class Game {
 	private static List<Player> currentPlayers;
 	private TextClient textClient;
 	private boolean success;
-	
+	private static boolean hasAsked = false;
 	/** This helps generating a random shuffle for the lists */
 	private long seed = System.nanoTime();
 
@@ -48,6 +48,7 @@ public class Game {
 		System.out.println("Players: ");
 		TextClient.askPlayers();
 		initializer.distributeCharacters();
+		initializer.distributeCards();
 		for(int i = 0; i < currentPlayers.size(); i++){
 			System.out.println(currentPlayers.get(i));
 		}
