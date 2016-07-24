@@ -8,8 +8,9 @@ public class RoomCard extends Card<Room>{
 	public RoomCard(Room r){
 		super(r);
 	}
-
-	public String toStirng(){
+	
+	@Override
+	public String toString(){
 		return "Card: " + super.getName();
 	}
 }
