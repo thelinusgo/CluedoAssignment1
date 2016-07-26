@@ -1,6 +1,7 @@
 package cluedo.main;
 import java.util.*;
 import cluedo.assets.*;
+import cluedo.cards.Card;
 /**
  * Creates a new instance of a Board, and runs the textClient.
  * @author linus
@@ -50,6 +51,12 @@ public class Game {
 		initializer.distributeCards();
 		for(int i = 0; i < currentPlayers.size(); i++){
 			System.out.println(currentPlayers.get(i));
+			System.out.println("-------------------------------------------");
+			System.out.println("Name: " +currentPlayers.get(i).getName());
+			for(Card c : currentPlayers.get(i).getCards()){
+				System.out.println("card: " + c.toString());
+			}
+			System.out.println("-------------------------------------------");
 		}
 	}
 	

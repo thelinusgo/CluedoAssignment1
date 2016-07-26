@@ -172,7 +172,7 @@ public class Initializer {
 
 	public void distributeCharacters(){
 		Collections.shuffle(characters, new Random(seed)); 
-		for(int i = 0; i < Game.getCurrentPlayers().size(); i++){
+		for(int i = 0; i < Game.getCurrentPlayers().size(); i++){	
 			Player p = Game.getCurrentPlayers().get(i);
 			p.setCharacter(characters.get(i));
 		}
