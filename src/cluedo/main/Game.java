@@ -45,7 +45,6 @@ public class Game {
 	 */
 	public void initialSetup(){
 		drawAsciiArt();
-		System.out.println("Players: ");
 		TextClient.askPlayers();
 		initializer.distributeCharacters();
 		initializer.distributeCards();

@@ -50,7 +50,7 @@ public class TextClient {
 			}else{
 				right = true;
 			}
-			
+		}
 			for(int i = 0 ; i != amount; ++i){
 				System.out.println("Please enter Player "  + String.valueOf(i+1) + "'s name");
 				singleName = sc.next();
@@ -58,7 +58,7 @@ public class TextClient {
 				//appendedNames += singleName + "\n";
 			}
 			System.out.println("Please note that every player will be assigned a random character.");
-		}
+		//}
 		//appendedNames += "/";
 		//return appendedNames;
 		

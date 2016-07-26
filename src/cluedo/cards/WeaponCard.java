@@ -1,5 +1,4 @@
 package cluedo.cards;
-
 import cluedo.assets.Weapon;
 
 /**
