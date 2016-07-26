@@ -2,6 +2,8 @@ package cluedo.assets;
 
 import java.util.*;
 
+import cluedo.cards.Card;
+
 /**
  * Class that represents a player in Cluedo.
  * This consists of a hand, and a players name, and if they're out of the game or not.

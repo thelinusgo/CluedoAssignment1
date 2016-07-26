@@ -1,4 +1,4 @@
-package cluedo.assets;
+package cluedo.cards;
 
 /**
  * Class that holds three Cards. It is backed by an array.

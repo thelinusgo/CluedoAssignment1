@@ -1,4 +1,7 @@
-package cluedo.assets;
+package cluedo.cards;
+
+import cluedo.assets.Character;
+
 /**
  * This class represents a Card containing a player object.
  * @author linus

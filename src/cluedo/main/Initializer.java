@@ -10,6 +10,11 @@ import java.util.Scanner;
 
 import cluedo.assets.*;
 import cluedo.assets.Character;
+import cluedo.cards.Card;
+import cluedo.cards.CharacterCard;
+import cluedo.cards.Envelope;
+import cluedo.cards.RoomCard;
+import cluedo.cards.WeaponCard;
 /**
  * Class that represents the Board. Contains fields and methods regarding setting up the board.
  * @author linus & casey

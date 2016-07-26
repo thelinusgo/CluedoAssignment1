@@ -1,4 +1,7 @@
-package cluedo.assets;
+package cluedo.cards;
+
+import cluedo.assets.Weapon;
+
 /**
  * This class represents a card holding a Weapon object.
  * @author linus

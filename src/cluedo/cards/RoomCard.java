@@ -1,4 +1,7 @@
-package cluedo.assets;
+package cluedo.cards;
+
+import cluedo.assets.Room;
+
 /**
  * This class represents a Card holding a Room object.
  * @author linus
