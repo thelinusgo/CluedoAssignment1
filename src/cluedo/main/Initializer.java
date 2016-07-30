@@ -21,7 +21,6 @@ import cluedo.cards.WeaponCard;
  *
  */
 public class Initializer {
-	//a
 	/**Lists that hold components of the board */
 	private static List<Room> rooms = new ArrayList<>();
 	private static List<Weapon> weapons = new ArrayList<>();
@@ -209,6 +208,10 @@ public class Initializer {
 				System.out.println(c);
 			}
 		}
+	}
+	
+	public List<Room> getRooms(){
+		return Initializer.rooms;
 	}
 
 	/*Very small test class. TODO need to remove in the final release. */

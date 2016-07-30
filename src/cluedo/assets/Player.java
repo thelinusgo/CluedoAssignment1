@@ -19,6 +19,7 @@ public class Player {
 	private int x;
 	private int y;
 	private int numberofMoves;
+	private boolean isInRoom = false;
 	
 	/**
 	 * Create a Player with a given name, a hand, a current character, and their x and y position.
@@ -129,6 +130,14 @@ public class Player {
 	 */
 	public void setOut(){
 		this.isOut = true;
+	}
+	
+	public void setIsInRoom(boolean rm){
+		this.isInRoom = rm;
+	}
+	
+	public boolean isInRoom() {
+		return this.isInRoom;
 	}
 	
 	public String toString(){

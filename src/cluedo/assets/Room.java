@@ -69,6 +69,13 @@ public class Room {
 		this.weapon = w;
 	}
 	
+	public boolean contains(int x, int y){
+		if(this.x <= x && this.x + width > x && this.y <= y && this.y + height > y){
+			return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * Gets the weapon being held in this current room.
 	 * @return

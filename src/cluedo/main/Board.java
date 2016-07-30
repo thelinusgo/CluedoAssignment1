@@ -7,17 +7,21 @@ public class Board {
 	/**
 	 * Represents the board in 2d array form.
 	 */
-	String[][] board = new String[25][25];
+	private String[][] board = new String[25][25];
 
 	/**
 	 * Stores the list of doors on the board.
 	 */
-	List<Door> doors = new ArrayList<Door>();
+	private List<Door> doors = new ArrayList<Door>();
 
 	/**
 	 * Stores the starting positions of each player.
 	 */
-	List<Position> startPos = new ArrayList<Position>();
+	private List<Position> startPos = new ArrayList<Position>();
+	
+	private Initializer initializer = new Initializer();
+	
+	private List<Room> rooms = initializer.getRooms();
 
 	/** This helps generating a random shuffle for the lists */
 	private long seed = System.nanoTime();
@@ -561,23 +565,41 @@ public class Board {
 	public void move(int directionX, int directionY, Player p){
 		int x = p.getX() + directionX;
 		int y = p.getY() + directionY;
-		if(isValidMove(x, y, directionX, directionY)){
+		if(isValidMove(x, y, directionX, directionY, p)){
 			p.setPos(x, y);
 			p.moveAStep();
 			board[p.getX()][p.getY()] = p.getCharacterName() + "|";
+			for(int i = 0; i < rooms.size(); i++){
+				if(rooms.get(i).contains(p.getX(), p.getY())){
+					p.setIsInRoom(true);
+				}else{
+					p.setIsInRoom(false);
+				}
+			}
 		}
 	}
-
-	public boolean isValidMove(int x, int y, int directionX, int directionY){
+	
+	/**
+	 * Checks if player is doing a valid move. If they are not, then it returns false, else it returns true.
+	 * 
+	 * @param x
+	 * @param y
+	 * @param directionX
+	 * @param directionY
+	 * @param p
+	 * @return
+	 */
+	public boolean isValidMove(int x, int y, int directionX, int directionY, Player p){
 		if(board[x][y].equals("|#|") || board[x][y].equals("#|")){
 			System.out.println("Cannot move into wall.");
 			return false;
 		}else if(board[x][y].equals("|X|") || board[x][y].equals("X|")){
 			System.out.println("Cannot move into wall.");
 			return false;
-		}/*else if(){
-
-		}*/else{
+		}else if((board[x][y].equals("S|") || board[x][y].equals("|S|")) && !p.isInRoom()){
+			System.out.println("Player is not in room to take the stairs.");
+			return false;
+		}else{
 			for(int i = 0; i < doors.size(); i++){
 				Door d = doors.get(i);
 				if(!d.isHorizontal() && x == d.getX() && y == d.getY() && directionY == 0 && directionX > 1){
