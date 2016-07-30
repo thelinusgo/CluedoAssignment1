@@ -1,4 +1,5 @@
 package cluedo.main;
+import java.io.IOException;
 import java.util.*;
 import cluedo.assets.*;
 import cluedo.cards.Card;
@@ -109,7 +110,11 @@ public class Game {
 			while(currentPlayer.numberofMoves() > 0){
 				System.out.println(currentPlayer.getName() + " currently has " + currentPlayer.numberofMoves() + " moves left.");
 				System.out.println("current location: " + currentPlayer.getX() + ", " + currentPlayer.getY());
-				TextClient.movementListener(currentPlayer);
+				try {
+					TextClient.movementListener(currentPlayer);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 			System.out.println(currentPlayer.getName() + " has run out of moves.");
 		}

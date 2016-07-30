@@ -579,7 +579,7 @@ public class Board {
 				}
 			}
 		}
-		p.setPos(directionX, directionY);
+		p.changePos(directionX, directionY);
 		p.moveAStep();
 		board[p.getX()][p.getY()] = p.getCharacterName() + "|";
 	}
@@ -606,6 +606,7 @@ public class Board {
 			int x = startPos.get(i).getX();
 			int y = startPos.get(i).getY();
 			board[x][y] = currentPlayers.get(i).getCharacterName();
+			currentPlayers.get(i).setPos(x, y);
 		}
 	}
 

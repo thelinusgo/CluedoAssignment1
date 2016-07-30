@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import javax.swing.plaf.synth.SynthSpinnerUI;
 
@@ -14,6 +15,10 @@ import cluedo.assets.Player;
 
 public class TextClient {
 	private static Board board = new Board();
+
+	private static Pattern MOVES = Pattern.compile("w|a|s|d");
+
+	private static Scanner sc = new Scanner(System.in);
 	/**
 	 * Get string from System.in
 	 */
@@ -29,39 +34,44 @@ public class TextClient {
 			}
 		}
 	}
-	
+
 	/**
 	 * Listen for direction movement. W, S, A, D are valid directions.
 	 * Currently unfinished!
 	 * TODO: NEED TO LOOK AT THIS!!
 	 * @param Player to move.
 	 */
-	public static void movementListener(Player p){
-		Scanner sc = new Scanner(System.in);
-
-		try{
+	public static void movementListener(Player p) throws IOException{
+		String dir = null;
 		System.out.println("Please enter the letters W, A, S or D to move.");
 		System.out.println("W - Up");
 		System.out.println("A - Left");
 		System.out.println("S - Down");
 		System.out.println("D - Right\n");
-		String dir = sc.next();
-		switch(dir){
-		case "W": board.move(0, -1, p);
-		case "S": board.move(0, 1, p);
-		case "A": board.move(-1, 0, p);
-		case "D": board.move(1, 0, p);
-		default:
-			System.out.println("That is not a valid direction!");
-			break;
-		}
-		}finally{
-			sc.close();
+		while(!sc.hasNext(MOVES)){
+			dir = sc.next();
+			switch(dir){
+			case "w": 
+				board.move(0, -1, p);
+				break;
+			case "s": 
+				board.move(0, 1, p);
+				break;
+			case "a": 
+				board.move(-1, 0, p);
+				break;
+			case "d": 
+				board.move(1, 0, p);
+				break;
+			default:
+				System.out.println("That is not a valid direction!");
+				break;
+			}
 		}
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Ask for initial players, and their names.
 	 * Returns a list of players. Sequence begins and ends with a backslash "/".
@@ -69,34 +79,34 @@ public class TextClient {
 	 */
 	public static void askPlayers(){
 		/*Local variables */
-		int amount = 0;
+		String amount = "z";
 		String singleName = "";
 		//String appendedNames = "/\n";
 		boolean right = false;
-		
-		/*Use a scanner. */
-		Scanner sc = new Scanner(System.in);
+		boolean isInteger = false;
 		/*Now, ask for user input. */
-		while(!right){
+		while(!right && !isInteger){
 			System.out.println("How many players would you like?");
-			amount = sc.nextInt();
+			amount = sc.next();
+			if(isInteger(amount)){
+				if(Integer.parseInt(amount) > 6 || Integer.parseInt(amount) < 3){
+					System.out.println("Cluedo needs 3-6 players.");
+				}else{
+					right = true;
+					isInteger = true;
+				}
+			}
 			
-			if(amount > 6 || amount < 3){
-				System.out.println("Cluedo needs 3-6 players.");
-			}else{
-				right = true;
-			}
 		}
-			for(int i = 0 ; i != amount; ++i){
-				System.out.println("Please enter Player "  + String.valueOf(i+1) + "'s name");
-				singleName = sc.next();
-				Game.addPlayer(singleName);
-			}
-			System.out.println("Please note that every player will be assigned a random character.");
-			Game.askSuccess = true;
-			//sc.close();
+		for(int i = 0 ; i != Integer.parseInt(amount); ++i){
+			System.out.println("Please enter Player "  + String.valueOf(i+1) + "'s name");
+			singleName = sc.next();
+			Game.addPlayer(singleName);
+		}
+		System.out.println("Please note that every player will be assigned a random character.");
+		Game.askSuccess = true;
 	}
-	
+
 	/**
 	 * Get integer from System.in
 	 */
@@ -111,6 +121,15 @@ public class TextClient {
 			} catch (IOException e) {
 				System.out.println("Please enter a number!");
 			}
+		}
+	}
+
+	public static boolean isInteger(String input){
+		try{
+			Integer.parseInt( input );
+			return true;
+		}catch(Exception e){
+			return false;
 		}
 	}
 
