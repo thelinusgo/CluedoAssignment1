@@ -16,7 +16,7 @@ import cluedo.assets.Player;
 public class TextClient {
 	private static Board board = new Board();
 
-	private static Pattern MOVES = Pattern.compile("w|a|s|d");
+	private static String MOVES = "w|a|s|d";
 
 	private static Scanner sc = new Scanner(System.in);
 	/**
@@ -42,16 +42,16 @@ public class TextClient {
 	 * @param Player to move.
 	 */
 	public static void movementListener(Player p) throws IOException{
-		String dir = null;
+		String dir = "z";
 		System.out.println("Please enter the letters W, A, S or D to move.");
 		System.out.println("W - Up");
 		System.out.println("A - Left");
 		System.out.println("S - Down");
 		System.out.println("D - Right\n");
-		while(!sc.hasNext(MOVES)){
+		while(!dir.matches(MOVES)){
 			dir = sc.next();
 			switch(dir){
-			case "w": 
+			case "w":
 				board.move(0, -1, p);
 				break;
 			case "s": 

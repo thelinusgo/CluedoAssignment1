@@ -58,6 +58,7 @@ public class Game {
 		TextClient.askPlayers();
 		initializer.distributeCharacters();
 		initializer.distributeCards();
+		board.setPlayerPosition(currentPlayers);
 		for(int i = 0; i < currentPlayers.size(); i++){
 			System.out.println(currentPlayers.get(i));
 			System.out.println("-------------------------------------------");
@@ -101,11 +102,10 @@ public class Game {
 	public void runGame(){
 		if(askSuccess){
 			currentPlayer = currentPlayers.get(0);
-			System.out.println("Asking players successful.");
 			System.out.println("Player : " + currentPlayer.getName() + " to start.");
 			System.out.println(currentPlayer.getName() + " rolls a " + dice.getDice() + ".");
 			currentPlayer.setNumberofMoves(dice.getDice());
-			System.out.println(currentPlayer.getName() + "  has " + currentPlayer.numberofMoves() + "moves.");
+			System.out.println(currentPlayer.getName() + "  has " + currentPlayer.numberofMoves() + " moves.");
 
 			while(currentPlayer.numberofMoves() > 0){
 				System.out.println(currentPlayer.getName() + " currently has " + currentPlayer.numberofMoves() + " moves left.");

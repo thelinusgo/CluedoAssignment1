@@ -85,15 +85,6 @@ public class Player {
 	}
 
 	/**
-	 * Change player's X and Y position.
-	 * @param x
-	 */
-	public void changePos(int x, int y){
-		this.x = this.x + x;
-		this.y = this.y + y;
-	}
-
-	/**
 	 * Get player's x position.
 	 * @return
 	 */
