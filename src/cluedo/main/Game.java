@@ -107,7 +107,8 @@ public class Game {
 			System.out.println(currentPlayer.getName() + "  has " + currentPlayer.numberofMoves() + "moves.");
 
 			while(currentPlayer.numberofMoves() > 0){
-				System.out.println(currentPlayer.getName() + " currently has " + currentPlayer.numberofMoves() + "moves left.");
+				System.out.println(currentPlayer.getName() + " currently has " + currentPlayer.numberofMoves() + " moves left.");
+				System.out.println("current location: " + currentPlayer.getX() + ", " + currentPlayer.getY());
 				TextClient.movementListener(currentPlayer);
 			}
 			System.out.println(currentPlayer.getName() + " has run out of moves.");

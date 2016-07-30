@@ -37,13 +37,14 @@ public class TextClient {
 	 * @param Player to move.
 	 */
 	public static void movementListener(Player p){
-		
 		Scanner sc = new Scanner(System.in);
+
+		try{
 		System.out.println("Please enter the letters W, A, S or D to move.");
 		System.out.println("W - Up");
 		System.out.println("A - Left");
 		System.out.println("S - Down");
-		System.out.println("D - Right");
+		System.out.println("D - Right\n");
 		String dir = sc.next();
 		switch(dir){
 		case "W": board.move(0, -1, p);
@@ -54,8 +55,9 @@ public class TextClient {
 			System.out.println("That is not a valid direction!");
 			break;
 		}
-		sc.close();
-
+		}finally{
+			sc.close();
+		}
 	}
 	
 	
@@ -92,7 +94,7 @@ public class TextClient {
 			}
 			System.out.println("Please note that every player will be assigned a random character.");
 			Game.askSuccess = true;
-			sc.close();
+			//sc.close();
 	}
 	
 	/**
