@@ -580,6 +580,7 @@ public class Board {
 			}
 		}
 		p.setPos(directionX, directionY);
+		p.moveAStep();
 		board[p.getX()][p.getY()] = p.getCharacterName() + "|";
 	}
 

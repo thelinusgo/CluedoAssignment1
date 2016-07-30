@@ -101,13 +101,13 @@ public class Game {
 		if(askSuccess){
 			currentPlayer = currentPlayers.get(0);
 			System.out.println("Asking players successful.");
-			System.out.println("Player : " + currentPlayer + " to start.");
+			System.out.println("Player : " + currentPlayer.getName() + " to start.");
 			System.out.println(currentPlayer.getName() + " rolls a " + dice.getDice() + ".");
 			currentPlayer.setNumberofMoves(dice.getDice());
-			System.out.println(currentPlayer.getName() + "  has: " + currentPlayer.numberofMoves());
+			System.out.println(currentPlayer.getName() + "  has " + currentPlayer.numberofMoves() + "moves.");
 
 			while(currentPlayer.numberofMoves() > 0){
-				System.out.println(currentPlayer.getName() + " currently has: " + currentPlayer.numberofMoves());
+				System.out.println(currentPlayer.getName() + " currently has " + currentPlayer.numberofMoves() + "moves left.");
 				TextClient.movementListener(currentPlayer);
 			}
 			System.out.println(currentPlayer.getName() + " has run out of moves.");

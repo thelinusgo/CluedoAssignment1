@@ -13,7 +13,7 @@ import cluedo.assets.Player;
 
 
 public class TextClient {
-
+	private static Board board = new Board();
 	/**
 	 * Get string from System.in
 	 */
@@ -37,13 +37,19 @@ public class TextClient {
 	 * @param Player to move.
 	 */
 	public static void movementListener(Player p){
+		
 		Scanner sc = new Scanner(System.in);
+		System.out.println("Please enter the letters W, A, S or D to move.");
+		System.out.println("W - Up");
+		System.out.println("A - Left");
+		System.out.println("S - Down");
+		System.out.println("D - Right");
 		String dir = sc.next();
 		switch(dir){
-		case "W": p.moveAStep();
-		case "S": p.moveAStep();
-		case "A": p.moveAStep();
-		case "D": p.moveAStep();
+		case "W": board.move(0, -1, p);
+		case "S": board.move(0, 1, p);
+		case "A": board.move(-1, 0, p);
+		case "D": board.move(1, 0, p);
 		default:
 			System.out.println("That is not a valid direction!");
 			break;
