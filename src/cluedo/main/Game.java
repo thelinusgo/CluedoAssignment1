@@ -10,11 +10,18 @@ import cluedo.cards.Card;
 public class Game {
 	private Initializer initializer;
 	private Board board;
+	
 	private int numPlayers = 0;
 	private static List<Player> currentPlayers;
+	
 	private TextClient textClient;
 	private boolean success;
 	private static boolean hasAsked = false;
+	
+	private static Dice dice = new Dice();
+	
+	
+	
 	/** This helps generating a random shuffle for the lists */
 	private long seed = System.nanoTime();
 
