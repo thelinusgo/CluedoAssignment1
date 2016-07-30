@@ -27,6 +27,14 @@ public class Character {
 		return null;
 	}
 	
+	/**
+	 * Returns the full String name of this character.
+	 * @return
+	 */
+	public String name(){
+		return this.name;
+	}
+	
 	@Override
 	public String toString(){
 		return "Character: " + name;

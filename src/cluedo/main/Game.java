@@ -8,21 +8,21 @@ import cluedo.cards.Card;
  *
  */
 public class Game {
-	private Initializer initializer;
-	private Board board;
+	private Initializer initializer; //initializes all of the data
+	private Board board; //an instance of the board.
 	
-	private int numPlayers = 0;
-	private static List<Player> currentPlayers;
+	private int numPlayers = 0; //stores the amount of players.
+	private static List<Player> currentPlayers; //a list of the current players.
 	
-	private TextClient textClient;
-	private boolean success;
-	private static boolean hasAsked = false;
+	private TextClient textClient; //an instance of the textClient.
+	public static boolean askSuccess; //TODO? WHAT IS THIS??
+	private static boolean hasAsked = false; //if a player has asked or not.
 	
-	private static Dice dice = new Dice();
+	private static Dice dice = new Dice(); //make a new instance of the dice.
+	private Player currentPlayer; //the current player of the round.
 	
 	
-	
-	/** This helps generating a random shuffle for the lists */
+	/** This helps generate a random shuffle for the lists */
 	private long seed = System.nanoTime();
 
 	public Game(){
@@ -30,6 +30,7 @@ public class Game {
 		currentPlayers = new ArrayList<Player>();
 		initializer = new Initializer();
 		initialSetup();
+		runGame();
 	}
 	
 	/**
@@ -93,10 +94,41 @@ public class Game {
 		board.setPlayerPosition(currentPlayers);
 	}
 	
+	/**
+	 * Runs the game - only if asking players was successful.
+	 */
 	public void runGame(){
-		if(success){
-			
+		if(askSuccess){
+			currentPlayer = currentPlayers.get(0);
+			System.out.println("Asking players successful.");
+			System.out.println("Player : " + currentPlayer + " to start.");
+			System.out.println(currentPlayer.getName() + " rolls a " + dice.getDice() + ".");
+			currentPlayer.setNumberofMoves(dice.getDice());
+			System.out.println(currentPlayer.getName() + "  has: " + currentPlayer.numberofMoves());
+
+			while(currentPlayer.numberofMoves() > 0){
+				System.out.println(currentPlayer.getName() + " currently has: " + currentPlayer.numberofMoves());
+				TextClient.movementListener(currentPlayer);
+			}
+			System.out.println(currentPlayer.getName() + " has run out of moves.");
 		}
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * TODO: Casey, you need to decide how moving is implemented.
+	 * Pathfinding, or basic WSAD movement?
+	 * This displays the instructions to move
+	 */
+	public void displayInstructions(){
+		System.out.println("Type W to move UP.");
+		System.out.println("Type S to move DOWN.");
+		System.out.println("Type A to move LEFT.");
+		System.out.println("Type D to move RIGHT.");
 	}
 
 	public static void main(String[] args){

@@ -12,13 +12,14 @@ import cluedo.cards.Card;
  */
 public class Player {
 
-	private List<Card> hand;
+	private List<Card> hand; //Holds the hand 
 	private boolean isOut = false;
 	private String name;
 	private String characterName;
 	private int x;
 	private int y;
-
+	private int numberofMoves;
+	
 	/**
 	 * Create a Player with a given name, a hand, a current character, and their x and y position.
 	 * 
@@ -33,10 +34,42 @@ public class Player {
 		hand = new ArrayList<>();
 	}
 	
+	/**
+	 * Sets the amount of moves a player may have.
+	 */
+	public void setNumberofMoves(int amount){
+		if(amount > 12 || amount < 2) throw new IllegalArgumentException("player can have only 2-12 moves.");
+		this.numberofMoves = amount;
+	}
+	
+	/**
+	 * This allows the player to move a step.
+	 */
+	
+	public void moveAStep(){
+		this.numberofMoves--;
+	}
+	/**
+	 * Returns the amount of moves a player currently has.
+	 * 
+	 */
+	public int numberofMoves(){
+		return this.numberofMoves;
+	}
+	
+	/**
+	 * Assigns a character to a player.
+	 * E.g. Linus gets Professor Plum.
+	 * @param c
+	 */
 	public void setCharacter(Character c){
 		this.characterName = c.getName();
 	}
 	
+	/**
+	 * Adds a card to the a players hand.
+	 * @param c
+	 */
 	public void addCard(Card c){
 		this.hand.add(c);
 	}

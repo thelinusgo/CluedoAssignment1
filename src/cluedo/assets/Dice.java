@@ -28,7 +28,7 @@ public class Dice {
 	}
 	
 	/**
-	 * Gets the die.
+	 * Gets the value of the die.
 	 * @return
 	 */
 	public int getDice(){
@@ -37,7 +37,7 @@ public class Dice {
 	
 	public static void main(String[] argc){
 		int val = 0; int avg = 0;
-		for(int i = 0; i <= 100; i++){
+		for(int i = 0; i <= 1000; i++){
 			Dice d = new Dice();
 			val += d.getDice();
 			System.out.println("i: " + i + "value: "+ d.getDice());

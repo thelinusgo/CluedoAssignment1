@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.plaf.synth.SynthSpinnerUI;
+
+import cluedo.assets.Player;
+
 
 public class TextClient {
 
@@ -25,6 +29,30 @@ public class TextClient {
 			}
 		}
 	}
+	
+	/**
+	 * Listen for direction movement. W, S, A, D are valid directions.
+	 * Currently unfinished!
+	 * TODO: NEED TO LOOK AT THIS!!
+	 * @param Player to move.
+	 */
+	public static void movementListener(Player p){
+		Scanner sc = new Scanner(System.in);
+		String dir = sc.next();
+		switch(dir){
+		case "W": p.moveAStep();
+		case "S": p.moveAStep();
+		case "A": p.moveAStep();
+		case "D": p.moveAStep();
+		default:
+			System.out.println("That is not a valid direction!");
+			break;
+		}
+		sc.close();
+
+	}
+	
+	
 	
 	/**
 	 * Ask for initial players, and their names.
@@ -55,13 +83,10 @@ public class TextClient {
 				System.out.println("Please enter Player "  + String.valueOf(i+1) + "'s name");
 				singleName = sc.next();
 				Game.addPlayer(singleName);
-				//appendedNames += singleName + "\n";
 			}
 			System.out.println("Please note that every player will be assigned a random character.");
-		//}
-		//appendedNames += "/";
-		//return appendedNames;
-		
+			Game.askSuccess = true;
+			sc.close();
 	}
 	
 	/**
