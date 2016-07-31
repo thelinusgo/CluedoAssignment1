@@ -17,7 +17,7 @@ public class Character {
 	 */
 	public String getName(){
 		switch(this.name){
-			case "Miss Scarlett": return "S";
+			case "Miss Scarlett": return "M";
 			case "Colonel Mustard": return "C";
 			case "Mrs. White": return "W";
 			case "The Reverend Green": return "G";
