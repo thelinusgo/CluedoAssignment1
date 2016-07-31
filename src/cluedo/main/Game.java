@@ -81,7 +81,6 @@ public class Game {
 		art+="+===========================================================================+\n";
 		System.out.println(art);
 		System.out.println("Welcome to the Cluedo Game.");
-
 	}
 
 	public void setPlayerPosition(){
