@@ -25,7 +25,7 @@ public class Envelope{
 	}
 	
 	public void add(Card card){
-		if(count > 3){
+		if(count >= 3){
 			return;
 		}
 		envelope[count] = card;

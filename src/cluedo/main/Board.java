@@ -577,6 +577,7 @@ public class Board {
 				}
 			}
 		}
+		drawBoard();
 	}
 	
 	/**
@@ -590,7 +591,10 @@ public class Board {
 	 * @return
 	 */
 	public boolean isValidMove(int x, int y, int directionX, int directionY, Player p){
-		if(board[x][y].equals("|#|") || board[x][y].equals("#|")){
+		if(x < 25 && x >= 0 && y < 25 && y >= 0){
+			System.out.println("Cannot go out of bounds!");
+			return false;
+		}else if(board[x][y].equals("|#|") || board[x][y].equals("#|")){
 			System.out.println("Cannot move into wall.");
 			return false;
 		}else if(board[x][y].equals("|X|") || board[x][y].equals("X|")){
@@ -635,8 +639,11 @@ public class Board {
 		for(int i = 0; i < currentPlayers.size(); i++){
 			int x = startPos.get(i).getX();
 			int y = startPos.get(i).getY();
-			board[x][y] = currentPlayers.get(i).getCharacterName();
+			board[x][y] = currentPlayers.get(i).getCharacterName() + "|";
 			currentPlayers.get(i).setPos(x, y);
+			if(x == 0 && y == 17){
+				board[x][y] = "|" +currentPlayers.get(i).getCharacterName() + "|";
+			}
 		}
 	}
 

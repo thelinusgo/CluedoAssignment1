@@ -11,12 +11,14 @@ import java.util.regex.Pattern;
 import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import cluedo.assets.Player;
+import cluedo.cards.Card;
 
 
 public class TextClient {
 	private static Board board = new Board();
 
 	private static String MOVES = "w|a|s|d";
+	private static String OPTIONS = "m|s|a";
 
 	private static Scanner sc = new Scanner(System.in);
 	/**
@@ -81,7 +83,7 @@ public class TextClient {
 		/*Local variables */
 		String amount = "z";
 		String singleName = "";
-		//String appendedNames = "/\n";
+
 		boolean right = false;
 		boolean isInteger = false;
 		/*Now, ask for user input. */
@@ -105,6 +107,26 @@ public class TextClient {
 		}
 		System.out.println("Please note that every player will be assigned a random character.");
 		Game.askSuccess = true;
+	}
+	
+	/**
+	 * Ask player what they want to do, i.e. show cards, move, make a suggestion or make an accusation.
+	 * @param p
+	 */
+	public static String askOption(){
+		String option = "z";
+		System.out.println("What do you want to do?");
+		System.out.println("Press M to make a move.");
+		System.out.println("Press S to make a suggestion.");
+		System.out.println("Press A to make an accusation.");
+		System.out.println("Press C to show current cards.");
+		while(!option.matches(OPTIONS)){
+			option = sc.next();
+			if(!option.matches(OPTIONS)){
+				System.out.println("Not an option. Use lower case letters.");
+			}
+		}
+		return option;
 	}
 
 	/**

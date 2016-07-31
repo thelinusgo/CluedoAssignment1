@@ -11,18 +11,19 @@ import cluedo.cards.Card;
 public class Game {
 	private Initializer initializer; //initializes all of the data
 	private Board board; //an instance of the board.
-	
+
 	private int numPlayers = 0; //stores the amount of players.
 	private static List<Player> currentPlayers; //a list of the current players.
-	
+
 	private TextClient textClient; //an instance of the textClient.
 	public static boolean askSuccess; //TODO? WHAT IS THIS??
 	private static boolean hasAsked = false; //if a player has asked or not.
-	
+
 	private static Dice dice = new Dice(); //make a new instance of the dice.
 	private Player currentPlayer; //the current player of the round.
 	
-	
+	private boolean moveMade = false;
+
 	/** This helps generate a random shuffle for the lists */
 	private long seed = System.nanoTime();
 
@@ -33,7 +34,7 @@ public class Game {
 		initialSetup();
 		runGame();
 	}
-	
+
 	/**
 	 * Add new player to current players.
 	 * @param name
@@ -41,7 +42,7 @@ public class Game {
 	public static void addPlayer(String name){
 		currentPlayers.add(new Player(name));
 	}
-	
+
 	/**
 	 * Returns currentPlayers list.
 	 * @param name
@@ -49,7 +50,7 @@ public class Game {
 	public static List<Player> getCurrentPlayers(){
 		return currentPlayers;
 	}
-	
+
 	/**
 	 * Sets up the board and an instance of the textClient.
 	 */
@@ -59,7 +60,7 @@ public class Game {
 		initializer.distributeCharacters();
 		initializer.distributeCards();
 		board.setPlayerPosition(currentPlayers);
-		for(int i = 0; i < currentPlayers.size(); i++){
+		/*for(int i = 0; i < currentPlayers.size(); i++){
 			System.out.println(currentPlayers.get(i));
 			System.out.println("-------------------------------------------");
 			System.out.println("Name: " +currentPlayers.get(i).getName());
@@ -67,46 +68,62 @@ public class Game {
 				System.out.println("card: " + c.toString());
 			}
 			System.out.println("-------------------------------------------");
-		}
+		}*/
+		board.drawBoard();
 	}
-	
+
 	/**
 	 * Fun little thing I tried doing. It works!
 	 * This method draws "CLUEDO GAME" in ascii representative form.
 	 * @author Linus Go
 	 */
 	public void drawAsciiArt(){
-	String art = "";
-	art+="+===========================================================================+\n";
-	art+="|| #####          by CASEY & LINUS              #####                       ||\n";
-	art+="||#     # #      #    # ###### #####   ####    #     #   ##   #    # ###### ||\n";
-	art+="||#       #      #    # #      #    # #    #   #        #  #  ##  ## #      ||\n";
-	art+="||#       #      #    # #####  #    # #    #   #  #### #    # # ## # #####  ||\n";
-	art+="||#       #      #    # #      #    # #    #   #     # ###### #    # #      ||\n";
-	art+="||#     # #      #    # #      #    # #    #   #     # #    # #    # #      ||\n";
-	art+="|| #####  ######  ####  ###### #####   ####     #####  #    # #    # ###### ||\n";
-	art+="+===========================================================================+\n";
-	System.out.println(art);
-	System.out.println("Welcome to the Cluedo Game.");
-	
+		String art = "";
+		art+="+===========================================================================+\n";
+		art+="|| #####          by CASEY & LINUS              #####                       ||\n";
+		art+="||#     # #      #    # ###### #####   ####    #     #   ##   #    # ###### ||\n";
+		art+="||#       #      #    # #      #    # #    #   #        #  #  ##  ## #      ||\n";
+		art+="||#       #      #    # #####  #    # #    #   #  #### #    # # ## # #####  ||\n";
+		art+="||#       #      #    # #      #    # #    #   #     # ###### #    # #      ||\n";
+		art+="||#     # #      #    # #      #    # #    #   #     # #    # #    # #      ||\n";
+		art+="|| #####  ######  ####  ###### #####   ####     #####  #    # #    # ###### ||\n";
+		art+="+===========================================================================+\n";
+		System.out.println(art);
+		System.out.println("Welcome to the Cluedo Game.");
+
 	}
 
 	public void setPlayerPosition(){
 		Collections.shuffle(currentPlayers, new Random(seed)); 
 		board.setPlayerPosition(currentPlayers);
 	}
-	
+
 	/**
 	 * Runs the game - only if asking players was successful.
 	 */
 	public void runGame(){
 		if(askSuccess){
-			currentPlayer = currentPlayers.get(0);
-			System.out.println("Player : " + currentPlayer.getName() + " to start.");
+			while(!isGameOver()){
+				for(int i = 0; i < currentPlayers.size(); i++){
+					moveMade = false;
+					currentPlayer = currentPlayers.get(i);
+					System.out.println("Player " + currentPlayer.getName() + "starts.");
+					while(!moveMade){
+						String option = TextClient.askOption();
+						doOption(option, currentPlayer);
+					}
+				}
+			}
+		}
+	}
+	
+	public void doOption(String option, Player p){
+		switch(option){
+		case "m":
 			System.out.println(currentPlayer.getName() + " rolls a " + dice.getDice() + ".");
 			currentPlayer.setNumberofMoves(dice.getDice());
 			System.out.println(currentPlayer.getName() + "  has " + currentPlayer.numberofMoves() + " moves.");
-
+			
 			while(currentPlayer.numberofMoves() > 0){
 				System.out.println(currentPlayer.getName() + " currently has " + currentPlayer.numberofMoves() + " moves left.");
 				System.out.println("current location: " + currentPlayer.getX() + ", " + currentPlayer.getY());
@@ -117,14 +134,29 @@ public class Game {
 				}
 			}
 			System.out.println(currentPlayer.getName() + " has run out of moves.");
+			moveMade = true;
+			break;
+		case "c":
+			for(Card c : p.getCards()){
+				System.out.println(c.toString());
+			}
+			break;
+		case "a":
+			moveMade = true;
+			break;
+		case "s":
+			moveMade = true;
+			break;
 		}
 	}
-	
-	
-	
-	
-	
-	
+
+
+	public boolean isGameOver(){
+		return false;
+	}
+
+
+
 	/**
 	 * TODO: Casey, you need to decide how moving is implemented.
 	 * Pathfinding, or basic WSAD movement?
