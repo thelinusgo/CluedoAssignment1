@@ -1,5 +1,6 @@
 package cluedo.arguments;
 
+import cluedo.assets.Player;
 import cluedo.cards.*;
 
 /**
@@ -13,6 +14,7 @@ public class Argument {
 	private RoomCard room;
 	private CharacterCard character;
 	private boolean isArgumentCorrect = false;
+	private Player currentPlayer;
 	
 	/**
 	 * Constructs an argument object, consisting of a weapon, a room and a character
@@ -20,10 +22,11 @@ public class Argument {
 	 * @param r
 	 * @param c
 	 */
-	public Argument(WeaponCard w, RoomCard r, CharacterCard c){
+	public Argument(WeaponCard w, RoomCard r, CharacterCard c, Player p){
 		this.weapon = w;
 		this.room = r;
 		this.character = c;
+		this.currentPlayer = p;
 	}
 	
 	/**
@@ -65,6 +68,10 @@ public class Argument {
 	 */
 	public CharacterCard getCharacterCard() {
 		return character;
+	}
+	
+	public Player getCurrentPlayer(){
+		return this.currentPlayer;
 	}
 
 

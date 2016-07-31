@@ -11,8 +11,8 @@ import cluedo.cards.WeaponCard;
 
 public class Accusation extends Argument{
 
-	public Accusation(WeaponCard weapon, RoomCard room, CharacterCard character) {
-		super(weapon, room, character);
+	public Accusation(WeaponCard weapon, RoomCard room, CharacterCard character, Player p) {
+		super(weapon, room, character, p);
 	}
 
 	/**
@@ -23,9 +23,7 @@ public class Accusation extends Argument{
 		WeaponCard weapon = super.getWeaponCard();
 		RoomCard room = super.getRoomCard();
 		CharacterCard character = super.getCharacterCard();
-
 		boolean valid = false;
-
 		for(Card cards: env.getEnvelope()){
 			for(Card playersCard : p.getCards()){
 				if(playersCard instanceof RoomCard){
@@ -50,5 +48,10 @@ public class Accusation extends Argument{
 			}
 		}
 		return valid;
+	}
+	@Override
+	public String toString(){
+		return "Player: " + super.getCurrentPlayer().getName() + " accuses " + super.getCharacterCard().getName() + " of murder; using a " + super.getWeaponCard().getName() +
+				" in the " + super.getRoomCard().getName();
 	}
 }
