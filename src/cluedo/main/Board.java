@@ -564,6 +564,7 @@ public class Board {
 		int y = p.getY() + directionY;
 		if(isValidMove(x, y, directionX, directionY, p)){
 			board[p.getX()][p.getY()] = null;
+			initialiseBoard();
 			p.setPos(x, y);
 			p.moveAStep();
 			board[p.getX()][p.getY()] = p.getCharacterName() + "|";
