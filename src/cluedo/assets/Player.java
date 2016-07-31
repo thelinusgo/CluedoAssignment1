@@ -20,6 +20,7 @@ public class Player {
 	private int y;
 	private int numberofMoves;
 	private boolean isInRoom = false;
+	private String lookback = "/|";
 	
 	/**
 	 * Create a Player with a given name, a hand, a current character, and their x and y position.
@@ -83,6 +84,9 @@ public class Player {
 	public void setPos(int x, int y){
 		this.x = x;
 		this.y = y;
+		if(x == 0 && y == 17){
+			this.lookback = "|/|";
+		}
 	}
 
 	/**
@@ -132,12 +136,35 @@ public class Player {
 		this.isOut = true;
 	}
 	
+	/**
+	 * Sets if the player has entered a room or not.
+	 * @param rm
+	 */
 	public void setIsInRoom(boolean rm){
 		this.isInRoom = rm;
 	}
 	
+	/**
+	 * Returns if the player is in a room or not.
+	 * @return
+	 */
 	public boolean isInRoom() {
 		return this.isInRoom;
+	}
+	
+	/**
+	 * Set look back string, in order to remove player's position when moving to another square.
+	 */
+	public void setLookBack(String lb){
+		this.lookback = lb;
+	}
+	
+	/**
+	 * Returns the lookback string.
+	 * @return
+	 */
+	public String getLookBack(){
+		return this.lookback;
 	}
 	
 	public String toString(){

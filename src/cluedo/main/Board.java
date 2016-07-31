@@ -34,7 +34,6 @@ public class Board {
 		for(int i = 0; i < board.length; i++){
 			board[0][i] = "|_|";
 		}
-
 		initialiseBoard();
 		drawBoard();
 	}
@@ -550,6 +549,7 @@ public class Board {
 				board[x][y] = "|/|";
 			}
 		}
+		Collections.shuffle(startPos, new Random(seed)); 
 	}
 
 	/**
@@ -562,9 +562,10 @@ public class Board {
 		List<Room> rooms = Game.initializer.getRooms();
 		int x = p.getX() + directionX;
 		int y = p.getY() + directionY;
+		
 		if(isValidMove(x, y, directionX, directionY, p)){
-			board[p.getX()][p.getY()] = null;
-			initialiseBoard();
+			String sqaure = board[x][y];
+			board[p.getX()][p.getY()] = p.getLookBack();
 			p.setPos(x, y);
 			p.moveAStep();
 			board[p.getX()][p.getY()] = p.getCharacterName() + "|";
@@ -634,7 +635,6 @@ public class Board {
 	 * @param currentPlayers
 	 */
 	public void setPlayerPosition(List<Player> currentPlayers){
-		Collections.shuffle(startPos, new Random(seed)); 
 		for(int i = 0; i < currentPlayers.size(); i++){
 			int x = startPos.get(i).getX();
 			int y = startPos.get(i).getY();
