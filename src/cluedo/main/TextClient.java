@@ -18,7 +18,9 @@ public class TextClient {
 	private static Board board = new Board();
 
 	private static String MOVES = "w|a|s|d";
-	private static String OPTIONS = "m|s|a";
+	private static String OPTIONS = "m|s|a|c";
+
+	private static boolean correctInput = false;
 
 	private static Scanner sc = new Scanner(System.in);
 	/**
@@ -43,36 +45,45 @@ public class TextClient {
 	 * TODO: NEED TO LOOK AT THIS!!
 	 * @param Player to move.
 	 */
-	public static void movementListener(Player p) throws IOException{
+	public static void movementListener(Player p){
 		String dir = "z";
 		System.out.println("Please enter the letters W, A, S or D to move.");
 		System.out.println("W - Up");
 		System.out.println("A - Left");
 		System.out.println("S - Down");
 		System.out.println("D - Right\n");
-		while(!dir.matches(MOVES)){
+		boolean isValidMove = false;
+		correctInput = false;
+
+		while(!correctInput && !isValidMove){
 			dir = sc.next();
-			switch(dir){
-			case "w":
-				board.move(0, -1, p);
-				break;
-			case "s": 
-				board.move(0, 1, p);
-				break;
-			case "a": 
-				board.move(-1, 0, p);
-				break;
-			case "d": 
-				board.move(1, 0, p);
-				break;
-			default:
+			if(dir.matches(MOVES)){
+				switch(dir){
+				case "w":
+					board.move(0, -1, p);
+					break;
+				case "s": 
+					board.move(0, 1, p);
+					break;
+				case "a": 
+					board.move(-1, 0, p);
+					break;
+				case "d": 
+					board.move(1, 0, p);
+					break;
+				}
+				if(board.isValidMove()){
+					isValidMove = true;
+				}
+				correctInput = true;
+			}else{
 				System.out.println("That is not a valid direction!");
-				break;
 			}
 		}
+		while(!board.isValidMove()){
+
+		}
 	}
-
-
 
 	/**
 	 * Ask for initial players, and their names.
@@ -84,21 +95,20 @@ public class TextClient {
 		String amount = "z";
 		String singleName = "";
 
-		boolean right = false;
+		boolean correctInput = false;
 		boolean isInteger = false;
 		/*Now, ask for user input. */
-		while(!right && !isInteger){
+		while(!correctInput && !isInteger){
 			System.out.println("How many players would you like?");
 			amount = sc.next();
 			if(isInteger(amount)){
 				if(Integer.parseInt(amount) > 6 || Integer.parseInt(amount) < 3){
 					System.out.println("Cluedo needs 3-6 players.");
 				}else{
-					right = true;
+					correctInput = true;
 					isInteger = true;
 				}
 			}
-			
 		}
 		for(int i = 0 ; i != Integer.parseInt(amount); ++i){
 			System.out.println("Please enter Player "  + String.valueOf(i+1) + "'s name");
@@ -108,7 +118,7 @@ public class TextClient {
 		System.out.println("Please note that every player will be assigned a random character.");
 		Game.askSuccess = true;
 	}
-	
+
 	/**
 	 * Ask player what they want to do, i.e. show cards, move, make a suggestion or make an accusation.
 	 * @param p

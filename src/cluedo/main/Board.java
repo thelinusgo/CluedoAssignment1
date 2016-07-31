@@ -22,6 +22,11 @@ public class Board {
 	/** This helps generating a random shuffle for the lists */
 	private long seed = System.nanoTime();
 
+	/**
+	 * For checking if player did a valid move or not.
+	 */
+	private boolean isValidMove;
+
 	public Board(){
 		//filling up the board so it does not contain any null values
 		for(int x = 0; x < board.length; x++){
@@ -36,6 +41,14 @@ public class Board {
 		}
 		initialiseBoard();
 		drawBoard();
+	}
+
+	/**
+	 * Returns the isValidMove field.
+	 * @return
+	 */
+	public boolean isValidMove() {
+		return isValidMove;
 	}
 
 	/**
@@ -551,6 +564,22 @@ public class Board {
 		}
 		Collections.shuffle(startPos, new Random(seed)); 
 	}
+	
+	/**
+	 * Initializes each player's position.
+	 * @param currentPlayers
+	 */
+	public void setPlayerPosition(List<Player> currentPlayers){
+		for(int i = 0; i < currentPlayers.size(); i++){
+			int x = startPos.get(i).getX();
+			int y = startPos.get(i).getY();
+			board[x][y] = currentPlayers.get(i).getCharacterName() + "|";
+			currentPlayers.get(i).setPos(x, y);
+			if(x == 0 && y == 17){
+				board[x][y] = "|" +currentPlayers.get(i).getCharacterName() + "|";
+			}
+		}
+	}
 
 	/**
 	 * Moves player.
@@ -562,9 +591,10 @@ public class Board {
 		List<Room> rooms = Game.initializer.getRooms();
 		int x = p.getX() + directionX;
 		int y = p.getY() + directionY;
-		
+		System.out.println(x + " " + y);
 		if(isValidMove(x, y, directionX, directionY, p)){
-			String sqaure = board[x][y];
+			isValidMove = true;
+			p.setLookBack(board[x][y]);
 			board[p.getX()][p.getY()] = p.getLookBack();
 			p.setPos(x, y);
 			p.moveAStep();
@@ -576,6 +606,8 @@ public class Board {
 					p.setIsInRoom(false);
 				}
 			}
+		}else{
+			isValidMove = false;
 		}
 		drawBoard();
 	}
@@ -627,22 +659,6 @@ public class Board {
 				System.out.print(board[y][x]);
 			}
 			System.out.println();
-		}
-	}
-
-	/**
-	 * Initializes each player's position.
-	 * @param currentPlayers
-	 */
-	public void setPlayerPosition(List<Player> currentPlayers){
-		for(int i = 0; i < currentPlayers.size(); i++){
-			int x = startPos.get(i).getX();
-			int y = startPos.get(i).getY();
-			board[x][y] = currentPlayers.get(i).getCharacterName() + "|";
-			currentPlayers.get(i).setPos(x, y);
-			if(x == 0 && y == 17){
-				board[x][y] = "|" +currentPlayers.get(i).getCharacterName() + "|";
-			}
 		}
 	}
 

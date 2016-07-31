@@ -21,7 +21,7 @@ public class Game {
 
 	private static Dice dice = new Dice(); //make a new instance of the dice.
 	private Player currentPlayer; //the current player of the round.
-	
+
 	private boolean moveMade = false;
 
 	/** This helps generate a random shuffle for the lists */
@@ -108,22 +108,18 @@ public class Game {
 			}
 		}
 	}
-	
+
 	public void doOption(String option, Player p){
 		switch(option){
 		case "m":
 			System.out.println(currentPlayer.getName() + " rolls a " + dice.getDice() + ".");
 			currentPlayer.setNumberofMoves(dice.getDice());
 			System.out.println(currentPlayer.getName() + "  has " + currentPlayer.numberofMoves() + " moves.");
-			
+
 			while(currentPlayer.numberofMoves() > 0){
 				System.out.println(currentPlayer.getName() + " currently has " + currentPlayer.numberofMoves() + " moves left.");
 				System.out.println("current location: " + currentPlayer.getX() + ", " + currentPlayer.getY());
-				try {
-					TextClient.movementListener(currentPlayer);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				TextClient.movementListener(currentPlayer);
 			}
 			System.out.println(currentPlayer.getName() + " has run out of moves.");
 			moveMade = true;
