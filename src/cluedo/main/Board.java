@@ -589,18 +589,18 @@ public class Board {
 	 */
 	public void move(int directionX, int directionY, Player p){
 		List<Room> rooms = Game.initializer.getRooms();
-		int x = p.getX() + directionX;
-		int y = p.getY() + directionY;
-		System.out.println(x + " " + y);
+		int x = p.position().getX() + directionX;
+		int y = p.position().getY() + directionY;
+		p.coordinatesTaken().clear();
 		if(isValidMove(x, y, directionX, directionY, p)){
 			isValidMove = true;
-			p.setLookBack(board[x][y]);
-			board[p.getX()][p.getY()] = p.getLookBack();
+			board[p.position().getX()][p.position().getY()] = p.getLookBack();
 			p.setPos(x, y);
+			p.setLookBack(board[p.position().getX()][p.position().getY()]);
 			p.moveAStep();
-			board[p.getX()][p.getY()] = p.getCharacterName() + "|";
+			board[p.position().getX()][p.position().getY()] = p.getCharacterName() + "|";
 			for(int i = 0; i < rooms.size(); i++){
-				if(rooms.get(i).contains(p.getX(), p.getY())){
+				if(rooms.get(i).contains(p.position().getX(), p.position().getY())){
 					p.setIsInRoom(true);
 				}else{
 					p.setIsInRoom(false);
@@ -623,7 +623,7 @@ public class Board {
 	 * @return
 	 */
 	public boolean isValidMove(int x, int y, int directionX, int directionY, Player p){
-		if(x > 24 && x < 0 && y > 24 && y < 0){
+		if(x > 24 || x < 0 || y > 24 || y < 0){
 			System.out.println("Cannot go out of bounds!");
 			return false;
 		}else if(board[x][y].equals("|#|") || board[x][y].equals("#|")){
@@ -643,6 +643,13 @@ public class Board {
 					return false;
 				}else if(d.isHorizontal() && x == d.getX() && y == d.getY() && directionY > 1 && directionX == 0){
 					System.out.println("Going through door the wrong way!");
+					return false;
+				}
+			}
+			
+			for(Position pos : p.coordinatesTaken()){
+				if(pos.getX() == x && pos.getY() == y){
+					System.out.println("You cannot move into the same square within this move.");
 					return false;
 				}
 			}

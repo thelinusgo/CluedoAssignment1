@@ -15,7 +15,7 @@ import cluedo.cards.Card;
 
 
 public class TextClient {
-	private static Board board = new Board();
+	private static Board board = Game.board;
 
 	private static String MOVES = "w|a|s|d";
 	private static String OPTIONS = "m|s|a|c";
@@ -74,14 +74,13 @@ public class TextClient {
 				}
 				if(board.isValidMove()){
 					isValidMove = true;
+				}else{
+					System.out.println("Please try again.");
 				}
 				correctInput = true;
 			}else{
 				System.out.println("That is not a valid direction!");
 			}
-		}
-		while(!board.isValidMove()){
-
 		}
 	}
 

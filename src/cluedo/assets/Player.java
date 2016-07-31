@@ -16,11 +16,12 @@ public class Player {
 	private boolean isOut = false;
 	private String name;
 	private String characterName;
-	private int x;
-	private int y;
+	private Position position;
 	private int numberofMoves;
 	private boolean isInRoom = false;
 	private String lookback = "/|";
+	
+	private List<Position> coordinates = new ArrayList<Position>();
 	
 	/**
 	 * Create a Player with a given name, a hand, a current character, and their x and y position.
@@ -82,27 +83,15 @@ public class Player {
 	 * @param y
 	 */
 	public void setPos(int x, int y){
-		this.x = x;
-		this.y = y;
+		this.position = new Position(x, y);
+		coordinates.add(this.position);
 		if(x == 0 && y == 17){
 			this.lookback = "|/|";
 		}
 	}
-
-	/**
-	 * Get player's x position.
-	 * @return
-	 */
-	public int getX(){
-		return this.x;
-	}
-
-	/**
-	 * Get player's y position.
-	 * @return
-	 */
-	public int getY(){
-		return this.y;
+	
+	public Position position(){
+		return this.position;
 	}
 
 	/**
@@ -167,6 +156,13 @@ public class Player {
 		return this.lookback;
 	}
 	
+	/**
+	 * Returns the list of coordinates that the player has been in within a single move.
+	 * @return
+	 */
+	public List<Position> coordinatesTaken(){
+		return coordinates;
+	}
 	public String toString(){
 		return "Name: " + this.name + ", Character Piece: " + this.characterName;
 	}

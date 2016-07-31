@@ -10,7 +10,7 @@ import cluedo.cards.Card;
  */
 public class Game {
 	public static Initializer initializer; //initializes all of the data
-	private Board board; //an instance of the board.
+	public static Board board; //an instance of the board.
 
 	private int numPlayers = 0; //stores the amount of players.
 	private static List<Player> currentPlayers; //a list of the current players.
@@ -118,7 +118,7 @@ public class Game {
 
 			while(currentPlayer.numberofMoves() > 0){
 				System.out.println(currentPlayer.getName() + " currently has " + currentPlayer.numberofMoves() + " moves left.");
-				System.out.println("current location: " + currentPlayer.getX() + ", " + currentPlayer.getY());
+				System.out.println("current location: " + currentPlayer.position().getX() + ", " + currentPlayer.position().getY());
 				TextClient.movementListener(currentPlayer);
 			}
 			System.out.println(currentPlayer.getName() + " has run out of moves.");
