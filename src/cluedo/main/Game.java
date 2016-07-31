@@ -5,11 +5,11 @@ import cluedo.assets.*;
 import cluedo.cards.Card;
 /**
  * Creates a new instance of a Board, and runs the textClient.
- * @author linus
+ * @author Casey & Linus
  *
  */
 public class Game {
-	private Initializer initializer; //initializes all of the data
+	public static Initializer initializer; //initializes all of the data
 	private Board board; //an instance of the board.
 
 	private int numPlayers = 0; //stores the amount of players.
@@ -60,15 +60,6 @@ public class Game {
 		initializer.distributeCharacters();
 		initializer.distributeCards();
 		board.setPlayerPosition(currentPlayers);
-		/*for(int i = 0; i < currentPlayers.size(); i++){
-			System.out.println(currentPlayers.get(i));
-			System.out.println("-------------------------------------------");
-			System.out.println("Name: " +currentPlayers.get(i).getName());
-			for(Card c : currentPlayers.get(i).getCards()){
-				System.out.println("card: " + c.toString());
-			}
-			System.out.println("-------------------------------------------");
-		}*/
 		board.drawBoard();
 	}
 
@@ -107,7 +98,8 @@ public class Game {
 				for(int i = 0; i < currentPlayers.size(); i++){
 					moveMade = false;
 					currentPlayer = currentPlayers.get(i);
-					System.out.println("Player " + currentPlayer.getName() + "starts.");
+					System.out.println("Player " + currentPlayer.getName() + " starts.");
+					System.out.println(currentPlayer.getName() + "'s character piece is " + currentPlayer.getCharacterName() + ".");
 					while(!moveMade){
 						String option = TextClient.askOption();
 						doOption(option, currentPlayer);

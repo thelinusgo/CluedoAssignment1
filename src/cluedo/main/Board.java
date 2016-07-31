@@ -18,10 +18,6 @@ public class Board {
 	 * Stores the starting positions of each player.
 	 */
 	private List<Position> startPos = new ArrayList<Position>();
-	
-	private Initializer initializer = new Initializer();
-	
-	private List<Room> rooms = initializer.getRooms();
 
 	/** This helps generating a random shuffle for the lists */
 	private long seed = System.nanoTime();
@@ -563,6 +559,7 @@ public class Board {
 	 * @param p
 	 */
 	public void move(int directionX, int directionY, Player p){
+		List<Room> rooms = Game.initializer.getRooms();
 		int x = p.getX() + directionX;
 		int y = p.getY() + directionY;
 		if(isValidMove(x, y, directionX, directionY, p)){
@@ -591,7 +588,7 @@ public class Board {
 	 * @return
 	 */
 	public boolean isValidMove(int x, int y, int directionX, int directionY, Player p){
-		if(x < 25 && x >= 0 && y < 25 && y >= 0){
+		if(x > 24 && x < 0 && y > 24 && y < 0){
 			System.out.println("Cannot go out of bounds!");
 			return false;
 		}else if(board[x][y].equals("|#|") || board[x][y].equals("#|")){

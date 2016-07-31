@@ -213,26 +213,4 @@ public class Initializer {
 	public List<Room> getRooms(){
 		return Initializer.rooms;
 	}
-
-	/*Very small test class. TODO need to remove in the final release. */
-	public static void main(String[] argv){
-		new Initializer();
-		System.out.println("ROOM ARRAYLIST: ");
-		int index = 0;
-		for(Room r : rooms){
-			System.out.println(index + ": " + r.toString());
-			index++;
-		}
-		System.out.println("----------------");
-		System.out.println("WEAPON ARRAYLIST: ");
-		index =0;
-		for(Weapon w : weapons){
-			System.out.println(index + ": " +w.toString());
-			index++;
-		}
-		System.out.println("----------------");
-		for(int i = 0 ; i < 3; i++){
-			System.out.println("[ENVELOPE] : " + envelope.get(i).toString() + " ");
-		}
-	}
 }
