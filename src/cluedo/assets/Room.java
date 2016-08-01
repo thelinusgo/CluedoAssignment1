@@ -69,6 +69,13 @@ public class Room {
 		this.weapon = w;
 	}
 	
+	/**
+	 * Returns whether a co-ordinate in the room is contained in this room.
+	 * Returns false otherwise.
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	public boolean contains(int x, int y){
 		if(this.x <= x && this.x + width > x && this.y <= y && this.y + height > y){
 			return true;

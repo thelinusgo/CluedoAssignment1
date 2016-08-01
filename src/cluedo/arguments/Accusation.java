@@ -9,6 +9,11 @@ import cluedo.cards.Envelope;
 import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
 
+/**
+ * Class that represents an Accusation. It extends an Argument, and has a checkAccusation method.
+ * @author linus
+ *
+ */
 public class Accusation extends Argument{
 
 	public Accusation(WeaponCard weapon, RoomCard room, CharacterCard character, Player p) {
