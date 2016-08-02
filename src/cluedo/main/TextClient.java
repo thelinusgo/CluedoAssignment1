@@ -20,24 +20,23 @@ public class TextClient {
 
 	private static String MOVES = "w|a|s|d"; //pattern describing the possible moves.
 	private static String OPTIONS = "m|s|a|c"; //patterns describing the possible options.
-
+	private static String CHOICE = "y|n";
+	
 	private static boolean correctInput = false; //set to true if the correct input has been provided.
 
 	private static Scanner sc = new Scanner(System.in); //field containing the scanner.
 	/**
 	 * Get string from System.in
 	 */
-	public static String inputString(String msg) {
-		System.out.print(msg + " ");
-		while (true) {
-			BufferedReader input = new BufferedReader(new InputStreamReader(
-					System.in));
-			try {
-				return input.readLine();
-			} catch (IOException e) {
-				System.out.println("I/O Error ... please try again!");
+	public static String inputString() {
+		String choice = "z";
+		while(!choice.matches(CHOICE)){
+			choice = sc.next();
+			if(!choice.matches(CHOICE)){
+				System.out.println("Not a choice. Use lower case letters.");
 			}
 		}
+		return choice;
 	}
 
 	/**

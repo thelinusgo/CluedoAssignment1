@@ -118,18 +118,31 @@ public class Game {
 			System.out.println(currentPlayer.getName() + " rolls a " + dice.getDice() + ".");
 			currentPlayer.setNumberofMoves(dice.getDice());
 			System.out.println(currentPlayer.getName() + "  has " + currentPlayer.numberofMoves() + " moves.");
-
-			while(currentPlayer.numberofMoves() > 0){
-				System.out.println(currentPlayer.getName() + " currently has " + currentPlayer.numberofMoves() + " moves left.");
-				System.out.println("current location: " + currentPlayer.position().getX() + ", " + currentPlayer.position().getY());
-				TextClient.movementListener(currentPlayer);
-				if(!board.canMove){
-					System.out.println("Sorry you do not have anywhere to move now.");
+			if(currentPlayer.isInRoom()){
+				System.out.println("Do you want to take the stairs or do you want to get out of the room?");
+				System.out.println("Press Y for stairs and N for exiting the room");
+				String choice = TextClient.inputString();
+				switch(choice){
+				case "y":
+					board.moveToRoom(p);
+					break;
+				case "n":
+					board.exitRoom(p);
 					break;
 				}
-			}
-			if(currentPlayer.numberofMoves() <= 0){
-				System.out.println(currentPlayer.getName() + " has run out of moves.");
+			}else{
+				while(currentPlayer.numberofMoves() > 0){
+					System.out.println(currentPlayer.getName() + " currently has " + currentPlayer.numberofMoves() + " moves left.");
+					System.out.println("current location: " + currentPlayer.position().getX() + ", " + currentPlayer.position().getY());
+					TextClient.movementListener(currentPlayer);
+					if(!board.canMove){
+						System.out.println("Sorry you do not have anywhere to move now.");
+						break;
+					}
+				}
+				if(currentPlayer.numberofMoves() <= 0){
+					System.out.println(currentPlayer.getName() + " has run out of moves.");
+				}
 			}
 			moveMade = true;
 			break;

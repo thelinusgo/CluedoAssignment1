@@ -8,13 +8,16 @@ package cluedo.assets;
  */
 public class Door {
 	private boolean isHorizontal;
-	private int x;
-	private int y;
+	private Position position;
+	
+	/**
+	 * Stores where the front of the door is.
+	 */
+	private Position inFront;
 	
 	public Door(boolean direction, int x, int y){
 		this.isHorizontal = direction;
-		this.x = x;
-		this.y = y;
+		this.position = new Position(x, y);
 	}
 	
 	/**
@@ -26,18 +29,26 @@ public class Door {
 	}
 	
 	/**
-	 * Returns the x position of the door.
-	 * @return
+	 * Sets the door's front.
+	 * @param p
 	 */
-	public int getX(){
-		return this.x;
+	public void setInFront(Position p){
+		this.inFront = p;
 	}
 	
 	/**
-	 * Returns the y position of the door.
+	 * Returns the door's front.
 	 * @return
 	 */
-	public int getY(){
-		return this.y;
+	public Position getInFront(){
+		return this.inFront;
+	}
+	
+	/**
+	 * Returns the position of this door.
+	 * @return
+	 */
+	public Position getPosition(){
+		return this.position;
 	}
 }

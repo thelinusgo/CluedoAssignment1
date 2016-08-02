@@ -72,17 +72,33 @@ public class Initializer {
 	 * Initializes the rooms list.
 	 */
 	public void initializeRooms(){
-		/*Fill the arraylist with rooms */
 		/*NB: not all rooms have weapons.  */
-		rooms.add(new Room("Kitchen", 0, 1, 6, 6, true));
-		rooms.add(new Room("Dining Room", 0, 9, 8, 7, false));
-		rooms.add(new Room("Ball Room", 8, 1, 8, 7, false));
-		rooms.add(new Room("Conservatory", 18, 1, 7, 5, true));
-		rooms.add(new Room("Billiard Room", 19, 8, 6, 5, false));
-		rooms.add(new Room("Library", 18, 14, 7, 5, false));
-		rooms.add(new Room("Study", 17, 21, 8, 4, true));
-		rooms.add(new Room("Hall", 9, 18, 6, 7, false));
-		rooms.add(new Room("Lounge", 0, 19, 7, 6, true));
+		Room kitchen = new Room("Kitchen", 0, 1, 6, 6, true);
+		Room diningrm = new Room("Dining Room", 0, 9, 8, 7, false);
+		Room ballRm = new Room("Ball Room", 8, 1, 8, 7, false);
+		Room conservatory = new Room("Conservatory", 18, 1, 7, 5, true);
+		Room billRm = new Room("Billiard Room", 19, 8, 6, 5, false);
+		Room lib = new Room("Library", 18, 14, 7, 5, false);
+		Room study = new Room("Study", 17, 21, 8, 4, true);
+		Room hall = new Room("Hall", 9, 18, 6, 7, false);
+		Room lounge = new Room("Lounge", 0, 19, 7, 6, true);
+		
+		/*Add rooms to rooms list*/
+		rooms.add(kitchen);
+		rooms.add(diningrm);
+		rooms.add(ballRm);
+		rooms.add(conservatory);
+		rooms.add(billRm);
+		rooms.add(lib);
+		rooms.add(study);
+		rooms.add(hall);
+		rooms.add(lounge);
+		
+		/*Set connecting rooms*/
+		kitchen.setRoom(study);
+		conservatory.setRoom(lounge);
+		study.setRoom(kitchen);
+		lounge.setRoom(conservatory);
 		Collections.shuffle(rooms); //shuffle it
 
 		for(int i = 0; i < weapons.size(); i++){

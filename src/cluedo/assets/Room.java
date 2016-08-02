@@ -55,6 +55,16 @@ public class Room {
 	private Map<Player, Position> playerMap;
 	
 	/**
+	 * Determines whether the room has stairs
+	 */
+	private boolean hasStairs;
+	
+	/**
+	 * Connects rooms with stairs.
+	 */
+	private Room other;
+	
+	/**
 	 * Construct a Room.
 	 */
 	public Room(String n){
@@ -66,7 +76,7 @@ public class Room {
 	/**
 	 * Construct a Room with x, y coordinates, its width and height and whether it has stairs or not.
 	 */
-	public Room(String n, int x, int y, int width, int height){
+	public Room(String n, int x, int y, int width, int height, boolean hS){
 		this.name = n;
 		this.x = x;
 		this.y = y;
@@ -76,8 +86,12 @@ public class Room {
 		doors = new ArrayList<Door>();
 		playerMap = new HashMap<>();
 		addPlayerCoords();
+		this.hasStairs = hS;
 	}
 	
+	/**
+	 * Determines where the player would be placed in room.
+	 */
 	private void addPlayerCoords(){
 		int j = 0;
 		int k = 0;
@@ -99,9 +113,9 @@ public class Room {
 			for(Position pos : playerCoords){
 				if(e.getValue().getX() != pos.getX() && e.getValue().getY() != pos.getY()){
 					playerMap.put(p, pos);
+					p.setPos(pos.getX(), pos.getY());
 				}
 			}
-			
 		}
 	}
 	
@@ -156,6 +170,27 @@ public class Room {
 	 */
 	public Weapon getWeapon(){
 		return this.weapon;
+	}
+	
+	/**
+	 * Returns whether the room has stairs.
+	 */
+	public boolean hasStairs(){
+		return this.hasStairs;
+	}
+	
+	/**
+	 * Returns the room connected.
+	 */
+	public Room getOtherRoom(){
+		return this.other;
+	}
+	
+	/**
+	 * Set room this is connected to this room.
+	 */
+	public void setRoom(Room rm){
+		this.other = rm;
 	}
 	
 	/**
