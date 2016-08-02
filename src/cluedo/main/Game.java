@@ -1,6 +1,8 @@
 package cluedo.main;
 import java.io.IOException;
 import java.util.*;
+
+import cluedo.arguments.Suggestion;
 import cluedo.assets.*;
 import cluedo.cards.Card;
 /**
@@ -134,19 +136,11 @@ public class Game {
 			break;
 		case "s":
 			//TODO: ALSO NEED TO FINISH THIS PART.
-			System.out.println("Player " + currentPlayer.getName() + " wishes to make an accusation.");
-			makeSuggestion(currentPlayer);
+			System.out.println("Player " + currentPlayer.getName() + " wishes to make an suggestion.");
+			Suggestion sug = TextClient.askSuggestion(p);
 			moveMade = true;
 			break;
 		}
-	}
-	
-	/**
-	 * This makes an accusation.
-	 * @param current Player
-	 */
-	public void makeSuggestion(Player p){
-		TextClient.askSuggestion(p);
 	}
 	
 	

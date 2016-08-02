@@ -44,7 +44,14 @@ public class Initializer {
 		fillList();
 		initializeEnvelope();
 	}
-
+	
+	public static Envelope getEnvelope(){
+		return envelope;
+	}
+	
+	
+	
+	
 	/**
 	 * Initializes the weapons list.
 	 */
