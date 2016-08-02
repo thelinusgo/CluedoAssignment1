@@ -27,11 +27,6 @@ public class Board {
 	 */
 	private boolean isValidMove = false;
 
-	/**
-	 * For checking if player can move.
-	 */
-	public boolean canMove = false;
-
 	public Board(){
 		//filling up the board so it does not contain any null values
 		for(int x = 0; x < board.length; x++){
@@ -628,14 +623,12 @@ public class Board {
 	 * @param p
 	 */
 	public void move(int directionX, int directionY, Player p){
-		canMove = false;
 		List<Room> rooms = Game.initializer.getRooms();
 		int x = p.position().getX() + directionX;
 		int y = p.position().getY() + directionY;
 		p.coordinatesTaken().clear();
 		if(isValidMove(new Position(x, y), directionX, directionY, p)){
 			isValidMove = true;
-			canMove = true;
 			board[p.position().getX()][p.position().getY()] = p.getLookBack();
 			if(board[x][y].equals("D|")){
 				for(Room r : rooms){
@@ -678,7 +671,7 @@ public class Board {
 		p.getRoom().getMap().remove(p);
 		board[p.position().getX()][p.position().getY()] = p.getCharacterName() + "|";
 	}
-	
+
 	/**
 	 * Make player exit room.
 	 * @param p
@@ -732,10 +725,10 @@ public class Board {
 		}else{
 			for(int i = 0; i < doors.size(); i++){
 				Door d = doors.get(i);
-				if(!d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && directionY == 0 && directionX > 1){
+				if(!d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && directionY == 0 &&(directionX == 1 || directionX == -1)){
 					System.out.println("Going through door the wrong way!");
 					return false;
-				}else if(d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && directionY > 1 && directionX == 0){
+				}else if(d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && (directionY == 1 || directionY == -1) && directionX == 0){
 					System.out.println("Going through door the wrong way!");
 					return false;
 				}
@@ -750,16 +743,13 @@ public class Board {
 
 			for(Player player : Game.getCurrentPlayers()){
 				if(!player.getName().equals(p.getName())){
-					for(Position pos : p.getPossibleCoords()){
-						if(pos.equals(player.position())){
-							System.out.println("Cannot move into existing player's square!");
-							return false;
-						}
+					if(position.equals(player.position())){
+						System.out.println("Cannot move into existing player's square!");
+						return false;
 					}
+
 				}
 			}
-
-
 		}
 		return true;
 	}
@@ -770,10 +760,12 @@ public class Board {
 	 * @param position
 	 * @return
 	 */
-	public boolean canMove(Player p, Position position){
+	public boolean canMove(Player p){
 		for(Position pos : p.coordinatesTaken()){
-			if(!pos.equals(position)){
-				return true;
+			for(Position position : p.getPossibleCoords()){
+				if(!pos.equals(position)){
+					return true;
+				}
 			}
 		}
 		return false;
