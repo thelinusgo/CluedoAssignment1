@@ -92,13 +92,14 @@ public class TextClient {
 	public static Accusation askAccusation(Player p){
 		System.out.println("Player: " + p.getName() + "Wishes to make an accusation.");
 		Envelope env = Initializer.getEnvelope();
+		CharacterCard character = null;
+		WeaponCard weapon = null;
+		RoomCard room = null;
 		
-	
-	
-	
-	
-	
-	
+		
+		
+		
+		return null;
 	}
 	
 	

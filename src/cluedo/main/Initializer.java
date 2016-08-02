@@ -30,7 +30,7 @@ public class Initializer {
 	private static List<RoomCard> roomCards = new ArrayList<>();
 	private static List<WeaponCard> weaponCards = new ArrayList<>();
 	private static List<CharacterCard> characterCards = new ArrayList<>();
-
+	
 	/** This helps generating a random shuffle for the lists */
 	private long seed = System.nanoTime();
 
@@ -215,6 +215,30 @@ public class Initializer {
 				System.out.println(c);
 			}
 		}
+	}
+	
+	/**
+	 * Returns the list of RoomCards
+	 * @return
+	 */
+	public List<RoomCard> getRoomCards(){
+		return Initializer.roomCards;
+	}
+	
+	/**
+	 * Returns the list of WeaponCards
+	 * @return
+	 */
+	public List<WeaponCard> getWeaponCards(){
+		return Initializer.weaponCards;
+	}
+	
+	/**
+	 * Returns the list of CharacterCards
+	 * @return
+	 */
+	public List<CharacterCard> getCharacterCards(){
+		return Initializer.characterCards;
 	}
 	
 	public List<Room> getRooms(){
