@@ -15,7 +15,7 @@ public class Game {
 	private int numPlayers = 0; //stores the amount of players.
 	private static List<Player> currentPlayers; //a list of the current players.
 
-	private TextClient textClient; //an instance of the textClient.
+	public TextClient textClient; //an instance of the textClient.
 	public static boolean askSuccess; //TODO? WHAT IS THIS??
 	private static boolean hasAsked = false; //if a player has asked or not.
 
@@ -38,7 +38,7 @@ public class Game {
 		initialSetup();
 		runGame();
 	}
-	
+
 	/**
 	 * Alternative constructor to allow testing.
 	 */
@@ -47,13 +47,25 @@ public class Game {
 			board = new Board();
 			currentPlayers = new ArrayList<Player>();
 			initializer = new Initializer();
+			testInitialSetup();
 			
 		}else{
 			System.out.println("Game is not in test mode! Test mode must be set to true to run.");
 			System.exit(0);
 		}
 	}
-
+	
+	/**
+	 * Gets the list of current Players
+	 * @return
+	 */
+	public static List<Player> currentPlayers(){
+		return currentPlayers;
+	}
+	
+	
+	
+	
 	/**
 	 * Add new player to current players.
 	 * @param name
@@ -76,6 +88,16 @@ public class Game {
 	public void initialSetup(){
 		drawAsciiArt();
 		TextClient.askPlayers();
+		initializer.distributeCharacters();
+		initializer.distributeCards();
+		board.setPlayerPosition(currentPlayers);
+		board.drawBoard();
+	}
+	
+	/**
+	 * Test class for the initial setup.
+	 */
+	public void testInitialSetup(){
 		initializer.distributeCharacters();
 		initializer.distributeCards();
 		board.setPlayerPosition(currentPlayers);
