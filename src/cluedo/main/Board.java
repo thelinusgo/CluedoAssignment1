@@ -598,23 +598,23 @@ public class Board {
 		int x = p.position().getX() + directionX;
 		int y = p.position().getY() + directionY;
 		p.coordinatesTaken().clear();
-		Position pos = new Position(x, y);
-		if(isValidMove(pos, directionX, directionY, p)){
+		if(isValidMove(new Position(x, y), directionX, directionY, p)){
 			isValidMove = true;
 			canMove = true;
 			board[p.position().getX()][p.position().getY()] = p.getLookBack();
+			if(board[x][y].equals("D|")){
+				
+			}
 			p.setPos(x, y);
 			p.setLookBack(board[p.position().getX()][p.position().getY()]);
-			if(p.isInRoom()){
-				p.coordinatesTaken().clear();
-			}else{
-				p.moveAStep();
-			}
+			p.moveAStep();
 			board[p.position().getX()][p.position().getY()] = p.getCharacterName() + "|";
 			for(int i = 0; i < rooms.size(); i++){
 				if(rooms.get(i).contains(p.position().getX(), p.position().getY())){
+					p.setRoom(rooms.get(i));
 					p.setIsInRoom(true);
 				}else{
+					p.setRoom(null);
 					p.setIsInRoom(false);
 				}
 			}
