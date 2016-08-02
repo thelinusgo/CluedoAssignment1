@@ -129,14 +129,27 @@ public class Game {
 			}
 			break;
 		case "a":
+			//TODO: need to finish this part.
 			moveMade = true;
 			break;
 		case "s":
+			//TODO: ALSO NEED TO FINISH THIS PART.
+			System.out.println("Player " + currentPlayer.getName() + " wishes to make an accusation.");
+			makeSuggestion(currentPlayer);
 			moveMade = true;
 			break;
 		}
 	}
-
+	
+	/**
+	 * This makes an accusation.
+	 * @param current Player
+	 */
+	public void makeSuggestion(Player p){
+		TextClient.askSuggestion(p);
+	}
+	
+	
 
 	public boolean isGameOver(){
 		return false;

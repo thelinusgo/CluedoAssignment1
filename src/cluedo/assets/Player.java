@@ -117,6 +117,16 @@ public class Player {
 	public List<Card> getCards(){
 		return this.hand;
 	}
+	
+	/**
+	 * Displays a list of available cards, printed to the console.
+	 */
+	public void displayHand(){
+		System.out.println("Current Cards in Hand: ");
+		for(int i = 0; i < hand.size(); i++){
+			System.out.println(String.valueOf(i) + " : " + hand.get(i).toString());
+		}
+	}
 
 	/**
 	 * This sets the current player to be out.
@@ -138,6 +148,7 @@ public class Player {
 	 * @return
 	 */
 	public boolean isInRoom() {
+		System.out.println("Currently in room: " + this.isInRoom);
 		return this.isInRoom;
 	}
 	

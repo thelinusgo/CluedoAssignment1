@@ -71,7 +71,7 @@ public class Room {
 	
 	/**
 	 * Returns whether a co-ordinate in the room is contained in this room.
-	 * Returns false otherwise.
+	 * Returns false otherwise. 
 	 * @param x
 	 * @param y
 	 * @return

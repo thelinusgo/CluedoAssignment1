@@ -7,22 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
-
-import javax.swing.plaf.synth.SynthSpinnerUI;
-
 import cluedo.assets.Player;
-import cluedo.cards.Card;
+import cluedo.cards.*;
 
 
 public class TextClient {
 	private static Board board = Game.board;
 
-	private static String MOVES = "w|a|s|d";
-	private static String OPTIONS = "m|s|a|c";
+	private static String MOVES = "w|a|s|d"; //pattern describing the possible moves.
+	private static String OPTIONS = "m|s|a|c"; //patterns describing the possible options.
 
-	private static boolean correctInput = false;
+	private static boolean correctInput = false; //set to true if the correct input has been provided.
 
-	private static Scanner sc = new Scanner(System.in);
+	private static Scanner sc = new Scanner(System.in); //field containing the scanner.
 	/**
 	 * Get string from System.in
 	 */
@@ -41,8 +38,7 @@ public class TextClient {
 
 	/**
 	 * Listen for direction movement. W, S, A, D are valid directions.
-	 * Currently unfinished!
-	 * TODO: NEED TO LOOK AT THIS!!
+	 * 
 	 * @param Player to move.
 	 */
 	public static void movementListener(Player p){
@@ -83,7 +79,57 @@ public class TextClient {
 			}
 		}
 	}
+	
+	/**
+	 * Gets user input about creating the suggestion.
+	 * @param p
+	 */
+	public static void askSuggestion(Player p){
+		System.out.println("What cards do you want to nominate?");
+		System.out.println("----------------------------------");
+		System.out.println("AVAILABLE CARDS");
+		WeaponCard weapon = null;
+		CharacterCard character = null;
+		RoomCard room = null;
+		p.displayHand();
+		List<Card> cardList = p.getCards();
+		
+		for(int i = 0; i < 3;){
+			System.out.println("Please enter the index you want to nominate: ");
+			int indexChoice = sc.nextInt();
+			
+			if(indexChoice < 0 || indexChoice > cardList.size()-1){
+				throw new ArrayIndexOutOfBoundsException("Bad index choice made");
+			}
+			
+			if(cardList.get(indexChoice) instanceof WeaponCard){
+				weapon = (WeaponCard) cardList.get(indexChoice);
+				i++;
+			}else if(cardList.get(indexChoice) instanceof CharacterCard){
+				character = (CharacterCard) cardList.get(indexChoice);
+				i++;
+			}else if(cardList.get(indexChoice) instanceof RoomCard){
+				room = (RoomCard) cardList.get(indexChoice);
+				i++;
+			}else{
+				System.out.println("not a valid card!");
+			}
+			
+		}
+		System.out.println("----------------------------------");
+		System.out.println("      Suggestion Pieces:          ");
+		System.out.println(" weapon: " + weapon);
+		System.out.println(" character: " + character);
+		System.out.println(" room: " + room);
+		System.out.println("----------------------------------");
 
+	}
+	
+	
+	
+	
+	
+	
 	/**
 	 * Ask for initial players, and their names.
 	 * Returns a list of players. Sequence begins and ends with a backslash "/".
