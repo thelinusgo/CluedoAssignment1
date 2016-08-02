@@ -10,15 +10,16 @@ public class CornerRoom extends Room{
 	 */
 	private Room other;
 	
+	
+	
 	/**
 	 * Constructor for a Corner room.
 	 * @param String name
 	 * @param Weapon weapon
 	 * @param Room other
 	 */
-	public CornerRoom(String n, Weapon w, Room other){
-		super(n);
-		super.addWeapon(w);
+	public CornerRoom(String n, int x, int y, int width, int height, Room other){
+		super(n, height, height, height, height);
 		if(other != null){
 			this.other = other;
 		}

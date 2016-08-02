@@ -26,7 +26,7 @@ public class Board {
 	 * For checking if player did a valid move or not.
 	 */
 	private boolean isValidMove = false;
-
+	
 	/**
 	 * For checking if player can move.
 	 */
@@ -603,21 +603,27 @@ public class Board {
 			canMove = true;
 			board[p.position().getX()][p.position().getY()] = p.getLookBack();
 			if(board[x][y].equals("D|")){
-				
+				for(Room r : rooms){
+					for(Door d : r.getDoors()){
+						if(d.getX() == x && d.getY() == y){
+							r.addMap(p);
+							x = r.getMap().get(p).getX();
+							y = r.getMap().get(p).getY();
+							p.setRoom(r);
+							p.setIsInRoom(true);
+						}else{
+							p.setRoom(null);
+							p.setIsInRoom(false);
+							r.getMap().remove(p);
+						}
+					}
+				}
 			}
 			p.setPos(x, y);
 			p.setLookBack(board[p.position().getX()][p.position().getY()]);
 			p.moveAStep();
 			board[p.position().getX()][p.position().getY()] = p.getCharacterName() + "|";
-			for(int i = 0; i < rooms.size(); i++){
-				if(rooms.get(i).contains(p.position().getX(), p.position().getY())){
-					p.setRoom(rooms.get(i));
-					p.setIsInRoom(true);
-				}else{
-					p.setRoom(null);
-					p.setIsInRoom(false);
-				}
-			}
+			
 		}else{
 			isValidMove = false;
 		}
