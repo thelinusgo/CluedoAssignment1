@@ -74,10 +74,10 @@ public class TextClient {
 				}
 				if(board.isValidMove()){
 					isValidMove = true;
+					correctInput = true;
 				}else{
 					System.out.println("Please try again.");
 				}
-				correctInput = true;
 			}else{
 				System.out.println("That is not a valid direction!");
 			}

@@ -25,7 +25,12 @@ public class Board {
 	/**
 	 * For checking if player did a valid move or not.
 	 */
-	private boolean isValidMove;
+	private boolean isValidMove = false;
+
+	/**
+	 * For checking if player can move.
+	 */
+	public boolean canMove = false;
 
 	public Board(){
 		//filling up the board so it does not contain any null values
@@ -564,7 +569,7 @@ public class Board {
 		}
 		Collections.shuffle(startPos, new Random(seed)); 
 	}
-	
+
 	/**
 	 * Initializes each player's position.
 	 * @param currentPlayers
@@ -588,16 +593,23 @@ public class Board {
 	 * @param p
 	 */
 	public void move(int directionX, int directionY, Player p){
+		canMove = false;
 		List<Room> rooms = Game.initializer.getRooms();
 		int x = p.position().getX() + directionX;
 		int y = p.position().getY() + directionY;
 		p.coordinatesTaken().clear();
-		if(isValidMove(x, y, directionX, directionY, p)){
+		Position pos = new Position(x, y);
+		if(isValidMove(pos, directionX, directionY, p)){
 			isValidMove = true;
+			canMove = true;
 			board[p.position().getX()][p.position().getY()] = p.getLookBack();
 			p.setPos(x, y);
 			p.setLookBack(board[p.position().getX()][p.position().getY()]);
-			p.moveAStep();
+			if(p.isInRoom()){
+				p.coordinatesTaken().clear();
+			}else{
+				p.moveAStep();
+			}
 			board[p.position().getX()][p.position().getY()] = p.getCharacterName() + "|";
 			for(int i = 0; i < rooms.size(); i++){
 				if(rooms.get(i).contains(p.position().getX(), p.position().getY())){
@@ -609,20 +621,23 @@ public class Board {
 		}else{
 			isValidMove = false;
 		}
+
 		drawBoard();
 	}
-	
+
 	/**
 	 * Checks if player is doing a valid move. If they are not, then it returns false, else it returns true.
 	 * 
-	 * @param x
-	 * @param y
-	 * @param directionX
-	 * @param directionY
-	 * @param p
+	 * @param x - position of player after being moved
+	 * @param y - position of player after being moved
+	 * @param directionX - how much the player is moving by in the x direction
+	 * @param directionY - how much the player is moving by in the y direction
+	 * @param p - current player
 	 * @return
 	 */
-	public boolean isValidMove(int x, int y, int directionX, int directionY, Player p){
+	public boolean isValidMove(Position position, int directionX, int directionY, Player p){
+		int x = position.getX();
+		int y = position.getY();
 		if(x > 24 || x < 0 || y > 24 || y < 0){
 			System.out.println("Cannot go out of bounds!");
 			return false;
@@ -646,15 +661,43 @@ public class Board {
 					return false;
 				}
 			}
-			
+
 			for(Position pos : p.coordinatesTaken()){
 				if(pos.getX() == x && pos.getY() == y){
 					System.out.println("You cannot move into the same square within this move.");
 					return false;
 				}
 			}
+			
+			for(Player player : Game.getCurrentPlayers()){
+				if(!player.getName().equals(p.getName())){
+					for(Position pos : p.getPossibleCoords()){
+						if(pos.equals(player.position())){
+							System.out.println("Cannot move into existing player's square!");
+							return false;
+						}
+					}
+				}
+			}
+			
+			
 		}
 		return true;
+	}
+	
+	/**
+	 * Determines if player can still move or not.
+	 * @param p
+	 * @param position
+	 * @return
+	 */
+	public boolean canMove(Player p, Position position){
+		for(Position pos : p.coordinatesTaken()){
+			if(!pos.equals(position)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

@@ -1,8 +1,6 @@
 package cluedo.main;
 import java.io.IOException;
 import java.util.*;
-
-import cluedo.arguments.Suggestion;
 import cluedo.assets.*;
 import cluedo.cards.Card;
 /**
@@ -24,10 +22,14 @@ public class Game {
 	private static Dice dice = new Dice(); //make a new instance of the dice.
 	private Player currentPlayer; //the current player of the round.
 
+	/** If player has made a move*/
 	private boolean moveMade = false;
 
 	/** This helps generate a random shuffle for the lists */
 	private long seed = System.nanoTime();
+
+	/** If player wants to forfeit */
+	private boolean pass = false;
 
 	public Game(){
 		board = new Board();
@@ -121,8 +123,14 @@ public class Game {
 				System.out.println(currentPlayer.getName() + " currently has " + currentPlayer.numberofMoves() + " moves left.");
 				System.out.println("current location: " + currentPlayer.position().getX() + ", " + currentPlayer.position().getY());
 				TextClient.movementListener(currentPlayer);
+				if(!board.canMove){
+					System.out.println("Sorry you do not have anywhere to move now.");
+					break;
+				}
 			}
-			System.out.println(currentPlayer.getName() + " has run out of moves.");
+			if(currentPlayer.numberofMoves() <= 0){
+				System.out.println(currentPlayer.getName() + " has run out of moves.");
+			}
 			moveMade = true;
 			break;
 		case "c":
@@ -136,14 +144,22 @@ public class Game {
 			break;
 		case "s":
 			//TODO: ALSO NEED TO FINISH THIS PART.
-			System.out.println("Player " + currentPlayer.getName() + " wishes to make an suggestion.");
-			Suggestion sug = TextClient.askSuggestion(p);
+			System.out.println("Player " + currentPlayer.getName() + " wishes to make an accusation.");
+			makeSuggestion(currentPlayer);
 			moveMade = true;
 			break;
 		}
 	}
-	
-	
+
+	/**
+	 * This makes an accusation.
+	 * @param current Player
+	 */
+	public void makeSuggestion(Player p){
+		TextClient.askSuggestion(p);
+	}
+
+
 
 	public boolean isGameOver(){
 		return false;

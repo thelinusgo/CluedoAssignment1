@@ -20,9 +20,11 @@ public class Player {
 	private int numberofMoves;
 	private boolean isInRoom = false;
 	private String lookback = "/|";
-	
+	private Room room = null;
+
 	private List<Position> coordinates = new ArrayList<Position>();
-	
+	private Position[] possibleCoords = new Position[4];
+
 	/**
 	 * Create a Player with a given name, a hand, a current character, and their x and y position.
 	 * 
@@ -36,7 +38,7 @@ public class Player {
 		this.name = name;
 		hand = new ArrayList<>();
 	}
-	
+
 	/**
 	 * Sets the amount of moves a player may have.
 	 */
@@ -44,11 +46,11 @@ public class Player {
 		if(amount > 12 || amount < 2) throw new IllegalArgumentException("player can have only 2-12 moves.");
 		this.numberofMoves = amount;
 	}
-	
+
 	/**
 	 * This allows the player to move a step.
 	 */
-	
+
 	public void moveAStep(){
 		this.numberofMoves--;
 	}
@@ -59,7 +61,7 @@ public class Player {
 	public int numberofMoves(){
 		return this.numberofMoves;
 	}
-	
+
 	/**
 	 * Assigns a character to a player.
 	 * E.g. Linus gets Professor Plum.
@@ -68,7 +70,7 @@ public class Player {
 	public void setCharacter(Character c){
 		this.characterName = c.getName();
 	}
-	
+
 	/**
 	 * Adds a card to the a players hand.
 	 * @param c
@@ -76,7 +78,7 @@ public class Player {
 	public void addCard(Card c){
 		this.hand.add(c);
 	}
-	
+
 	/**
 	 * Set player's X and Y position.
 	 * @param x
@@ -88,8 +90,12 @@ public class Player {
 		if(x == 0 && y == 17){
 			this.lookback = "|/|";
 		}
+		possibleCoords[0] = new Position(x + 1, y);
+		possibleCoords[1] = new Position(x - 1, y);
+		possibleCoords[2] = new Position(x, y + 1);
+		possibleCoords[3] = new Position(x, y - 1);
 	}
-	
+
 	public Position position(){
 		return this.position;
 	}
@@ -117,7 +123,7 @@ public class Player {
 	public List<Card> getCards(){
 		return this.hand;
 	}
-	
+
 	/**
 	 * Displays a list of available cards, printed to the console.
 	 */
@@ -134,7 +140,7 @@ public class Player {
 	public void setOut(){
 		this.isOut = true;
 	}
-	
+
 	/**
 	 * Sets if the player has entered a room or not.
 	 * @param rm
@@ -142,7 +148,7 @@ public class Player {
 	public void setIsInRoom(boolean rm){
 		this.isInRoom = rm;
 	}
-	
+
 	/**
 	 * Returns if the player is in a room or not.
 	 * @return
@@ -151,14 +157,14 @@ public class Player {
 		System.out.println("Currently in room: " + this.isInRoom);
 		return this.isInRoom;
 	}
-	
+
 	/**
 	 * Set look back string, in order to remove player's position when moving to another square.
 	 */
 	public void setLookBack(String lb){
 		this.lookback = lb;
 	}
-	
+
 	/**
 	 * Returns the lookback string.
 	 * @return
@@ -166,7 +172,20 @@ public class Player {
 	public String getLookBack(){
 		return this.lookback;
 	}
-	
+
+	/**
+	 * Set room that player is in.
+	 */
+	public void setRoom(Room rm){
+		this.room = rm;
+	}
+	/**
+	 * Get room that player is in.
+	 */
+	public Room getRoom(){
+		return this.room;
+	}
+
 	/**
 	 * Returns the list of coordinates that the player has been in within a single move.
 	 * @return
@@ -174,6 +193,11 @@ public class Player {
 	public List<Position> coordinatesTaken(){
 		return coordinates;
 	}
+
+	public Position[] getPossibleCoords(){
+		return this.possibleCoords;
+	}
+
 	public String toString(){
 		return "Name: " + this.name + ", Character Piece: " + this.characterName;
 	}
