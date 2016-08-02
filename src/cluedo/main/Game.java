@@ -38,6 +38,21 @@ public class Game {
 		initialSetup();
 		runGame();
 	}
+	
+	/**
+	 * Alternative constructor to allow testing.
+	 */
+	public Game(boolean test){
+		if(test){
+			board = new Board();
+			currentPlayers = new ArrayList<Player>();
+			initializer = new Initializer();
+			
+		}else{
+			System.out.println("Game is not in test mode! Test mode must be set to true to run.");
+			System.exit(0);
+		}
+	}
 
 	/**
 	 * Add new player to current players.
