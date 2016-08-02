@@ -4,9 +4,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+
+import cluedo.arguments.Accusation;
+import cluedo.arguments.Suggestion;
 import cluedo.assets.Player;
 import cluedo.cards.*;
 
@@ -81,54 +85,118 @@ public class TextClient {
 	}
 	
 	/**
-	 * Gets user input about creating the suggestion.
+	 * Asks the user input about creating an accusation.
 	 * @param p
+	 * @return
 	 */
-	public static void askSuggestion(Player p){
-		System.out.println("What cards do you want to nominate?");
-		System.out.println("----------------------------------");
-		System.out.println("AVAILABLE CARDS");
-		WeaponCard weapon = null;
-		CharacterCard character = null;
-		RoomCard room = null;
-		p.displayHand();
-		List<Card> cardList = p.getCards();
+	public static Accusation askAccusation(Player p){
+		System.out.println("Player: " + p.getName() + "Wishes to make an accusation.");
+		Envelope env = Initializer.getEnvelope();
 		
-		for(int i = 0; i < 3;){
-			System.out.println("Please enter the index you want to nominate: ");
-			int indexChoice = sc.nextInt();
-			
-			if(indexChoice < 0 || indexChoice > cardList.size()-1){
-				throw new ArrayIndexOutOfBoundsException("Bad index choice made");
-			}
-			
-			if(cardList.get(indexChoice) instanceof WeaponCard){
-				weapon = (WeaponCard) cardList.get(indexChoice);
-				i++;
-			}else if(cardList.get(indexChoice) instanceof CharacterCard){
-				character = (CharacterCard) cardList.get(indexChoice);
-				i++;
-			}else if(cardList.get(indexChoice) instanceof RoomCard){
-				room = (RoomCard) cardList.get(indexChoice);
-				i++;
-			}else{
-				System.out.println("not a valid card!");
-			}
-			
-		}
-		System.out.println("----------------------------------");
-		System.out.println("      Suggestion Pieces:          ");
-		System.out.println(" weapon: " + weapon);
-		System.out.println(" character: " + character);
-		System.out.println(" room: " + room);
-		System.out.println("----------------------------------");
-
+	
+	
+	
+	
+	
+	
 	}
 	
 	
 	
 	
 	
+	
+	
+	/**
+	 * Gets user input about creating the suggestion.
+	 * This iterates over the players hand, and allows them to create a suggestion, based off their data.
+	 * @param p
+	 */
+	public static Suggestion askSuggestion(Player p){
+		System.out.println("What cards do you want to nominate?");
+		System.out.println("----------------------------------");
+		System.out.println("AVAILABLE CARDS:");
+		
+		//the objects for creating a suggestion.
+		//TODO: needs to be based on room he's in..
+		WeaponCard weapon = null;
+		CharacterCard character = null;
+		RoomCard room = null;
+		int indexChoice;
+		
+		//sublists containing cards of a certain category.
+		List<Card> cardsList = p.getCards();
+		List<WeaponCard> weapons = new ArrayList<>();
+		List<RoomCard> rooms = new ArrayList<>();
+		List<CharacterCard> suspects = new ArrayList<>();
+		
+		//seperating the hand into their respective sublists..
+		for(Card cards : cardsList){
+			if(cards instanceof WeaponCard){
+				weapons.add((WeaponCard) cards);
+			}else if(cards instanceof RoomCard){
+				rooms.add((RoomCard) cards);
+			}else if(cards instanceof CharacterCard){
+				suspects.add((CharacterCard) cards);
+			}	
+		}
+		
+		System.out.println("Instructions: Enter index of the item you want to nominate.");
+		for(int i = 0; i < 3;){
+			if(i == 0){
+				System.out.println("Step 1) Choose from available weapons: ");
+				int index = 0;
+				for(WeaponCard ww : weapons){
+				System.out.println(index + " "  + ww.toString());				
+				index++;
+				}
+				indexChoice = sc.nextInt();
+				if(indexChoice < 0 || indexChoice > weapons.size()-1){
+					System.out.println("Incorrect index. Please try again.");
+				
+				}else{
+					weapon = (WeaponCard) weapons.get(indexChoice);
+					i++;
+				}
+			}else if(i == 1){
+				System.out.println("Step 2) Choose from available Rooms: ");
+				int index = 0;
+				for(RoomCard rr : rooms){
+				System.out.println(index + " "  + rr.toString());
+				index++;
+				}
+				indexChoice = sc.nextInt();
+				if(indexChoice < 0 || indexChoice > weapons.size()-1){
+					System.out.println("Incorrect index. Please try again.");
+					}else{
+						room = (RoomCard) rooms.get(indexChoice);
+						i++;
+					}
+			}else{
+				System.out.println("Step 3) Choose from available Suspects: ");
+				int index = 0;
+				for(CharacterCard cc : suspects){
+				System.out.println(index + " "  + cc.toString());
+				index++;
+				}
+				indexChoice = sc.nextInt();
+				if(indexChoice < 0 || indexChoice > weapons.size()-1){
+					System.out.println("Incorrect index. Please try again.");
+					}else{
+						character = (CharacterCard) suspects.get(indexChoice);
+						i++;
+					}
+			}
+		}
+		System.out.println("----------------------------------");
+		System.out.println(" CONFIRMED Suggestion Pieces:     ");
+		System.out.println(" weapon: " + weapon);
+		System.out.println(" character: " + character);
+		System.out.println(" room: " + room);
+		System.out.println("----------------------------------");
+
+		return new Suggestion(weapon, room, character, p);
+	}
 	
 	/**
 	 * Ask for initial players, and their names.
