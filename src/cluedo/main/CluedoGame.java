@@ -243,7 +243,16 @@ public class CluedoGame {
 	public boolean isGameOver(){
 		return false;
 	}
-
+	
+	/**
+	 * Indicates an attempt to make an invalid move.
+	 *
+	 */
+	public static class InvalidMove extends Exception {
+		public InvalidMove(String msg) {
+			super(msg);
+		}
+	}
 
 
 	/**
