@@ -208,7 +208,7 @@ public class TextClient {
 
 	/**
 	 * Gets user input about creating the suggestion.
-	 * This iterates over the players hand, and allows them to create a suggestion, based off their data.
+	 * This iterates over the all of the players cards, and allows them to create a suggestion, based off their data.
 	 * @param p
 	 */
 	public static Suggestion askSuggestion(Player p){
@@ -218,6 +218,7 @@ public class TextClient {
 		}
 		
 		
+		System.out.println("-----------SUGGESTION!-------------");
 		System.out.println("What cards do you want to nominate?");
 		System.out.println("----------------------------------");
 		System.out.println("AVAILABLE CARDS:");
@@ -230,26 +231,9 @@ public class TextClient {
 		String indexChoice;
 		boolean isInteger = false;
 
-		//sublists containing cards of a certain category.
-		List<Card> cardsList = p.getCards();
-		List<WeaponCard> weapons = new ArrayList<>();
-		//List<RoomCard> rooms = new ArrayList<>();
-		List<CharacterCard> suspects = new ArrayList<>();
+		List<WeaponCard> weapons = Initializer.getWeaponCards();
+		List<CharacterCard> suspects = Initializer.getCharacterCards();
 
-		//seperating the hand into their respective sublists..
-		for(Card cards : cardsList){
-			if(cards instanceof WeaponCard){
-				weapons.add((WeaponCard) cards);
-			}
-//			else if(cards instanceof RoomCard){
-//				rooms.add((RoomCard) cards);
-//			}
-			else if(cards instanceof CharacterCard){
-				suspects.add((CharacterCard) cards);
-			}	
-		}
-
-		
 		System.out.println("Instructions: Enter index of the item you want to nominate.");
 		for(int i = 0; i < 2;){
 			isInteger = false;
@@ -265,7 +249,6 @@ public class TextClient {
 					if(isInteger(indexChoice)){
 						if(Integer.parseInt(indexChoice) < 0 || Integer.parseInt(indexChoice) > weapons.size()-1){
 							System.out.println("Incorrect index. Please try again.");
-
 						}else{
 							weapon = (WeaponCard) weapons.get(Integer.parseInt(indexChoice));
 							i++;
@@ -274,27 +257,7 @@ public class TextClient {
 					}
 				}
 			}
-//			else if(i == 1){
-//				System.out.println("Step 2) Choose from available Rooms: ");
-//				int index = 0;
-//				for(RoomCard rr : rooms){
-//					System.out.println(index + " "  + rr.toString());
-//					index++;
-//				}
-//				while(!isInteger){
-//					indexChoice = sc.next();
-//					if(isInteger(indexChoice)){
-//						if(Integer.parseInt(indexChoice) < 0 || Integer.parseInt(indexChoice) > weapons.size()-1){
-//							System.out.println("Incorrect index. Please try again.");
-//						}else{
-//							room = (RoomCard) rooms.get(Integer.parseInt(indexChoice));
-//							i++;
-//							isInteger = true;
-//						}
-//					}
-//				}
-//			}
-			else{
+			else if(i == 1){
 				System.out.println("Step 2) Choose from available Suspects: ");
 				int index = 0;
 				for(CharacterCard cc : suspects){
