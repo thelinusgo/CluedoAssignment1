@@ -3,6 +3,7 @@ package cluedo.assets;
 import java.util.*;
 
 import cluedo.cards.Card;
+import cluedo.main.CluedoGame;
 
 /**
  * Class that represents a player in Cluedo.
@@ -23,7 +24,7 @@ public class Player {
 	private Room room = null;
 
 	private List<Position> coordinates = new ArrayList<Position>();
-	private Position[] possibleCoords = new Position[4];
+	private List<Position> possibleCoords = new ArrayList<Position>();
 	private Door door;
 
 	/**
@@ -92,10 +93,16 @@ public class Player {
 		if(x == 0 && y == 17){
 			this.lookback = "|/|";
 		}
-		possibleCoords[0] = new Position(x + 1, y);
-		possibleCoords[1] = new Position(x - 1, y);
-		possibleCoords[2] = new Position(x, y + 1);
-		possibleCoords[3] = new Position(x, y - 1);
+		possibleCoords.add(new Position(x + 1, y));
+		possibleCoords.add(new Position(x - 1, y));
+		possibleCoords.add(new Position(x, y + 1));
+		possibleCoords.add(new Position(x, y - 1));
+		for(int i = 0; i < possibleCoords.size(); i++){
+			Position pos = possibleCoords.get(i);
+			if(!CluedoGame.board.validPos(pos, this)){
+				possibleCoords.remove(i);
+			}
+		}
 	}
 
 	/**
@@ -203,7 +210,7 @@ public class Player {
 	 * Returns the possible coordinates that this player can move to.
 	 * @return
 	 */
-	public Position[] getPossibleCoords(){
+	public List<Position> getPossibleCoords(){
 		return this.possibleCoords;
 	}
 	

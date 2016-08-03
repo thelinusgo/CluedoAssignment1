@@ -640,7 +640,6 @@ public class Board {
 			}else{
 				p.setPos(x, y);
 			}
-			System.out.println(p.position().toString());
 			p.setLookBack(board[p.position().getX()][p.position().getY()]);
 			p.moveAStep();
 			if(p.isInRoom()){
@@ -766,6 +765,19 @@ public class Board {
 	}
 	
 	/**
+	 * Returns true if player has valid possible moves
+	 * @return
+	 */
+	public boolean validPos(Position pos, Player p){
+		int x = pos.getX();
+		int y = pos.getY();
+		if(board[x][y].equals("|#|") || board[x][y].equals("#|") || board[x][y].equals("|X|") || board[x][y].equals("X|")){
+			return false;
+		}
+		return true;
+	}
+	
+	/**
 	 * Prints out the board.
 	 */
 	public void drawBoard(){
@@ -776,7 +788,15 @@ public class Board {
 			System.out.println();
 		}
 	}
-
+	
+	/**
+	 * For testing purposes only
+	 * @return
+	 */
+	public String[][] getBoard(){
+		return board;
+	}
+	
 	public static void main(String[] args) {
 		new Board();
 	}
