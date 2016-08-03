@@ -106,7 +106,7 @@ public class TextClient {
 		}
 		System.out.println("----------------------------------");
 		System.out.println("Current Weapons...........");
-		for(CharacterCard cc : characters){
+		for(WeaponCar: weapons){
 			System.out.println(cc.toString());
 		}
 		
