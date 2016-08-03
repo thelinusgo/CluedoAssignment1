@@ -40,8 +40,6 @@ public class Game {
 		currentPlayers = new ArrayList<Player>();
 		initializer = new Initializer();
 		board = new Board();
-		initialSetup();
-		runGame();
 	}
 
 	/**
@@ -261,6 +259,8 @@ public class Game {
 	}
 
 	public static void main(String[] args){
-		new Game();
+		Game game = new Game();
+		game.initialSetup();
+		game.runGame();
 	}
 }
