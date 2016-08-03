@@ -213,7 +213,7 @@ public class TextClient {
 	 */
 	public static Suggestion askSuggestion(Player p){
 		if(p.getRoom() == null){
-			System.out.println("Sorry, you must be in a room to make a suggestion.");
+			System.out.println("ERROR: Sorry, you must be in a room to make a suggestion.");
 			return null;
 		}
 		
@@ -249,8 +249,6 @@ public class TextClient {
 			}	
 		}
 
-		
-		
 		
 		System.out.println("Instructions: Enter index of the item you want to nominate.");
 		for(int i = 0; i < 2;){
