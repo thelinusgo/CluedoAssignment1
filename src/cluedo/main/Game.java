@@ -195,7 +195,7 @@ public class Game {
 			break;
 		case "a":
 			//TODO: need to finish this part.
-			System.out.println("[TODO]Printing out envelope: ");
+			System.out.println("[TODO: Remove this]Printing out envelope: ");
 			for(Card c : Initializer.getEnvelope().getEnvelope()){
 				System.out.println(c.toString());
 			}
@@ -205,7 +205,7 @@ public class Game {
 			break;
 		case "s":
 			//TODO: ALSO NEED TO FINISH THIS PART.
-			System.out.println("Player " + currentPlayer.getName() + " wishes to make an accusation.");
+			System.out.println("Player " + currentPlayer.getName() + " wishes to make an suggestion.");
 			makeSuggestion(currentPlayer);
 			moveMade = true;
 			break;
