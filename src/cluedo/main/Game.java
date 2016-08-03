@@ -47,7 +47,8 @@ public class Game {
 			board = new Board();
 			currentPlayers = new ArrayList<Player>();
 			initializer = new Initializer();
-			testInitialSetup();
+			initialSetup();
+			//runGame();
 			
 		}else{
 			System.out.println("Game is not in test mode! Test mode must be set to true to run.");
@@ -63,7 +64,9 @@ public class Game {
 		return currentPlayers;
 	}
 	
-	
+	public int numPlayers(){
+		return this.numPlayers;
+	}
 	
 	
 	/**
