@@ -1,63 +1,139 @@
 package tests;
+import org.junit.*;
+
+import cluedo.assets.*;
+import cluedo.assets.Character;
+import cluedo.main.*;
 
 import static org.junit.Assert.*;
+import java.util.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.List;
-import java.util.Scanner;
-
-import org.junit.Test;
-
-import cluedo.assets.Player;
-import cluedo.main.Board;
-import cluedo.main.CluedoGame;
-import cluedo.main.Initializer;
 
 public class CluedoTests {
-
 	/**
-	 * Test that it can add the correct amount of players
-	 * Test
+	 * Tests that it can move one position.
 	 */
 	@Test
-	public void testCluedo_CorrectInput_1(){
-		CluedoGame cluedo = new CluedoGame(true);
-		int value = cluedo.numPlayers();
-		List<Player> players = cluedo.currentPlayers();
-		assertTrue(value < 6 || value > 3);
+	public void testValidMove_1() {
+		CluedoGame game = new CluedoGame();
+		try {
+			Player player = setupMockPlayer("Ralf", "Miss Scarlett", new Position(23, 13));
+			player.setLookBack("_|");
+			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
+			game.board.move(-1, 0, player);
+			assertEquals(new Position(22, 13), player.position());
+		} catch (CluedoGame.InvalidMove e) {
+			fail(e.getMessage());
+		}
 	}
 	
 	/**
-	 * Test that the user can place input correctly.
+	 * Tests that you can move multiple steps.
 	 */
 	@Test
-	public void testCluedo_CorrectInput_2(){
-	CluedoGame cluedo = new CluedoGame(true);
-	assertTrue(cluedo != null);
+	public void testValidMove_2() {
+		CluedoGame game = new CluedoGame();
+		try {
+			Player player = setupMockPlayer("Rodolfo", "Miss Scarlett", new Position(23, 13));
+			player.setLookBack("_|");
+			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
+			game.board.move(-4, 0, player);
+			assertEquals(new Position(19, 13), player.position());
+		} catch (CluedoGame.InvalidMove e) {
+			fail(e.getMessage());
+		}
 	}
 	
 	/**
-	 * SIMULATED INPUT: Tests correct input.
+	 * Ensures that you cannot move backwards from your position.
 	 */
 	@Test
-	public void testCluedo_CorrectInput_3(){
-	String amount = "3";
+	public void testInvalidMove_1(){
+		CluedoGame game = new CluedoGame();
+		try{
+			Player player = setupMockPlayer("Samuel", "Professor Plum", new Position(0,17));
+			player.setLookBack("|_");
+			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
+			game.board.move(-1, 0, player);
+			assertEquals(new Position(0, 17), player.position());
+		}catch(CluedoGame.InvalidMove e){
+			fail(e.getMessage());
+		}
+	}
 	
-	String n1 = "a";
-	String n2 = "b";
-	String n3 = "c";
+	/**
+	 * Ensures that you cannot move into a wall. If you move 10 spaces, and 10th square is a wall, it will move
+	 * 9 spaces, 1 before the wall.
+	 */
+	@Test
+	public void testInvalidMove_2(){
+		CluedoGame game = new CluedoGame();
+		try{
+			Player player = setupMockPlayer("Namuel", "Professor Plum", new Position(7,24));
+			player.setLookBack("__");
+			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
+			for(int i = 0; i < 10; i++){
+			game.board.move(0, -1, player);	
+			}
+			assertEquals(new Position(7, 16), player.position()); //assert that it moved it one square behind the wall.
+		}catch(CluedoGame.InvalidMove e){
+			fail(e.getMessage());
+		}
+	}
 	
-	CluedoGame cluedo = new CluedoGame(true);	
-	ByteArrayInputStream in = new ByteArrayInputStream(amount.getBytes());
-	Scanner sc = new Scanner(System.in);
-	System.setIn(in);
-	System.out.println(n1);
-	ByteArrayInputStream in1 = new ByteArrayInputStream(n1.getBytes());
-	System.setIn(in1);
-	ByteArrayInputStream in2 = new ByteArrayInputStream(n2.getBytes());
-	System.setIn(in2);
-	ByteArrayInputStream in3 = new ByteArrayInputStream(n3.getBytes());
-	System.setIn(in3);
+	/**
+	 * Test that it utilizes the diceRoll correctly.
+	 */
+	@Test
+	public void testValidMove_3(){
+		CluedoGame game = new CluedoGame();
+		int diceRoll = game.diceRoll();
+		try{
+			Player player = setupMockPlayer("Xamuel", "Professor Plum", new Position(0,17));
+			player.setLookBack("_|");
+			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
+			for(int i = 0; i < diceRoll; i++){
+				game.board.move(1, 0, player);
+			}
+			assertEquals(new Position(diceRoll, player.position().getY()), player.position());
+		}catch(CluedoGame.InvalidMove e){
+			fail(e.getMessage());
+		}
+	}
+	
+	/**
+	 * Test that I can go inside of a room.
+	 */
+	@Test
+	public void testGoingInRoom(){
+		CluedoGame game = new CluedoGame();
+		try{
+			Player player = setupMockPlayer("Lamuel", "Professor Plum", new Position(24,6));
+			player.setLookBack("_|");
+			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
+		
+		
+		
+		
+		
+		}catch(CluedoGame.InvalidMove e){
+			fail(e.getMessage());
+		}
+	}
+	
+	
+	
+	
+	
+	/**
+	 * Setup a mock game of monopoly with a player located at a given location.
+	 */
+	private Player setupMockPlayer(String name, String charName, Position pos)
+			throws CluedoGame.InvalidMove {
+		
+		Player p = new Player(name);
+		p.setCharacter(new Character(charName));
+		p.setPos(pos.getX(), pos.getY());
+		return p;
 	}
 }
