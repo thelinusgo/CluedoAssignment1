@@ -27,11 +27,6 @@ public class Board {
 	 */
 	private boolean isValidMove = false;
 
-	/**
-	 * Door player is going through.
-	 */
-	private Door door = null;
-
 	public Board(){
 		//filling up the board so it does not contain any null values
 		for(int x = 0; x < board.length; x++){
@@ -635,8 +630,8 @@ public class Board {
 		if(isValidMove(new Position(x, y), directionX, directionY, p)){
 			isValidMove = true;
 			board[p.position().getX()][p.position().getY()] = p.getLookBack();
-			if(door != null){
-				Room r = door.getRoom();
+			if(p.door() != null){
+				Room r = p.door().getRoom();
 				r.addMap(p);
 				p.setRoom(r);
 				p.setIsInRoom(true);
@@ -682,9 +677,9 @@ public class Board {
 		p.setLookBack(board[p.position().getX()][p.position().getY()]);
 		p.getRoom().getMap().remove(p);
 			for(Player player : CluedoGame.getCurrentPlayers()){
-				if(player.position().getX() != door.getInFront().getX() && player.position().getY() != door.getInFront().getY()){
-					x = door.getInFront().getX();
-					y = door.getInFront().getY();
+				if(player.position().getX() != p.door().getInFront().getX() && player.position().getY() != p.door().getInFront().getY()){
+					x = p.door().getInFront().getX();
+					y = p.door().getInFront().getY();
 				}
 		}
 		p.setPos(x, y);
@@ -692,6 +687,7 @@ public class Board {
 		p.getRoom().getMap().remove(p);
 		p.setIsInRoom(false);
 		p.setRoom(null);
+		p.setDoor(null);
 		if(x == p.position().getX() && y == p.position().getY()){
 			System.out.println("Cannot exit room.");
 		}
@@ -732,7 +728,7 @@ public class Board {
 					System.out.println("Going through door the wrong way!");
 					return false;
 				}else if(x == d.getPosition().getX() && y == d.getPosition().getY()){
-					door = d;
+					p.setDoor(d);
 				}
 			}
 

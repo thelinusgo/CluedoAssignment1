@@ -24,6 +24,7 @@ public class Player {
 
 	private List<Position> coordinates = new ArrayList<Position>();
 	private Position[] possibleCoords = new Position[4];
+	private Door door;
 
 	/**
 	 * Create a Player with a given name, a hand, a current character, and their x and y position.
@@ -37,6 +38,7 @@ public class Player {
 	public Player(String name){
 		this.name = name;
 		hand = new ArrayList<>();
+		door = null;
 	}
 
 	/**
@@ -96,6 +98,10 @@ public class Player {
 		possibleCoords[3] = new Position(x, y - 1);
 	}
 
+	/**
+	 * Returns the position of where this player is.
+	 * @return
+	 */
 	public Position position(){
 		return this.position;
 	}
@@ -192,9 +198,28 @@ public class Player {
 	public List<Position> coordinatesTaken(){
 		return coordinates;
 	}
-
+	
+	/**
+	 * Returns the possible coordinates that this player can move to.
+	 * @return
+	 */
 	public Position[] getPossibleCoords(){
 		return this.possibleCoords;
+	}
+	
+	/**
+	 * Set door that player has entered through
+	 */
+	public void setDoor(Door dr){
+		this.door = dr;
+	}
+	
+	/**
+	 * Returns the door that this player has entered.
+	 * @return
+	 */
+	public Door door(){
+		return this.door;
 	}
 
 	public String toString(){
