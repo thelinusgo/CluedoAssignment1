@@ -636,6 +636,7 @@ public class Board {
 			isValidMove = true;
 			board[p.position().getX()][p.position().getY()] = p.getLookBack();
 			if(door != null){
+				System.out.println("Going through door");
 				Room r = door.getRoom();
 				r.addMap(p);
 				p.setRoom(r);
@@ -643,6 +644,7 @@ public class Board {
 			}else{
 				p.setPos(x, y);
 			}
+			System.out.println(p.position().toString());
 			p.setLookBack(board[p.position().getX()][p.position().getY()]);
 			p.moveAStep();
 			board[p.position().getX()][p.position().getY()] = p.getCharacterName() + "|";
