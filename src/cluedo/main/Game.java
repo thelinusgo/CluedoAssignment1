@@ -31,10 +31,9 @@ public class Game {
 	/** If player wants to forfeit */
 	private boolean pass = false;
 
-	public Game(){
-		board = new Board();
-		currentPlayers = new ArrayList<Player>();
+	public Game(){currentPlayers = new ArrayList<Player>();
 		initializer = new Initializer();
+		board = new Board();
 		initialSetup();
 		runGame();
 	}
@@ -175,7 +174,7 @@ public class Game {
 					System.out.println(currentPlayer.getName() + " currently has " + currentPlayer.numberofMoves() + " moves left.");
 					System.out.println("current location: " + currentPlayer.position().getX() + ", " + currentPlayer.position().getY());
 					TextClient.movementListener(currentPlayer);
-					if(!board.canMove(p)){
+					if(!board.canMove(p) && !p.coordinatesTaken().isEmpty()){
 						System.out.println("Sorry you do not have anywhere to move now.");
 						break;
 					}

@@ -34,6 +34,17 @@ public class Initializer {
 	/** This helps generating a random shuffle for the lists */
 	private long seed = System.nanoTime();
 
+	/*Initialise Rooms NB: not all rooms have weapons.  */
+	Room kitchen = new Room("Kitchen", 0, 1, 6, 6, true);
+	Room diningrm = new Room("Dining Room", 0, 9, 8, 7, false);
+	Room ballRm = new Room("Ball Room", 8, 1, 8, 7, false);
+	Room conservatory = new Room("Conservatory", 18, 1, 7, 5, true);
+	Room billRm = new Room("Billiard Room", 19, 8, 6, 5, false);
+	Room lib = new Room("Library", 18, 14, 7, 5, false);
+	Room study = new Room("Study", 17, 21, 8, 4, true);
+	Room hall = new Room("Hall", 9, 18, 6, 7, false);
+	Room lounge = new Room("Lounge", 0, 19, 7, 6, true);
+	
 	/**
 	 * Construct a new Board
 	 */
@@ -72,17 +83,6 @@ public class Initializer {
 	 * Initializes the rooms list.
 	 */
 	public void initializeRooms(){
-		/*NB: not all rooms have weapons.  */
-		Room kitchen = new Room("Kitchen", 0, 1, 6, 6, true);
-		Room diningrm = new Room("Dining Room", 0, 9, 8, 7, false);
-		Room ballRm = new Room("Ball Room", 8, 1, 8, 7, false);
-		Room conservatory = new Room("Conservatory", 18, 1, 7, 5, true);
-		Room billRm = new Room("Billiard Room", 19, 8, 6, 5, false);
-		Room lib = new Room("Library", 18, 14, 7, 5, false);
-		Room study = new Room("Study", 17, 21, 8, 4, true);
-		Room hall = new Room("Hall", 9, 18, 6, 7, false);
-		Room lounge = new Room("Lounge", 0, 19, 7, 6, true);
-		
 		/*Add rooms to rooms list*/
 		rooms.add(kitchen);
 		rooms.add(diningrm);
