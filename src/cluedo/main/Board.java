@@ -731,7 +731,7 @@ public class Board {
 				}else if(d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && directionX == 0 && (directionY > 0 || directionY < 0)){
 					System.out.println("Going through door the wrong way!");
 					return false;
-				}else{
+				}else if(x == d.getPosition().getX() && y == d.getPosition().getY()){
 					door = d;
 				}
 			}

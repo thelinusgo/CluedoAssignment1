@@ -174,7 +174,7 @@ public class Game {
 					System.out.println(currentPlayer.getName() + " currently has " + currentPlayer.numberofMoves() + " moves left.");
 					System.out.println("current location: " + currentPlayer.position().getX() + ", " + currentPlayer.position().getY());
 					TextClient.movementListener(currentPlayer);
-					if(!board.canMove(p)){
+					if(!board.canMove(p) && !p.coordinatesTaken().isEmpty()){
 						System.out.println("Sorry you do not have anywhere to move now.");
 						break;
 					}

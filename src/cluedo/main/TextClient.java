@@ -89,31 +89,123 @@ public class TextClient {
 	 * @return
 	 */
 	public static Accusation askAccusation(Player p){
-		System.out.println("Player: " + p.getName() + "Wishes to make an accusation.");
-		Envelope env = Initializer.getEnvelope();
-		CharacterCard character = null;
-		WeaponCard weapon = null;
-		RoomCard room = null;
+			System.out.println("-----------ACCUSATION!-------------");
+			System.out.println("What cards do you want to nominate?");
+			System.out.println("----------------------------------");
+			System.out.println("AVAILABLE CARDS:");
 
-		List<CharacterCard> characters = Initializer.getCharacterCards();
-		List<WeaponCard> weapons = Initializer.getWeaponCards();
-		List<RoomCard> rooms = Initializer.getRoomCards();
-		
-		System.out.println("----------------------------------");
-		System.out.println("Current Characters.........");
-		for(CharacterCard cc : characters){
-			System.out.println(cc.toString());
-		}
-		System.out.println("----------------------------------");
-		System.out.println("Current Weapons...........");
-		for(WeaponCar: weapons){
-			System.out.println(cc.toString());
-		}
-		
-		
-		
+			//the objects for creating a suggestion.
+			//TODO: needs to be based on room he's in..
+			WeaponCard weapon = null;
+			CharacterCard character = null;
+			RoomCard room = null;
+			String indexChoice;
+			boolean isInteger = false;
 
-		return null;
+			//sublists containing cards of a certain category.
+			List<Card> cardsList = p.getCards();
+			List<WeaponCard> weapons = Initializer.getWeaponCards();
+			List<RoomCard> rooms = Initializer.getRoomCards();
+			List<CharacterCard> suspects = Initializer.getCharacterCards();
+			System.out.println("Instructions: Enter index of the item you want to nominate.");
+			for(int i = 0; i < 3;){
+				isInteger = false;
+				if(i == 0){
+					System.out.println("Step 1) Choose from available weapons: ");
+					int index = 0;
+					for(WeaponCard ww : weapons){
+						System.out.println(index + " "  + ww.toString());				
+						index++;
+					}
+					while(!isInteger){
+						indexChoice = sc.next();
+						if(isInteger(indexChoice)){
+							if(Integer.parseInt(indexChoice) < 0 || Integer.parseInt(indexChoice) > weapons.size()-1){
+								System.out.println("Incorrect index. Please try again.");
+
+							}else{
+								weapon = (WeaponCard) weapons.get(Integer.parseInt(indexChoice));
+								i++;
+								isInteger = true;
+							}
+						}
+					}
+				}else if(i == 1){
+					System.out.println("Step 2) Choose from available Rooms: ");
+					int index = 0;
+					for(RoomCard rr : rooms){
+						System.out.println(index + " "  + rr.toString());
+						index++;
+					}
+					while(!isInteger){
+						indexChoice = sc.next();
+						if(isInteger(indexChoice)){
+							if(Integer.parseInt(indexChoice) < 0 || Integer.parseInt(indexChoice) > weapons.size()-1){
+								System.out.println("Incorrect index. Please try again.");
+							}else{
+								room = (RoomCard) rooms.get(Integer.parseInt(indexChoice));
+								i++;
+								isInteger = true;
+							}
+						}
+					}
+				}else{
+					System.out.println("Step 3) Choose from available Suspects: ");
+					int index = 0;
+					for(CharacterCard cc : suspects){
+						System.out.println(index + " "  + cc.toString());
+						index++;
+					}
+					while(!isInteger){
+						indexChoice = sc.next();
+						if(isInteger(indexChoice)){
+							if(Integer.parseInt(indexChoice) < 0 || Integer.parseInt(indexChoice) > weapons.size()-1){
+								System.out.println("Incorrect index. Please try again.");
+							}else{
+								character = (CharacterCard) suspects.get(Integer.parseInt(indexChoice));
+								i++;
+								isInteger = true;
+							}
+						}
+					}
+				}
+			}
+			
+			Card[] env = Initializer.getEnvelope().getEnvelope();
+			
+			int count = 0;
+			for(Card card : env){
+				if(card instanceof WeaponCard){
+					if(card.equals(weapon)){
+						count++;
+					}
+				}else if(card instanceof CharacterCard){
+					if(card.equals(character)){
+						count++;
+					}
+				}else if(card instanceof RoomCard){
+					if(card.equals(room)){
+						count++;
+					}
+				}
+			}
+			
+			
+			
+			
+			if(count == 3){
+			//TODO: come and fix this later!
+			System.out.println("----------------------------------");
+			System.out.println(" CONFIRMED Accusation Pieces:     ");
+			System.out.println(" weapon: " + weapon);
+			System.out.println(" character: " + character);
+			System.out.println(" room: " + room);
+			System.out.println("----------------------------------");
+			return new Accusation(weapon, room, character, p);
+			}
+			System.out.println("The accusation pieces did not match.");
+			System.out.println(count);
+			return null;	
 	}
 
 	/**
