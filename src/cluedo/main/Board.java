@@ -677,11 +677,11 @@ public class Board {
 		board[p.position().getX()][p.position().getY()] = p.getLookBack();
 		p.setLookBack(board[p.position().getX()][p.position().getY()]);
 		p.getRoom().getMap().remove(p);
-			for(Player player : CluedoGame.getCurrentPlayers()){
-				if(player.position().getX() != p.door().getInFront().getX() && player.position().getY() != p.door().getInFront().getY()){
-					x = p.door().getInFront().getX();
-					y = p.door().getInFront().getY();
-				}
+		for(Player player : CluedoGame.getCurrentPlayers()){
+			if(player.position().getX() != p.door().getInFront().getX() && player.position().getY() != p.door().getInFront().getY()){
+				x = p.door().getInFront().getX();
+				y = p.door().getInFront().getY();
+			}
 		}
 		p.setPos(x, y);
 		board[p.position().getX()][p.position().getY()] = p.getCharacterName() + "|";
@@ -703,46 +703,50 @@ public class Board {
 	 * @param directionY - how much the player is moving by in the y direction
 	 * @param p - current player
 	 * @return
-	 * @throws InvalidMove 
 	 */
-	public boolean isValidMove(Position position, int directionX, int directionY, Player p) throws InvalidMove{
+	public boolean isValidMove(Position position, int directionX, int directionY, Player p){
 		int x = position.getX();
 		int y = position.getY();
-		if(x > 24 || x < 0 || y > 24 || y < 0){
-			throw new CluedoGame.InvalidMove("Cannot go out of bounds!");
-		}else if(board[x][y].equals("|#|") || board[x][y].equals("#|")){
-			throw new CluedoGame.InvalidMove("Cannot move into wall.");
-		}else if(board[x][y].equals("|X|") || board[x][y].equals("X|")){
-			throw new CluedoGame.InvalidMove("Cannot move into wall.");
-		}else if((board[x][y].equals("S|") || board[x][y].equals("|S|")) && !p.isInRoom()){
-			throw new CluedoGame.InvalidMove("Player is not in room to take the stairs.");
-		}else if(board[x][y].equals("*|")){
-			throw new CluedoGame.InvalidMove("Cannot move into envelope space.");
-		}else{
-			for(Door d : doors){
-				if(!d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && (directionX > 0 || directionX < 0) && directionY == 0){
-					throw new CluedoGame.InvalidMove("Going through door the wrong way!");
-				}else if(d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && directionX == 0 && (directionY > 0 || directionY < 0)){
-					throw new CluedoGame.InvalidMove("Going through door the wrong way!");
-				}else if(x == d.getPosition().getX() && y == d.getPosition().getY()){
-					p.setDoor(d);
-				}
-			}
-
-			for(Position pos : p.coordinatesTaken()){
-				if(pos.getX() == x && pos.getY() == y){
-					throw new CluedoGame.InvalidMove("You cannot move into the same square within this move.");
-				}
-			}
-
-			for(Player player : CluedoGame.getCurrentPlayers()){
-				if(!player.getName().equals(p.getName())){
-					if(position.equals(player.position())){
-						throw new CluedoGame.InvalidMove("Cannot move into existing player's square!");
+		try {
+			if(x > 24 || x < 0 || y > 24 || y < 0){
+				throw new CluedoGame.InvalidMove("Cannot go out of bounds!");
+			}else if(board[x][y].equals("|#|") || board[x][y].equals("#|")){
+				throw new CluedoGame.InvalidMove("Cannot move into wall.");
+			}else if(board[x][y].equals("|X|") || board[x][y].equals("X|")){
+				throw new CluedoGame.InvalidMove("Cannot move into wall.");
+			}else if((board[x][y].equals("S|") || board[x][y].equals("|S|")) && !p.isInRoom()){
+				throw new CluedoGame.InvalidMove("Player is not in room to take the stairs.");
+			}else if(board[x][y].equals("*|")){
+				throw new CluedoGame.InvalidMove("Cannot move into envelope space.");
+			}else{
+				for(Door d : doors){
+					if(!d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && (directionX > 0 || directionX < 0) && directionY == 0){
+						throw new CluedoGame.InvalidMove("Going through door the wrong way!");
+					}else if(d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && directionX == 0 && (directionY > 0 || directionY < 0)){
+						throw new CluedoGame.InvalidMove("Going through door the wrong way!");
+					}else if(x == d.getPosition().getX() && y == d.getPosition().getY()){
+						p.setDoor(d);
 					}
+				}
 
+				for(Position pos : p.coordinatesTaken()){
+					if(pos.getX() == x && pos.getY() == y){
+						throw new CluedoGame.InvalidMove("You cannot move into the same square within this move.");
+					}
+				}
+
+				for(Player player : CluedoGame.getCurrentPlayers()){
+					if(!player.getName().equals(p.getName())){
+						if(position.equals(player.position())){
+							throw new CluedoGame.InvalidMove("Cannot move into existing player's square!");
+						}
+
+					}
 				}
 			}
+		} catch (InvalidMove e) {
+			System.out.println(e.getMessage());
+			return false;
 		}
 		return true;
 	}
@@ -763,7 +767,7 @@ public class Board {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns true if player has valid possible moves
 	 * @return
@@ -771,12 +775,14 @@ public class Board {
 	public boolean validPos(Position pos, Player p){
 		int x = pos.getX();
 		int y = pos.getY();
-		if(board[x][y].equals("|#|") || board[x][y].equals("#|") || board[x][y].equals("|X|") || board[x][y].equals("X|")){
-			return false;
+		if(x < 25 && x >= 0 && y < 25 && y >= 0){
+			if(board[x][y].equals("|#|") || board[x][y].equals("#|") || board[x][y].equals("|X|") || board[x][y].equals("X|")){
+				return false;
+			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Prints out the board.
 	 */
@@ -788,7 +794,7 @@ public class Board {
 			System.out.println();
 		}
 	}
-	
+
 	/**
 	 * For testing purposes only
 	 * @return
@@ -796,7 +802,7 @@ public class Board {
 	public String[][] getBoard(){
 		return board;
 	}
-	
+
 	public static void main(String[] args) {
 		new Board();
 	}
