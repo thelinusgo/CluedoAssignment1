@@ -31,10 +31,9 @@ public class Game {
 	/** If player wants to forfeit */
 	private boolean pass = false;
 
-	public Game(){
-		board = new Board();
-		currentPlayers = new ArrayList<Player>();
+	public Game(){currentPlayers = new ArrayList<Player>();
 		initializer = new Initializer();
+		board = new Board();
 		initialSetup();
 		runGame();
 	}
