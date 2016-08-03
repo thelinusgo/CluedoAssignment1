@@ -32,12 +32,11 @@ public class CluedoGame {
 	/** If player has made a move*/
 	private boolean moveMade = false;
 	
-	
 	/** This helps generate a random shuffle for the lists */
 	private long seed = System.nanoTime();
 
-	/** If player wants to forfeit */
-	private boolean pass = false;
+	/**Stores player's previous option*/
+	private String prevOption = "";
 
 	public CluedoGame(){
 		currentPlayers = new ArrayList<Player>();
@@ -150,8 +149,9 @@ public class CluedoGame {
 
 	/**
 	 * Runs the game - only if asking players was successful.
+	 * @throws InvalidMove 
 	 */
-	public void runGame(){
+	public void runGame() throws InvalidMove{
 		if(askSuccess){
 			while(!isGameOver()){
 				for(int i = 0; i < currentPlayers.size(); i++){
@@ -159,8 +159,24 @@ public class CluedoGame {
 					currentPlayer = currentPlayers.get(i);
 					System.out.println("Player " + currentPlayer.getName() + " starts.");
 					System.out.println(currentPlayer.getName() + "'s character piece is " + currentPlayer.getCharacterName() + ".");
-					while(!moveMade){
-						String option = TextClient.askOption();
+					loop: while(!moveMade){
+						String option;
+						if(prevOption.equals("s")){
+							System.out.println("Do you want to end your turn or make an accusation? (Press Y for ending your turn or N for making an accusation)");
+							option = TextClient.inputString();
+							switch(option){
+							case "y":
+								System.out.println("You have ended your turn.");
+								moveMade = true;
+								prevOption = "";
+								break loop;
+							case "n":
+								option = "a";
+								break;
+							}
+						}else{
+							option = TextClient.askOption();
+						}
 						doOption(option, currentPlayer);
 					}
 				}
@@ -168,7 +184,7 @@ public class CluedoGame {
 		}
 	}
 
-	public void doOption(String option, Player p){
+	public void doOption(String option, Player p) throws InvalidMove{
 		switch(option){
 		case "m":
 			currentPlayer.setNumberofMoves(diceRoll());
@@ -223,11 +239,10 @@ public class CluedoGame {
 			Suggestion sugg = makeSuggestion(currentPlayer);
 			
 			if(sugg == null){
-				System.out.println("The room you are in is null.");
+				System.out.println("You are not in a room to make a suggestion.");
 				moveMade = true;
 				break;
 			}
-			
 			/**
 			 * TODO: casey, I feel like this is broken.
 			 */
@@ -267,7 +282,7 @@ public class CluedoGame {
 //				}				
 //			}
 			System.out.println("count:" + count);
-			moveMade = true;
+			prevOption = "s";
 			break;
 		}
 	}
@@ -316,7 +331,7 @@ public class CluedoGame {
 		System.out.println("Type D to move RIGHT.");
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws InvalidMove{
 		CluedoGame game = new CluedoGame();
 		game.initialSetup();
 		game.runGame();

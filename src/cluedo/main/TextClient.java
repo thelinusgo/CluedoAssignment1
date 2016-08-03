@@ -14,6 +14,7 @@ import cluedo.arguments.Argument;
 import cluedo.arguments.Suggestion;
 import cluedo.assets.Player;
 import cluedo.cards.*;
+import cluedo.main.CluedoGame.InvalidMove;
 
 
 public class TextClient {
@@ -44,8 +45,9 @@ public class TextClient {
 	 * Listen for direction movement. W, S, A, D are valid directions.
 	 * 
 	 * @param Player to move.
+	 * @throws InvalidMove 
 	 */
-	public static void movementListener(Player p){
+	public static void movementListener(Player p) throws InvalidMove{
 		String dir = "z";
 		System.out.println("Please enter the letters W, A, S or D to move.");
 		System.out.println("W - Up");
