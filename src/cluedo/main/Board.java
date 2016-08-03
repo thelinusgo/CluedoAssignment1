@@ -665,8 +665,9 @@ public class Board {
 	public void moveToRoom(Player p){
 		board[p.position().getX()][p.position().getY()] = p.getLookBack();
 		p.setLookBack(board[p.position().getX()][p.position().getY()]);
-		p.getRoom().getOtherRoom().addMap(p);
 		p.getRoom().getMap().remove(p);
+		p.setRoom(p.getRoom().getOtherRoom());
+		p.getRoom().addMap(p);
 		board[p.position().getX()][p.position().getY()] = p.getCharacterName() + "|";
 	}
 
@@ -688,6 +689,9 @@ public class Board {
 		}
 		p.setPos(x, y);
 		board[p.position().getX()][p.position().getY()] = p.getCharacterName() + "|";
+		p.getRoom().getMap().remove(p);
+		p.setIsInRoom(false);
+		p.setRoom(null);
 		if(x == p.position().getX() && y == p.position().getY()){
 			System.out.println("Cannot exit room.");
 		}
