@@ -205,6 +205,7 @@ public class TextClient {
 			}
 			System.out.println("The accusation pieces did not match.");
 			System.out.println(count);
+			p.setOut();
 			return null;	
 	}
 
