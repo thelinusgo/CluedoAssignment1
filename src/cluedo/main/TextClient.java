@@ -16,7 +16,7 @@ import cluedo.cards.*;
 
 
 public class TextClient {
-	private static Board board = Game.board;
+	private static Board board = CluedoGame.board;
 
 	private static String MOVES = "w|a|s|d"; //pattern describing the possible moves.
 	private static String OPTIONS = "m|s|a|c"; //patterns describing the possible options.
@@ -353,10 +353,10 @@ public class TextClient {
 		for(int i = 0 ; i != Integer.parseInt(amount); ++i){
 			System.out.println("Please enter Player "  + String.valueOf(i+1) + "'s name");
 			singleName = sc.next();
-			Game.addPlayer(singleName);
+			CluedoGame.addPlayer(singleName);
 		}
 		System.out.println("Please note that every player will be assigned a random character.");
-		Game.askSuccess = true;
+		CluedoGame.askSuccess = true;
 	}
 
 	/**

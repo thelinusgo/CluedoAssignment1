@@ -1,13 +1,13 @@
 package tests;
 import org.junit.*;
+
+import cluedo.main.*;
+
 import static org.junit.Assert.*;
 import java.util.*;
 
-import swen221.monopoly.*;
-import swen221.monopoly.locations.Location;
-import swen221.monopoly.locations.Street;
 
-public class MonopolyTests {
+public class CluedoTests2 {
 	// this is where you must write your tests; do not alter the package, or the
     // name of this file.  An example test is provided for you.
 	
@@ -17,7 +17,7 @@ public class MonopolyTests {
 		// player attempts to buy a property. We check that the right amount has
 		// been deducted from his/her balance, and that he/she now owns the
 		// property and vice-versa.
-		GameOfMonopoly game = new GameOfMonopoly();
+		CluedoGame game = new CluedoGame();
 		try {
 			Player player = setupMockPlayer(game,"Park Lane",1500);
 			game.buyProperty(player);

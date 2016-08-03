@@ -129,7 +129,7 @@ public class Board {
 		board[1][2] = "1 ";
 		board[5][1] = "S|";
 
-		Door d = new Door(false, 4, 6, Game.initializer.kitchen);
+		Door d = new Door(false, 4, 6, CluedoGame.initializer.kitchen);
 		d.setInFront(new Position(4, 7));
 		doors.add(d);
 	}
@@ -187,8 +187,8 @@ public class Board {
 
 		board[1][10] = "2 ";
 
-		Door d1 = new Door(true, width-1, 12, Game.initializer.diningrm);
-		Door d2 = new Door(true, width-2, y+height-1, Game.initializer.diningrm);
+		Door d1 = new Door(true, width-1, 12, CluedoGame.initializer.diningrm);
+		Door d2 = new Door(true, width-2, y+height-1, CluedoGame.initializer.diningrm);
 		d1.setInFront(new Position(width, 12));
 		d2.setInFront(new Position(width-2, y+height));
 		doors.add(d1);
@@ -238,7 +238,7 @@ public class Board {
 		board[x][y] = "|S|";
 		board[x+1][y+1] = "3 ";
 
-		Door d = new Door(false, x+width-1, y, Game.initializer.lounge);
+		Door d = new Door(false, x+width-1, y, CluedoGame.initializer.lounge);
 		d.setInFront(new Position(x+width-1, y+1));
 		doors.add(d);
 	}
@@ -286,9 +286,9 @@ public class Board {
 
 		board[x+1][y+1] = "4 ";
 
-		Door d1 = new Door(true, x+width-1, y+2, Game.initializer.hall);
-		Door d2 = new Door(true, x+3, y , Game.initializer.hall);
-		Door d3 = new Door(true, x+2, y, Game.initializer.hall);
+		Door d1 = new Door(true, x+width-1, y+2, CluedoGame.initializer.hall);
+		Door d2 = new Door(true, x+3, y , CluedoGame.initializer.hall);
+		Door d3 = new Door(true, x+2, y, CluedoGame.initializer.hall);
 		d1.setInFront(new Position(x+width, y+2));
 		d2.setInFront(new Position(x+3, y+1));
 		d3.setInFront(new Position(x+2, y+1));
@@ -341,7 +341,7 @@ public class Board {
 		board[x+width-1][y] = "S|";
 		board[x+1][y+1] = "5 ";
 
-		Door d = new Door(false, x, y, Game.initializer.study);
+		Door d = new Door(false, x, y, CluedoGame.initializer.study);
 		d.setInFront(new Position(x, y+1));
 		doors.add(d);
 	}
@@ -388,8 +388,8 @@ public class Board {
 		}
 		board[x+1][y+1] = "6 ";
 
-		Door d1 = new Door(true, x, y+2, Game.initializer.lib);
-		Door d2 = new Door(true, x+3, y, Game.initializer.lib);
+		Door d1 = new Door(true, x, y+2, CluedoGame.initializer.lib);
+		Door d2 = new Door(true, x+3, y, CluedoGame.initializer.lib);
 		d1.setInFront(new Position(x+1, y+2));
 		d2.setInFront(new Position(x+3, y-1));
 		doors.add(d1);
@@ -438,8 +438,8 @@ public class Board {
 		}
 		board[x+1][y+1] = "7 ";
 
-		Door d1 = new Door(true, x, y+1, Game.initializer.billRm);
-		Door d2 = new Door(false, x+width-2, y+height-1, Game.initializer.billRm);
+		Door d1 = new Door(true, x, y+1, CluedoGame.initializer.billRm);
+		Door d2 = new Door(false, x+width-2, y+height-1, CluedoGame.initializer.billRm);
 		d1.setInFront(new Position(x+width-2, y+height));
 		d2.setInFront(new Position(x+1, y+1));
 		doors.add(d1);
@@ -489,7 +489,7 @@ public class Board {
 		board[x+width-2][y+height-1] = "S|";
 		board[x+1][y+1] = "8 ";
 
-		Door d = new Door(false, x, y+height-2, Game.initializer.conservatory);
+		Door d = new Door(false, x, y+height-2, CluedoGame.initializer.conservatory);
 		d.setInFront(new Position(x, y+height-1));
 		doors.add(d);
 	}
@@ -535,10 +535,10 @@ public class Board {
 			board[x+width-2][i] = " |";
 		}
 
-		Door d1 = new Door(true, x, 5, Game.initializer.ballRm);
-		Door d2 = new Door(true, x+width-1, 5, Game.initializer.ballRm);
-		Door d3 = new Door(false, x+1, y+height-1, Game.initializer.ballRm);
-		Door d4 = new Door(false, x+width-2, y+height-1, Game.initializer.ballRm);
+		Door d1 = new Door(true, x, 5, CluedoGame.initializer.ballRm);
+		Door d2 = new Door(true, x+width-1, 5, CluedoGame.initializer.ballRm);
+		Door d3 = new Door(false, x+1, y+height-1, CluedoGame.initializer.ballRm);
+		Door d4 = new Door(false, x+width-2, y+height-1, CluedoGame.initializer.ballRm);
 		d1.setInFront(new Position(x+1, 5));
 		d2.setInFront(new Position(x+width, 5));
 		d3.setInFront(new Position(x+1, y+height));
@@ -628,7 +628,7 @@ public class Board {
 	 * @param p
 	 */
 	public void move(int directionX, int directionY, Player p){
-		List<Room> rooms = Game.initializer.getRooms();
+		List<Room> rooms = CluedoGame.initializer.getRooms();
 		int x = p.position().getX() + directionX;
 		int y = p.position().getY() + directionY;
 		p.coordinatesTaken().clear();
@@ -681,7 +681,7 @@ public class Board {
 		board[p.position().getX()][p.position().getY()] = p.getLookBack();
 		p.setLookBack(board[p.position().getX()][p.position().getY()]);
 		p.getRoom().getMap().remove(p);
-			for(Player player : Game.getCurrentPlayers()){
+			for(Player player : CluedoGame.getCurrentPlayers()){
 				if(player.position().getX() != door.getInFront().getX() && player.position().getY() != door.getInFront().getY()){
 					x = door.getInFront().getX();
 					y = door.getInFront().getY();
@@ -743,7 +743,7 @@ public class Board {
 				}
 			}
 
-			for(Player player : Game.getCurrentPlayers()){
+			for(Player player : CluedoGame.getCurrentPlayers()){
 				if(!player.getName().equals(p.getName())){
 					if(position.equals(player.position())){
 						System.out.println("Cannot move into existing player's square!");

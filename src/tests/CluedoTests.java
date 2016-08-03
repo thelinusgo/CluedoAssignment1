@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import cluedo.assets.Player;
 import cluedo.main.Board;
-import cluedo.main.Game;
+import cluedo.main.CluedoGame;
 import cluedo.main.Initializer;
 
 public class CluedoTests {
@@ -22,7 +22,7 @@ public class CluedoTests {
 	 */
 	@Test
 	public void testCluedo_CorrectInput_1(){
-		Game cluedo = new Game(true);
+		CluedoGame cluedo = new CluedoGame(true);
 		int value = cluedo.numPlayers();
 		List<Player> players = cluedo.currentPlayers();
 		assertTrue(value < 6 || value > 3);
@@ -33,7 +33,7 @@ public class CluedoTests {
 	 */
 	@Test
 	public void testCluedo_CorrectInput_2(){
-	Game cluedo = new Game(true);
+	CluedoGame cluedo = new CluedoGame(true);
 	assertTrue(cluedo != null);
 	}
 	
@@ -48,7 +48,7 @@ public class CluedoTests {
 	String n2 = "b";
 	String n3 = "c";
 	
-	Game cluedo = new Game(true);	
+	CluedoGame cluedo = new CluedoGame(true);	
 	ByteArrayInputStream in = new ByteArrayInputStream(amount.getBytes());
 	Scanner sc = new Scanner(System.in);
 	System.setIn(in);

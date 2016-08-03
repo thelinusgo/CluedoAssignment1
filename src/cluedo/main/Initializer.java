@@ -194,8 +194,8 @@ public class Initializer {
 
 	public void distributeCharacters(){
 		Collections.shuffle(characters, new Random(seed)); 
-		for(int i = 0; i < Game.getCurrentPlayers().size(); i++){	
-			Player p = Game.getCurrentPlayers().get(i);
+		for(int i = 0; i < CluedoGame.getCurrentPlayers().size(); i++){	
+			Player p = CluedoGame.getCurrentPlayers().get(i);
 			p.setCharacter(characters.get(i));
 		}
 	}
@@ -205,28 +205,28 @@ public class Initializer {
 		Collections.shuffle(weaponCards, new Random(seed)); 
 		Collections.shuffle(characterCards, new Random(seed)); 
 		for(int i = 0, j = 0; j < roomCards.size(); i++, j++){
-			if(i == Game.getCurrentPlayers().size()){
+			if(i == CluedoGame.getCurrentPlayers().size()){
 				i = 0;
 			}
-			Player currentPlayer = Game.getCurrentPlayers().get(i);
+			Player currentPlayer = CluedoGame.getCurrentPlayers().get(i);
 			currentPlayer.addCard(roomCards.get(j));
 		}
 		for(int i = 0, j = 0; j < weaponCards.size(); i++, j++){
-			if(i == Game.getCurrentPlayers().size()){
+			if(i == CluedoGame.getCurrentPlayers().size()){
 				i = 0;
 			}
-			Player currentPlayer = Game.getCurrentPlayers().get(i);
+			Player currentPlayer = CluedoGame.getCurrentPlayers().get(i);
 			currentPlayer.addCard(weaponCards.get(j));
 		}
 		for(int i = 0, j = 0; j < characterCards.size(); i++, j++){
-			if(i == Game.getCurrentPlayers().size()){
+			if(i == CluedoGame.getCurrentPlayers().size()){
 				i = 0;
 			}
-			Player currentPlayer = Game.getCurrentPlayers().get(i);
+			Player currentPlayer = CluedoGame.getCurrentPlayers().get(i);
 			currentPlayer.addCard(characterCards.get(j));
 		}
 		
-		for(Player p : Game.getCurrentPlayers()){
+		for(Player p : CluedoGame.getCurrentPlayers()){
 			for(Card c : p.getCards()){
 				System.out.println(c);
 			}

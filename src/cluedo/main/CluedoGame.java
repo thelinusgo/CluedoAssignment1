@@ -11,7 +11,7 @@ import cluedo.cards.Card;
  * @author Casey & Linus
  *
  */
-public class Game {
+public class CluedoGame {
 	public static Initializer initializer; //initializes all of the data
 	public static Board board; //an instance of the board.
 
@@ -36,7 +36,7 @@ public class Game {
 	/** If player wants to forfeit */
 	private boolean pass = false;
 
-	public Game(){
+	public CluedoGame(){
 		currentPlayers = new ArrayList<Player>();
 		initializer = new Initializer();
 		board = new Board();
@@ -45,7 +45,7 @@ public class Game {
 	/**
 	 * Alternative constructor to allow testing.
 	 */
-	public Game(boolean test){
+	public CluedoGame(boolean test){
 		if(test){
 			board = new Board();
 			currentPlayers = new ArrayList<Player>();
@@ -259,7 +259,7 @@ public class Game {
 	}
 
 	public static void main(String[] args){
-		Game game = new Game();
+		CluedoGame game = new CluedoGame();
 		game.initialSetup();
 		game.runGame();
 	}
