@@ -174,7 +174,7 @@ public class Game {
 				}
 			}else{
 				while(currentPlayer.numberofMoves() > 0){
-					System.out.println(currentPlayer.getName() + " currently has " + currentPlayer.numberofMoves() + " moves left.");
+					System.out.println(currentPlayer.getName() + " (" + currentPlayer.getCharacterName() + ")" + " currently has " + currentPlayer.numberofMoves() + " moves left.");
 					System.out.println("current location: " + currentPlayer.position().getX() + ", " + currentPlayer.position().getY());
 					TextClient.movementListener(currentPlayer);
 					if(!board.canMove(p) && !p.coordinatesTaken().isEmpty()){

@@ -154,7 +154,6 @@ public class Player {
 	 * @return
 	 */
 	public boolean isInRoom() {
-		System.out.println("Currently in room: " + this.isInRoom);
 		return this.isInRoom;
 	}
 

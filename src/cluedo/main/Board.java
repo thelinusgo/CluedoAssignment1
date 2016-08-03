@@ -765,8 +765,6 @@ public class Board {
 	public boolean canMove(Player p){
 		for(Position position : p.getPossibleCoords()){
 			for(Position pos : p.coordinatesTaken()){
-				System.out.println(position.toString());
-				System.out.println(pos.toString());
 				if(!pos.equals(position)){
 					return true;
 				}
