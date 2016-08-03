@@ -235,7 +235,7 @@ public class Board {
 		board[x+1][y+1] = "3 ";
 
 		Door d = new Door(false, x+width-1, y, CluedoGame.initializer.lounge, "v");
-		d.setInFront(new Position(x+width-1, y+1));
+		d.setInFront(new Position(x+width-1, y-1));
 		doors.add(d);
 	}
 
@@ -286,8 +286,8 @@ public class Board {
 		Door d2 = new Door(true, x+3, y , CluedoGame.initializer.hall, "v");
 		Door d3 = new Door(true, x+2, y, CluedoGame.initializer.hall, "v");
 		d1.setInFront(new Position(x+width, y+2));
-		d2.setInFront(new Position(x+3, y+1));
-		d3.setInFront(new Position(x+2, y+1));
+		d2.setInFront(new Position(x+3, y-1));
+		d3.setInFront(new Position(x+2, y-1));
 		doors.add(d1);
 		doors.add(d2);
 		doors.add(d3);
@@ -338,7 +338,7 @@ public class Board {
 		board[x+1][y+1] = "5 ";
 
 		Door d = new Door(false, x, y, CluedoGame.initializer.study, "v");
-		d.setInFront(new Position(x, y+1));
+		d.setInFront(new Position(x, y-1));
 		doors.add(d);
 	}
 
@@ -386,7 +386,7 @@ public class Board {
 
 		Door d1 = new Door(true, x, y+2, CluedoGame.initializer.lib,  ">");
 		Door d2 = new Door(true, x+3, y, CluedoGame.initializer.lib, "v");
-		d1.setInFront(new Position(x+1, y+2));
+		d1.setInFront(new Position(x-1, y+2));
 		d2.setInFront(new Position(x+3, y-1));
 		doors.add(d1);
 		doors.add(d2);
@@ -437,7 +437,7 @@ public class Board {
 		Door d1 = new Door(true, x, y+1, CluedoGame.initializer.billRm, ">");
 		Door d2 = new Door(false, x+width-2, y+height-1, CluedoGame.initializer.billRm, "^");
 		d1.setInFront(new Position(x+width-2, y+height));
-		d2.setInFront(new Position(x+1, y+1));
+		d2.setInFront(new Position(x-1, y+1));
 		doors.add(d1);
 		doors.add(d2);
 	}
@@ -535,7 +535,7 @@ public class Board {
 		Door d2 = new Door(true, x+width-1, 5, CluedoGame.initializer.ballRm, "<");
 		Door d3 = new Door(false, x+1, y+height-1, CluedoGame.initializer.ballRm, "^");
 		Door d4 = new Door(false, x+width-2, y+height-1, CluedoGame.initializer.ballRm, "^");
-		d1.setInFront(new Position(x+1, 5));
+		d1.setInFront(new Position(x-1, 5));
 		d2.setInFront(new Position(x+width, 5));
 		d3.setInFront(new Position(x+1, y+height));
 		d4.setInFront(new Position(x+width-2, y+height)); 
