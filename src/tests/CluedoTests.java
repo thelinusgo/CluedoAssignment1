@@ -47,8 +47,10 @@ public class CluedoTests {
 	String n1 = "a";
 	String n2 = "b";
 	String n3 = "c";
+	
 	Game cluedo = new Game(true);	
 	ByteArrayInputStream in = new ByteArrayInputStream(amount.getBytes());
+	Scanner sc = new Scanner(System.in);
 	System.setIn(in);
 	System.out.println(n1);
 	ByteArrayInputStream in1 = new ByteArrayInputStream(n1.getBytes());
