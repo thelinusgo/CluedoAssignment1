@@ -189,10 +189,7 @@ public class TextClient {
 					}
 				}
 			}
-			
-			
-			
-			
+
 			if(count == 3){
 			//TODO: come and fix this later!
 			System.out.println("----------------------------------");
