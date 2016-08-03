@@ -1,6 +1,9 @@
 package cluedo.main;
 import java.io.IOException;
 import java.util.*;
+
+import cluedo.arguments.Accusation;
+import cluedo.arguments.Suggestion;
 import cluedo.assets.*;
 import cluedo.cards.Card;
 /**
@@ -192,6 +195,12 @@ public class Game {
 			break;
 		case "a":
 			//TODO: need to finish this part.
+			System.out.println("[TODO]Printing out envelope: ");
+			for(Card c : Initializer.getEnvelope().getEnvelope()){
+				System.out.println(c.toString());
+			}
+			System.out.println("Player " + currentPlayer.getName() + " wishes to make an accusation.");
+			makeAccusation(currentPlayer);
 			moveMade = true;
 			break;
 		case "s":
@@ -207,10 +216,17 @@ public class Game {
 	 * This makes an accusation.
 	 * @param current Player
 	 */
-	public void makeSuggestion(Player p){
-		TextClient.askSuggestion(p);
+	public Suggestion makeSuggestion(Player p){
+		return TextClient.askSuggestion(p);
 	}
-
+	
+	/**
+	 * This makes a suggestion.
+	 * @param p
+	 */
+	public Accusation makeAccusation(Player p){
+		return TextClient.askAccusation(p);
+	}
 
 
 	public boolean isGameOver(){
