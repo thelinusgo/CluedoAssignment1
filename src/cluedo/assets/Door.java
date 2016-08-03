@@ -9,6 +9,7 @@ package cluedo.assets;
 public class Door {
 	private boolean isHorizontal;
 	private Position position;
+	private String s;
 	
 	/**
 	 * Stores the room that this door belongs to.
@@ -20,10 +21,11 @@ public class Door {
 	 */
 	private Position inFront;
 	
-	public Door(boolean direction, int x, int y, Room rm){
+	public Door(boolean direction, int x, int y, Room rm, String s){
 		this.isHorizontal = direction;
 		this.position = new Position(x, y);
 		this.room = rm;
+		this.s = s;
 	}
 	
 	/**
@@ -63,5 +65,12 @@ public class Door {
 	 */
 	public Room getRoom(){
 		return this.room;
+	}
+	
+	/**
+	 * Returns the string of the door.
+	 */
+	public String getString(){
+		return this.s;
 	}
 }
