@@ -636,7 +636,6 @@ public class Board {
 			isValidMove = true;
 			board[p.position().getX()][p.position().getY()] = p.getLookBack();
 			if(door != null){
-				System.out.println("Going through door");
 				Room r = door.getRoom();
 				r.addMap(p);
 				p.setRoom(r);
@@ -647,13 +646,10 @@ public class Board {
 			System.out.println(p.position().toString());
 			p.setLookBack(board[p.position().getX()][p.position().getY()]);
 			p.moveAStep();
-			board[p.position().getX()][p.position().getY()] = p.getCharacterName() + "|";
-			for(Room r : rooms){
-				if(!r.contains(x, y)){
-					p.setRoom(null);
-					p.setIsInRoom(false);
-					r.getMap().remove(p);
-				}
+			if(p.isInRoom()){
+				board[p.position().getX()][p.position().getY()] = p.getCharacterName() + " ";
+			}else{
+				board[p.position().getX()][p.position().getY()] = p.getCharacterName() + "|";
 			}
 		}else{
 			isValidMove = false;
@@ -684,13 +680,11 @@ public class Board {
 		board[p.position().getX()][p.position().getY()] = p.getLookBack();
 		p.setLookBack(board[p.position().getX()][p.position().getY()]);
 		p.getRoom().getMap().remove(p);
-		for(Door d : p.getRoom().getDoors()){
 			for(Player player : Game.getCurrentPlayers()){
-				if(player.position().getX() != d.getInFront().getX() && player.position().getY() != d.getInFront().getY()){
-					x = d.getInFront().getX();
-					y = d.getInFront().getY();
+				if(player.position().getX() != door.getInFront().getX() && player.position().getY() != door.getInFront().getY()){
+					x = door.getInFront().getX();
+					y = door.getInFront().getY();
 				}
-			}
 		}
 		p.setPos(x, y);
 		board[p.position().getX()][p.position().getY()] = p.getCharacterName() + "|";
@@ -776,7 +770,7 @@ public class Board {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Prints out the board.
 	 */

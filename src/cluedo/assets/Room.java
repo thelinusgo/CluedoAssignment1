@@ -8,32 +8,32 @@ import java.util.*;
  *
  */
 public class Room {
-	
+
 	/**
 	 * The name of the Room.
 	 */
 	private String name;
-	
+
 	/**
 	 * The weapon that the room is in.
 	 */
 	private Weapon weapon = null;
-	
+
 	/**
 	 * The x position of this room.
 	 */
 	private int x;
-	
+
 	/**
 	 * The y position of this room.
 	 */
 	private int y;
-	
+
 	/**
 	 * The width of this room.
 	 */
 	private int width;
-	
+
 	/**
 	 * The height of this room.
 	 */
@@ -43,36 +43,36 @@ public class Room {
 	 * Stores the doors that belong to this room.
 	 */
 	private List<Door> doors;
-	
+
 	/**
 	 * Coordinates that players will be placed in if they have entered the room
 	 */
 	private Position[] playerCoords;
-	
+
 	/**
 	 * Maps players to coordinates.
 	 */
 	private Map<Player, Position> playerMap;
-	
+
 	/**
 	 * Determines whether the room has stairs
 	 */
 	private boolean hasStairs;
-	
+
 	/**
 	 * Connects rooms with stairs.
 	 */
 	private Room other;
-	
+
 	/**
 	 * Construct a Room.
 	 */
 	public Room(String n){
 		this.name = n;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Construct a Room with x, y coordinates, its width and height and whether it has stairs or not.
 	 */
@@ -88,7 +88,7 @@ public class Room {
 		addPlayerCoords();
 		this.hasStairs = hS;
 	}
-	
+
 	/**
 	 * Determines where the player would be placed in room.
 	 */
@@ -96,7 +96,7 @@ public class Room {
 		int j = 0;
 		int k = 0;
 		for(int i = 0; i < playerCoords.length; i++){
-			playerCoords[i] = new Position(this.width/2+k, this.height/2+j);
+			playerCoords[i] = new Position(this.x+this.width/2+k, this.y+this.height/2+j);
 			j++;
 			if(j == 1){
 				j = 0;
@@ -104,28 +104,34 @@ public class Room {
 			}
 		}
 	}
-	
+
 	/**
 	 * Add player and position to Map.
 	 */
 	public void addMap(Player p){
-		for(Map.Entry<Player, Position> e : playerMap.entrySet()){
+		if(!playerMap.isEmpty()){
 			for(Position pos : playerCoords){
-				if(e.getValue().getX() != pos.getX() && e.getValue().getY() != pos.getY()){
-					playerMap.put(p, pos);
-					p.setPos(pos.getX(), pos.getY());
+				for(Map.Entry<Player, Position> e : playerMap.entrySet()){
+					if(e.getValue().getX() != pos.getX() && e.getValue().getY() != pos.getY()){
+						playerMap.put(p, pos);
+						p.setPos(pos.getX(), pos.getY());
+					}
 				}
 			}
+		}else{
+			Position pos = playerCoords[0];
+			playerMap.put(p, pos);
+			p.setPos(pos.getX(), pos.getY());
 		}
 	}
-	
+
 	/**
 	 * Returns the map.
 	 */
 	public Map<Player, Position> getMap(){
 		return playerMap;
 	}
-	
+
 	/**
 	 * Add weapon to room
 	 * @param w
@@ -133,7 +139,7 @@ public class Room {
 	public void addWeapon(Weapon w){
 		this.weapon = w;
 	}
-	
+
 	/**
 	 * Adds a door object to the doors ArrayList.
 	 * @param d
@@ -141,7 +147,7 @@ public class Room {
 	public void addDoors(Door d){
 		this.doors.add(d);
 	}
-	
+
 	/**
 	 * Returns the doors ArrayList.
 	 * @return
@@ -149,7 +155,7 @@ public class Room {
 	public List<Door> getDoors(){
 		return this.doors;
 	}
-	
+
 	/**
 	 * Returns whether a co-ordinate in the room is contained in this room.
 	 * Returns false otherwise. 
@@ -163,7 +169,7 @@ public class Room {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Gets the weapon being held in this current room.
 	 * @return
@@ -171,28 +177,28 @@ public class Room {
 	public Weapon getWeapon(){
 		return this.weapon;
 	}
-	
+
 	/**
 	 * Returns whether the room has stairs.
 	 */
 	public boolean hasStairs(){
 		return this.hasStairs;
 	}
-	
+
 	/**
 	 * Returns the room connected.
 	 */
 	public Room getOtherRoom(){
 		return this.other;
 	}
-	
+
 	/**
 	 * Set room this is connected to this room.
 	 */
 	public void setRoom(Room rm){
 		this.other = rm;
 	}
-	
+
 	/**
 	 * Returns a toString representation of this Room.
 	 */
@@ -203,7 +209,7 @@ public class Room {
 		}
 		return "[Room: " + name + " | Weapon: null]";
 	}
-	
+
 	public String stringName(){
 		return "[Room: " + name + "]";
 	}
