@@ -664,7 +664,8 @@ public class Board {
 		p.getRoom().getMap().remove(p);
 		p.setRoom(p.getRoom().getOtherRoom());
 		p.getRoom().addMap(p);
-		board[p.position().getX()][p.position().getY()] = p.getCharacterName() + "|";
+		board[p.position().getX()][p.position().getY()] = p.getCharacterName() + " ";
+		drawBoard();
 	}
 
 	/**
@@ -692,6 +693,7 @@ public class Board {
 		if(x == p.position().getX() && y == p.position().getY()){
 			System.out.println("Cannot exit room.");
 		}
+		drawBoard();
 	}
 
 	/**
