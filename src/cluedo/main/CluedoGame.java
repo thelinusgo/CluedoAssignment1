@@ -188,6 +188,11 @@ public class CluedoGame {
 					System.out.println(currentPlayer.getName() + " (" + currentPlayer.getCharacterName() + ")" + " currently has " + currentPlayer.numberofMoves() + " moves left.");
 					System.out.println("current location: " + currentPlayer.position().getX() + ", " + currentPlayer.position().getY());
 					TextClient.movementListener(currentPlayer);
+					if(currentPlayer.isInRoom()){
+						System.out.println("You have entered a room. You will need to wait for your next turn to be able to");
+						System.out.println("take the stairs or exit the room.");
+						break;
+					}
 					if(!board.canMove(p) && !p.coordinatesTaken().isEmpty()){
 						System.out.println("Sorry you do not have anywhere to move now.");
 						break;
