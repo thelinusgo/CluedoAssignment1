@@ -11,13 +11,19 @@ public class Door {
 	private Position position;
 	
 	/**
+	 * Stores the room that this door belongs to.
+	 */
+	private Room room;
+	
+	/**
 	 * Stores where the front of the door is.
 	 */
 	private Position inFront;
 	
-	public Door(boolean direction, int x, int y){
+	public Door(boolean direction, int x, int y, Room rm){
 		this.isHorizontal = direction;
 		this.position = new Position(x, y);
+		this.room = rm;
 	}
 	
 	/**
@@ -50,5 +56,12 @@ public class Door {
 	 */
 	public Position getPosition(){
 		return this.position;
+	}
+	
+	/**
+	 * Returns the room that this door belongs to.
+	 */
+	public Room getRoom(){
+		return this.room;
 	}
 }

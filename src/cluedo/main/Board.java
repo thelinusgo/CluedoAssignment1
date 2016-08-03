@@ -27,6 +27,11 @@ public class Board {
 	 */
 	private boolean isValidMove = false;
 
+	/**
+	 * Door player is going through.
+	 */
+	private Door door = null;
+
 	public Board(){
 		//filling up the board so it does not contain any null values
 		for(int x = 0; x < board.length; x++){
@@ -124,7 +129,7 @@ public class Board {
 		board[1][2] = "1 ";
 		board[5][1] = "S|";
 
-		Door d = new Door(false, 4, 6);
+		Door d = new Door(false, 4, 6, Game.initializer.kitchen);
 		d.setInFront(new Position(4, 7));
 		doors.add(d);
 	}
@@ -182,8 +187,8 @@ public class Board {
 
 		board[1][10] = "2 ";
 
-		Door d1 = new Door(true, width-1, 12);
-		Door d2 = new Door(true, width-2, y+height-1);
+		Door d1 = new Door(true, width-1, 12, Game.initializer.diningrm);
+		Door d2 = new Door(true, width-2, y+height-1, Game.initializer.diningrm);
 		d1.setInFront(new Position(width, 12));
 		d2.setInFront(new Position(width-2, y+height));
 		doors.add(d1);
@@ -233,7 +238,7 @@ public class Board {
 		board[x][y] = "|S|";
 		board[x+1][y+1] = "3 ";
 
-		Door d = new Door(false, x+width-1, y);
+		Door d = new Door(false, x+width-1, y, Game.initializer.lounge);
 		d.setInFront(new Position(x+width-1, y+1));
 		doors.add(d);
 	}
@@ -281,9 +286,9 @@ public class Board {
 
 		board[x+1][y+1] = "4 ";
 
-		Door d1 = new Door(true, x+width-1, y+2);
-		Door d2 = new Door(true, x+3, y);
-		Door d3 = new Door(true, x+2, y);
+		Door d1 = new Door(true, x+width-1, y+2, Game.initializer.hall);
+		Door d2 = new Door(true, x+3, y , Game.initializer.hall);
+		Door d3 = new Door(true, x+2, y, Game.initializer.hall);
 		d1.setInFront(new Position(x+width, y+2));
 		d2.setInFront(new Position(x+3, y+1));
 		d3.setInFront(new Position(x+2, y+1));
@@ -336,7 +341,7 @@ public class Board {
 		board[x+width-1][y] = "S|";
 		board[x+1][y+1] = "5 ";
 
-		Door d = new Door(false, x, y);
+		Door d = new Door(false, x, y, Game.initializer.study);
 		d.setInFront(new Position(x, y+1));
 		doors.add(d);
 	}
@@ -383,8 +388,8 @@ public class Board {
 		}
 		board[x+1][y+1] = "6 ";
 
-		Door d1 = new Door(true, x, y+2);
-		Door d2 = new Door(true, x+3, y);
+		Door d1 = new Door(true, x, y+2, Game.initializer.lib);
+		Door d2 = new Door(true, x+3, y, Game.initializer.lib);
 		d1.setInFront(new Position(x+1, y+2));
 		d2.setInFront(new Position(x+3, y-1));
 		doors.add(d1);
@@ -433,8 +438,8 @@ public class Board {
 		}
 		board[x+1][y+1] = "7 ";
 
-		Door d1 = new Door(true, x, y+1);
-		Door d2 = new Door(false, x+width-2, y+height-1);
+		Door d1 = new Door(true, x, y+1, Game.initializer.billRm);
+		Door d2 = new Door(false, x+width-2, y+height-1, Game.initializer.billRm);
 		d1.setInFront(new Position(x+width-2, y+height));
 		d2.setInFront(new Position(x+1, y+1));
 		doors.add(d1);
@@ -484,7 +489,7 @@ public class Board {
 		board[x+width-2][y+height-1] = "S|";
 		board[x+1][y+1] = "8 ";
 
-		Door d = new Door(false, x, y+height-2);
+		Door d = new Door(false, x, y+height-2, Game.initializer.conservatory);
 		d.setInFront(new Position(x, y+height-1));
 		doors.add(d);
 	}
@@ -530,10 +535,10 @@ public class Board {
 			board[x+width-2][i] = " |";
 		}
 
-		Door d1 = new Door(true, x, 5);
-		Door d2 = new Door(true, x+width-1, 5);
-		Door d3 = new Door(false, x+1, y+height-1);
-		Door d4 = new Door(false, x+width-2, y+height-1);
+		Door d1 = new Door(true, x, 5, Game.initializer.ballRm);
+		Door d2 = new Door(true, x+width-1, 5, Game.initializer.ballRm);
+		Door d3 = new Door(false, x+1, y+height-1, Game.initializer.ballRm);
+		Door d4 = new Door(false, x+width-2, y+height-1, Game.initializer.ballRm);
 		d1.setInFront(new Position(x+1, 5));
 		d2.setInFront(new Position(x+width, 5));
 		d3.setInFront(new Position(x+1, y+height));
@@ -630,16 +635,11 @@ public class Board {
 		if(isValidMove(new Position(x, y), directionX, directionY, p)){
 			isValidMove = true;
 			board[p.position().getX()][p.position().getY()] = p.getLookBack();
-			if(board[x][y].equals("D|")){
-				for(Room r : rooms){
-					for(Door d : r.getDoors()){
-						if(d.getPosition().getX() == x && d.getPosition().getY() == y){
-							r.addMap(p);
-							p.setRoom(r);
-							p.setIsInRoom(true);
-						}
-					}
-				}
+			if(door != null){
+				Room r = door.getRoom();
+				r.addMap(p);
+				p.setRoom(r);
+				p.setIsInRoom(true);
 			}else{
 				p.setPos(x, y);
 			}
@@ -723,14 +723,16 @@ public class Board {
 			System.out.println("Player is not in room to take the stairs.");
 			return false;
 		}else{
-			for(int i = 0; i < doors.size(); i++){
-				Door d = doors.get(i);
-				if(!d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && directionY == 0 &&(directionX == 1 || directionX == -1)){
+			for(Door d : doors){
+				if(!d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && (directionX > 0 || directionX < 0) && directionY == 0){
+					System.out.println(directionX + " " + directionY);
 					System.out.println("Going through door the wrong way!");
 					return false;
-				}else if(d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && (directionY == 1 || directionY == -1) && directionX == 0){
+				}else if(d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && directionX == 0 && (directionY > 0 || directionY < 0)){
 					System.out.println("Going through door the wrong way!");
 					return false;
+				}else{
+					door = d;
 				}
 			}
 
@@ -761,8 +763,10 @@ public class Board {
 	 * @return
 	 */
 	public boolean canMove(Player p){
-		for(Position pos : p.coordinatesTaken()){
-			for(Position position : p.getPossibleCoords()){
+		for(Position position : p.getPossibleCoords()){
+			for(Position pos : p.coordinatesTaken()){
+				System.out.println(position.toString());
+				System.out.println(pos.toString());
 				if(!pos.equals(position)){
 					return true;
 				}
