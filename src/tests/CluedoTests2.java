@@ -1,6 +1,8 @@
 package tests;
 import org.junit.*;
 
+import cluedo.assets.*;
+import cluedo.assets.Character;
 import cluedo.main.*;
 
 import static org.junit.Assert.*;
@@ -696,10 +698,12 @@ public class CluedoTests2 {
 	/**
 	 * Setup a mock game of monopoly with a player located at a given location.
 	 */
-	private Player setupMockPlayer(GameOfMonopoly game, String locationName, int balance)
-			throws GameOfMonopoly.InvalidMove {
-		Board board = game.getBoard();
-		Location location = board.findLocation(locationName);
-		return new Player("Dave", Player.Token.ScottishTerrier, balance, location);
+	private Player setupMockPlayer(String name, String charName, Position pos)
+			throws CluedoGame.InvalidMove {
+		
+		Player p = new Player(name);
+		p.setCharacter(new Character(charName));
+		p.setPos(pos.getX(), pos.getY());
+		return p;
 	}
 }

@@ -717,6 +717,8 @@ public class Board {
 			throw new CluedoGame.InvalidMove("Cannot move into wall.");
 		}else if((board[x][y].equals("S|") || board[x][y].equals("|S|")) && !p.isInRoom()){
 			throw new CluedoGame.InvalidMove("Player is not in room to take the stairs.");
+		}else if(board[x][y].equals("*|")){
+			throw new CluedoGame.InvalidMove("Cannot move into envelope space.");
 		}else{
 			for(Door d : doors){
 				if(!d.isHorizontal() && x == d.getPosition().getX() && y == d.getPosition().getY() && (directionX > 0 || directionX < 0) && directionY == 0){
