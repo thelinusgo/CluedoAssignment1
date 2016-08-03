@@ -22,19 +22,22 @@ public class Game {
 	public static boolean askSuccess; //TODO? WHAT IS THIS??
 	private static boolean hasAsked = false; //if a player has asked or not.
 
-	private static Dice dice = new Dice(); //make a new instance of the dice.
+	private List<Integer> diceList = new ArrayList<Integer>(Arrays.asList(2,3,4,5,6,7,8,9,10,11,12));
+	private int currentRoll = diceList.get(0);
 	private Player currentPlayer; //the current player of the round.
 
 	/** If player has made a move*/
 	private boolean moveMade = false;
-
+	
+	
 	/** This helps generate a random shuffle for the lists */
 	private long seed = System.nanoTime();
 
 	/** If player wants to forfeit */
 	private boolean pass = false;
 
-	public Game(){currentPlayers = new ArrayList<Player>();
+	public Game(){
+		currentPlayers = new ArrayList<Player>();
 		initializer = new Initializer();
 		board = new Board();
 		initialSetup();
@@ -85,6 +88,16 @@ public class Game {
 	 */
 	public static List<Player> getCurrentPlayers(){
 		return currentPlayers;
+	}
+	
+	/**
+	 * Returns a random value between 2-12.
+	 * @return
+	 */
+	public int diceRoll(){
+		Collections.shuffle(diceList);
+		currentRoll = diceList.get(0);
+		return currentRoll;
 	}
 
 	/**
@@ -157,8 +170,8 @@ public class Game {
 	public void doOption(String option, Player p){
 		switch(option){
 		case "m":
-			System.out.println(currentPlayer.getName() + " rolls a " + dice.getDice() + ".");
-			currentPlayer.setNumberofMoves(dice.getDice());
+			currentPlayer.setNumberofMoves(diceRoll());
+			System.out.println(currentPlayer.getName() + " rolls a " + currentPlayer.numberofMoves() + ".");
 			System.out.println(currentPlayer.getName() + "  has " + currentPlayer.numberofMoves() + " moves.");
 			if(currentPlayer.isInRoom()){
 				System.out.println("Do you want to take the stairs or do you want to get out of the room?");
