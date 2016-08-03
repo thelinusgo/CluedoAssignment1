@@ -6,6 +6,9 @@ import cluedo.arguments.Accusation;
 import cluedo.arguments.Suggestion;
 import cluedo.assets.*;
 import cluedo.cards.Card;
+import cluedo.cards.CharacterCard;
+import cluedo.cards.RoomCard;
+import cluedo.cards.WeaponCard;
 /**
  * Creates a new instance of a Board, and runs the textClient.
  * @author Casey & Linus
@@ -210,11 +213,6 @@ public class CluedoGame {
 			}
 			break;
 		case "a":
-			//TODO: need to finish this part.
-			System.out.println("[TODO: Remove this]Printing out envelope: ");
-			for(Card c : Initializer.getEnvelope().getEnvelope()){
-				System.out.println(c.toString());
-			}
 			System.out.println("Player " + currentPlayer.getName() + " wishes to make an accusation.");
 			makeAccusation(currentPlayer);
 			moveMade = true;
@@ -222,7 +220,53 @@ public class CluedoGame {
 		case "s":
 			//TODO: ALSO NEED TO FINISH THIS PART.
 			System.out.println("Player " + currentPlayer.getName() + " wishes to make an suggestion.");
-			makeSuggestion(currentPlayer);
+			Suggestion sugg = makeSuggestion(currentPlayer);
+			
+			if(sugg == null){
+				System.out.println("The room you are in is null.");
+				moveMade = true;
+				break;
+			}
+			
+			/**
+			 * TODO: casey, I feel like this is broken.
+			 */
+			CharacterCard cc = sugg.getCharacterCard();
+			WeaponCard wp = sugg.getWeaponCard();
+			RoomCard room = sugg.getRoomCard();
+			int count = 1;
+			//iterate over the players list backwards
+			
+			for(Player pl : currentPlayers){
+				for(Card currentCard : pl.getCards()){
+					if(currentCard instanceof CharacterCard){
+						if(currentCard.equals(cc)){
+							System.out.println("Card matches!");
+							count++;
+						}
+					}else if(currentCard instanceof WeaponCard){
+						if(currentCard.equals(wp)){
+							System.out.println("Card matches!");
+							count++;
+						}
+					}
+				}
+			}
+//			for(int i = currentPlayers.size()-1; i > 0; --i){
+//				for(int j = 0; j < currentPlayers.get(i).getCards().size(); ++j){
+//					Card currentCard = currentPlayers.get(i).getCards().get(j);
+//					if(currentCard instanceof CharacterCard){
+//						if(currentCard.equals(cc)){
+//							count++;
+//						}
+//					}else if(currentCard instanceof WeaponCard){
+//						if(currentCard.equals(wp)){
+//							count++;
+//						}
+//					}
+//				}				
+//			}
+			System.out.println("count:" + count);
 			moveMade = true;
 			break;
 		}

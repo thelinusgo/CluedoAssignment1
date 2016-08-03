@@ -10,6 +10,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import cluedo.arguments.Accusation;
+import cluedo.arguments.Argument;
 import cluedo.arguments.Suggestion;
 import cluedo.assets.Player;
 import cluedo.cards.*;
@@ -95,7 +96,6 @@ public class TextClient {
 			System.out.println("AVAILABLE CARDS:");
 
 			//the objects for creating a suggestion.
-			//TODO: needs to be based on room he's in..
 			WeaponCard weapon = null;
 			CharacterCard character = null;
 			RoomCard room = null;
@@ -103,7 +103,6 @@ public class TextClient {
 			boolean isInteger = false;
 
 			//sublists containing cards of a certain category.
-			List<Card> cardsList = p.getCards();
 			List<WeaponCard> weapons = Initializer.getWeaponCards();
 			List<RoomCard> rooms = Initializer.getRoomCards();
 			List<CharacterCard> suspects = Initializer.getCharacterCards();
@@ -189,7 +188,7 @@ public class TextClient {
 					}
 				}
 			}
-
+			Accusation accusation = null;
 			if(count == 3){
 			//TODO: come and fix this later!
 			System.out.println("----------------------------------");
@@ -198,12 +197,14 @@ public class TextClient {
 			System.out.println(" character: " + character);
 			System.out.println(" room: " + room);
 			System.out.println("----------------------------------");
-			return new Accusation(weapon, room, character, p);
+			accusation = new Accusation(weapon, room, character, p);
+			accusation.setArgumentStatus(true);
+			return accusation;
 			}
 			System.out.println("The accusation pieces did not match.");
 			System.out.println(count);
 			p.setOut();
-			return null;	
+			return accusation;	
 	}
 
 	/**
@@ -216,13 +217,10 @@ public class TextClient {
 			System.out.println("ERROR: Sorry, you must be in a room to make a suggestion.");
 			return null;
 		}
-		
-		
 		System.out.println("-----------SUGGESTION!-------------");
 		System.out.println("What cards do you want to nominate?");
 		System.out.println("----------------------------------");
 		System.out.println("AVAILABLE CARDS:");
-
 		//the objects for creating a suggestion.
 		//TODO: needs to be based on room he's in..
 		WeaponCard weapon = null;
@@ -284,7 +282,6 @@ public class TextClient {
 		System.out.println(" character: " + character);
 		System.out.println(" room: " + room);
 		System.out.println("----------------------------------");
-
 		return new Suggestion(weapon, room, character, p);
 	}
 
