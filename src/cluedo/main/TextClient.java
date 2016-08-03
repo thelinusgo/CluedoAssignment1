@@ -95,8 +95,23 @@ public class TextClient {
 		WeaponCard weapon = null;
 		RoomCard room = null;
 
-
-
+		List<CharacterCard> characters = Initializer.getCharacterCards();
+		List<WeaponCard> weapons = Initializer.getWeaponCards();
+		List<RoomCard> rooms = Initializer.getRoomCards();
+		
+		System.out.println("----------------------------------");
+		System.out.println("Current Characters.........");
+		for(CharacterCard cc : characters){
+			System.out.println(cc.toString());
+		}
+		System.out.println("----------------------------------");
+		System.out.println("Current Weapons...........");
+		for(CharacterCard cc : characters){
+			System.out.println(cc.toString());
+		}
+		
+		
+		
 
 		return null;
 	}

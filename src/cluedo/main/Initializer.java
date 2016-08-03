@@ -237,7 +237,7 @@ public class Initializer {
 	 * Returns the list of RoomCards
 	 * @return
 	 */
-	public List<RoomCard> getRoomCards(){
+	public static List<RoomCard> getRoomCards(){
 		return Initializer.roomCards;
 	}
 	
@@ -245,7 +245,7 @@ public class Initializer {
 	 * Returns the list of WeaponCards
 	 * @return
 	 */
-	public List<WeaponCard> getWeaponCards(){
+	public static List<WeaponCard> getWeaponCards(){
 		return Initializer.weaponCards;
 	}
 	
@@ -253,11 +253,11 @@ public class Initializer {
 	 * Returns the list of CharacterCards
 	 * @return
 	 */
-	public List<CharacterCard> getCharacterCards(){
+	public static List<CharacterCard> getCharacterCards(){
 		return Initializer.characterCards;
 	}
 	
-	public List<Room> getRooms(){
+	public static List<Room> getRooms(){
 		return Initializer.rooms;
 	}
 }
