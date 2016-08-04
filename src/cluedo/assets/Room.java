@@ -48,11 +48,11 @@ public class Room {
 	 * Coordinates that players will be placed in if they have entered the room
 	 */
 	private Position[] playerCoords;
-
+	
 	/**
-	 * Maps players to coordinates.
+	 * Stores the position of the player in this room.
 	 */
-	private Map<Player, Position> playerMap;
+	private Map<Position, Player> playerMap;
 
 	/**
 	 * Determines whether the room has stairs
@@ -63,7 +63,9 @@ public class Room {
 	 * Connects rooms with stairs.
 	 */
 	private Room other;
-
+	
+	private int i;
+	
 	/**
 	 * Construct a Room.
 	 */
@@ -96,40 +98,40 @@ public class Room {
 		int j = 0;
 		int k = 0;
 		for(int i = 0; i < playerCoords.length; i++){
-			playerCoords[i] = new Position(this.x+this.width/2+k, this.y+this.height/2+j);
+			playerCoords[i] = new Position(this.x+1+j, this.y+2+k);
 			j++;
-			if(j == 1){
+			if(j >= 3){
 				j = 0;
 				k++;
 			}
+		}
+		
+		for(Position pos : playerCoords){
+			playerMap.put(pos, null);
 		}
 	}
 
 	/**
 	 * Add player and position to Map.
 	 */
-	public void addMap(Player p){
-		if(!playerMap.isEmpty()){
-			for(Position pos : playerCoords){
-				for(Map.Entry<Player, Position> e : playerMap.entrySet()){
-					if(e.getValue().getX() != pos.getX() && e.getValue().getY() != pos.getY()){
-						playerMap.put(p, pos);
-						p.setPos(pos.getX(), pos.getY());
-					}
-				}
+	public void addPlayer(Player p){
+		Position pos = playerCoords[i];
+		loop: for(Map.Entry<Position, Player> e : playerMap.entrySet()){
+			if(e.getValue() == null){
+				playerMap.put(pos, p);
+				p.setPos(pos.getX(), pos.getY());
+				break loop;
 			}
-		}else{
-			Position pos = playerCoords[0];
-			playerMap.put(p, pos);
-			p.setPos(pos.getX(), pos.getY());
 		}
+		i++;
 	}
-
-	/**
-	 * Returns the map.
-	 */
-	public Map<Player, Position> getMap(){
-		return playerMap;
+	
+	public void removePlayer(Player p){
+		for(int i = 0; i < playerCoords.length; i++){
+			if(p.position().equals(playerCoords[i])){
+				playerMap.put(p.position(), null);
+			}
+		}
 	}
 
 	/**

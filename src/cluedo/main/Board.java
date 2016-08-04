@@ -634,7 +634,7 @@ public class Board {
 			board[p.position().getX()][p.position().getY()] = p.getLookBack();
 			if(p.door() != null){
 				Room r = p.door().getRoom();
-				r.addMap(p);
+				r.addPlayer(p);
 				p.setRoom(r);
 				p.setIsInRoom(true);
 			}else{
@@ -661,9 +661,9 @@ public class Board {
 	public void moveToRoom(Player p){
 		board[p.position().getX()][p.position().getY()] = p.getLookBack();
 		p.setLookBack(board[p.position().getX()][p.position().getY()]);
-		p.getRoom().getMap().remove(p);
+		p.getRoom().removePlayer(p);
 		p.setRoom(p.getRoom().getOtherRoom());
-		p.getRoom().addMap(p);
+		p.getRoom().addPlayer(p);
 		board[p.position().getX()][p.position().getY()] = p.getCharacterName() + " ";
 		drawBoard();
 	}
@@ -677,7 +677,6 @@ public class Board {
 		int y = p.position().getY();
 		board[p.position().getX()][p.position().getY()] = p.getLookBack();
 		p.setLookBack(board[p.position().getX()][p.position().getY()]);
-		p.getRoom().getMap().remove(p);
 		for(Player player : CluedoGame.getCurrentPlayers()){
 			if(player.position().getX() != p.door().getInFront().getX() && player.position().getY() != p.door().getInFront().getY()){
 				x = p.door().getInFront().getX();
@@ -686,7 +685,7 @@ public class Board {
 		}
 		p.setPos(x, y);
 		board[p.position().getX()][p.position().getY()] = p.getCharacterName() + "|";
-		p.getRoom().getMap().remove(p);
+		p.getRoom().removePlayer(p);
 		p.setIsInRoom(false);
 		p.setRoom(null);
 		p.setDoor(null);
@@ -728,6 +727,7 @@ public class Board {
 						throw new CluedoGame.InvalidMove("Going through door the wrong way!");
 					}else if(x == d.getPosition().getX() && y == d.getPosition().getY()){
 						p.setDoor(d);
+						break;
 					}
 				}
 

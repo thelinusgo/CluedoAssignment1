@@ -32,6 +32,11 @@ public class CluedoGame {
 	/** If player has made a move*/
 	private boolean moveMade = false;
 	
+	/**
+	 * Stores the cards of players who have been kicked out of the game because they made an inccorect accusation.
+	 */
+	private List<List<Card>> showCards = new ArrayList<>();
+	
 	/** This helps generate a random shuffle for the lists */
 	private long seed = System.nanoTime();
 
@@ -227,13 +232,29 @@ public class CluedoGame {
 			moveMade = true;
 			break;
 		case "c":
+			System.out.println("Your current cards.");
 			for(Card c : p.getCards()){
 				System.out.println(c.toString());
 			}
 			break;
+		case "d":
+			System.out.println("Show all previous players' cards");
+			for(List<Card> lc : showCards){
+				for(Card c : lc){
+					System.out.println(c.toString());
+				}
+			}
+			break;
 		case "a":
 			System.out.println("Player " + currentPlayer.getName() + " wishes to make an accusation.");
-			makeAccusation(currentPlayer);
+			Accusation accusation = makeAccusation(currentPlayer);
+			if(accusation == null){
+				System.out.println("The accusation pieces did not match."); 
+				System.out.println("You have now been kicked out of the game.");
+				showCards.add(p.getCards());
+				currentPlayers().remove(p);
+				board.getBoard()[p.position().getX()][p.position().getY()] = p.getLookBack();
+			}
 			moveMade = true;
 			break;
 		case "s":
@@ -243,7 +264,6 @@ public class CluedoGame {
 			
 			if(sugg == null){
 				System.out.println("You are not in a room to make a suggestion.");
-				moveMade = true;
 				break;
 			}
 			/**
@@ -259,31 +279,21 @@ public class CluedoGame {
 				for(Card currentCard : pl.getCards()){
 					if(currentCard instanceof CharacterCard){
 						if(currentCard.equals(cc)){
+							System.out.println(currentCard.toString());
+							System.out.println(cc.toString());
 							System.out.println("Card matches!");
 							count++;
 						}
 					}else if(currentCard instanceof WeaponCard){
 						if(currentCard.equals(wp)){
+							System.out.println(currentCard.toString());
+							System.out.println(wp.toString());
 							System.out.println("Card matches!");
 							count++;
 						}
 					}
 				}
 			}
-//			for(int i = currentPlayers.size()-1; i > 0; --i){
-//				for(int j = 0; j < currentPlayers.get(i).getCards().size(); ++j){
-//					Card currentCard = currentPlayers.get(i).getCards().get(j);
-//					if(currentCard instanceof CharacterCard){
-//						if(currentCard.equals(cc)){
-//							count++;
-//						}
-//					}else if(currentCard instanceof WeaponCard){
-//						if(currentCard.equals(wp)){
-//							count++;
-//						}
-//					}
-//				}				
-//			}
 			System.out.println("count:" + count);
 			prevOption = "s";
 			break;

@@ -21,7 +21,7 @@ public class TextClient {
 	private static Board board = CluedoGame.board;
 
 	private static String MOVES = "w|a|s|d"; //pattern describing the possible moves.
-	private static String OPTIONS = "m|s|a|c"; //patterns describing the possible options.
+	private static String OPTIONS = "m|s|a|c|d"; //patterns describing the possible options.
 	private static String CHOICE = "y|n";
 
 	private static boolean correctInput = false; //set to true if the correct input has been provided.
@@ -203,9 +203,7 @@ public class TextClient {
 			accusation.setArgumentStatus(true);
 			return accusation;
 		}
-		System.out.println("The accusation pieces did not match.");
-		System.out.println(count);
-		CluedoGame.currentPlayers().remove(p);
+		
 		return accusation;	
 	}
 
@@ -332,6 +330,7 @@ public class TextClient {
 		System.out.println("Press S to make a suggestion.");
 		System.out.println("Press A to make an accusation.");
 		System.out.println("Press C to show current cards.");
+		System.out.println("Press D to display previous players' cards.");
 		while(!option.matches(OPTIONS)){
 			option = sc.next();
 			if(!option.matches(OPTIONS)){
