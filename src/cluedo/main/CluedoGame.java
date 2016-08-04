@@ -261,11 +261,18 @@ public class CluedoGame {
 				if(currentCard instanceof CharacterCard){
 					if(currentCard.equals(cc)){
 						System.out.println("Card matches!");
+						room.getObject().getWeapon().addRoom(cc.getObject().getRoom());
+						cc.getObject().getRoom().addCharacter(room.getObject().getCharacter());
+						room.getObject().addCharacter(cc.getObject());
+						cc.getObject().addRoom(room.getObject());
 						count++;
 					}
 				}else if(currentCard instanceof WeaponCard){
 					if(currentCard.equals(wp)){
 						System.out.println("Card matches!");
+						room.getObject().getWeapon().addRoom(wp.getObject().getRoom());
+						wp.getObject().getRoom().addWeapon(room.getObject().getWeapon());
+						room.getObject().addWeapon(wp.getObject());
 						wp.getObject().addRoom(room.getObject());
 						count++;
 					}
