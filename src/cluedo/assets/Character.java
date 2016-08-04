@@ -8,9 +8,12 @@ public class Character {
 	
 	private String name;
 	
+	private Room room;
+	
 	public Character(String name){
 		this.name = name;
 	}
+	
 	/**
 	 * Returns the name of the character.
 	 * @return
@@ -33,6 +36,21 @@ public class Character {
 	 */
 	public String name(){
 		return this.name;
+	}
+	
+	/**
+	 * Stores the room that this player is in.
+	 */
+	public void addRoom(Room rm){
+		this.room = rm;
+	}
+	
+	/**
+	 * Returns the room that this player belongs to.
+	 * @return
+	 */
+	public Room getRoom(){
+		return this.room;
 	}
 	
 	@Override

@@ -48,6 +48,6 @@ public class Weapon{
 	
 	@Override
 	public String toString(){
-		return "Weapon: " + this.weaponName;
+		return "Weapon: " + this.weaponName + " Room: " + this.getRoom();
 	}
 }

@@ -195,18 +195,26 @@ public class Initializer {
 		cards.remove(characterCard);
 	}
 	
+	/**
+	 * Store character in room and room in character.
+	 */
 	public void setCharacters(){
 		Collections.shuffle(rooms, new Random(seed));
 		for(Player p : CluedoGame.getCurrentPlayers()){
 			for(int i = 0; i < characters.size(); i++){
 				Character c = characters.get(i);
 				if(!p.getCharacter().equals(c)){
-					rooms.get(i).addCharacter(c);
+					Room rm = rooms.get(i);
+					rm.addCharacter(c);
+					c.addRoom(rm);
 				}
 			}
 		}
 	}
 
+	/**
+	 * Distribute characters to current players.
+	 */
 	public void distributeCharacters(){
 		Collections.shuffle(characters, new Random(seed)); 
 		for(int i = 0; i < CluedoGame.getCurrentPlayers().size(); i++){	

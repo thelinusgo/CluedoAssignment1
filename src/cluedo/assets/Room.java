@@ -196,6 +196,14 @@ public class Room {
 	public Weapon getWeapon(){
 		return this.weapon;
 	}
+	
+	/**
+	 * Returns the character in this room.
+	 * @return
+	 */
+	public Character getCharacter() {
+		return this.character;
+	}
 
 	/**
 	 * Returns whether the room has stairs.
@@ -232,4 +240,5 @@ public class Room {
 	public String stringName(){
 		return "[Room: " + name + "]";
 	}
+
 }
