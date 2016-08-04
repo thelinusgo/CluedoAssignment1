@@ -1,6 +1,7 @@
 package tests;
 import org.junit.*;
 
+import cluedo.arguments.Suggestion;
 import cluedo.assets.*;
 import cluedo.assets.Character;
 import cluedo.cards.Card;
@@ -260,6 +261,52 @@ public class CluedoTests {
 			fail(e.getMessage());
 		}
 	}
+	
+	/**
+	 * Test that it generates a correct suggestion object.
+	 * NOTE: REQUIRES USER INPUT to pass.
+	 */
+	@Test
+	public void testValidSuggestion(){
+	CluedoGame game = new CluedoGame();
+	try{
+		Player player = setupMockPlayer("Xamuel", "Miss Scarlett", new Position(0,17));
+		player.setLookBack("|_");
+		game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|";
+		game.board.move(6, -2, player);
+		assertTrue(player.getRoom() != null);
+		Suggestion sug = game.makeSuggestion(player);
+		assertTrue(sug != null);
+	}catch(CluedoGame.InvalidMove e){
+		fail(e.getMessage());
+	}
+   }
+	
+	/**
+	 * Test that it requires a valid accusation object.
+	 * NOTE: requires user input to pass.
+	 */
+	@Test
+	public void testInvalidSuggestion(){
+		CluedoGame game = new CluedoGame();
+		try{
+			Player player = setupMockPlayer("Xamuel", "Miss Scarlett", new Position(0,17));
+			player.setLookBack("|_");
+			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|";
+			game.board.move(+2, 0, player);
+			assertTrue(player.getRoom() == null);
+			Suggestion sug = game.makeSuggestion(player);
+			assertTrue(sug == null);
+			
+		}catch(CluedoGame.InvalidMove e){
+			fail(e.getMessage());
+		}
+	}
+	
+	
+	
+	
+	
 	
 	/**
 	 * Setup a mock game of monopoly with a player located at a given location.
