@@ -5,6 +5,7 @@ import java.util.*;
 import cluedo.arguments.Accusation;
 import cluedo.arguments.Suggestion;
 import cluedo.assets.*;
+import cluedo.assets.Character;
 import cluedo.cards.Card;
 import cluedo.cards.CharacterCard;
 import cluedo.cards.RoomCard;
@@ -239,8 +240,8 @@ public class CluedoGame {
 		int count = 1;
 		//iterate over the players list backwards
 
-		for(Player pl : currentPlayers){
-			for(Card currentCard : pl.getCards()){
+		for(Player p : currentPlayers){
+			for(Card currentCard : p.getCards()){
 				if(currentCard instanceof CharacterCard){
 					if(currentCard.equals(cc)){
 						System.out.println("Card matches!");
@@ -248,6 +249,13 @@ public class CluedoGame {
 						cc.getObject().getRoom().addCharacter(room.getObject().getCharacter());
 						room.getObject().addCharacter(cc.getObject());
 						cc.getObject().addRoom(room.getObject());
+						for(Player player : currentPlayers){
+							if(!player.equals(p)){
+								if(player.getCharacter().equals(cc.getObject())){
+									board.moveToRoom(p, room.getObject());
+								}
+							}
+						}
 						count++;
 					}
 				}else if(currentCard instanceof WeaponCard){
@@ -424,7 +432,7 @@ public class CluedoGame {
 			String choice = TextClient.inputString();
 			switch(choice){
 			case "y":
-				board.moveToRoom(p);
+				board.moveToRoom(p, p.getRoom().getOtherRoom());
 				break;
 			case "n":
 				board.exitRoom(p);

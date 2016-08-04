@@ -658,11 +658,11 @@ public class Board {
 	 * Move player to other room.
 	 * @param p
 	 */
-	public void moveToRoom(Player p){
+	public void moveToRoom(Player p, Room rm){
 		board[p.position().getX()][p.position().getY()] = p.getLookBack();
 		p.setLookBack(board[p.position().getX()][p.position().getY()]);
 		p.getRoom().removePlayer(p);
-		p.setRoom(p.getRoom().getOtherRoom());
+		p.setRoom(rm);
 		p.getRoom().addPlayer(p);
 		board[p.position().getX()][p.position().getY()] = p.getCharacterName() + " ";
 		drawBoard();

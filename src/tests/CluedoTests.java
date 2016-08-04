@@ -200,7 +200,7 @@ public class CluedoTests {
 			game.board.canMove(player);
 			//get the room that the player WILL LEAVE
 			Room oldRoom = player.getRoom();
-			game.board.moveToRoom(player);
+			game.board.moveToRoom(player, oldRoom.getOtherRoom());
 			assertTrue(player.isInRoom());
 			//check that the rooms Other Room equals the old room.
 			assertEquals(player.getRoom().getOtherRoom(), oldRoom);
@@ -225,7 +225,7 @@ public class CluedoTests {
 		game.board.move(6, -2, player);
 		assertTrue(player.isInRoom());
 		Room currentRoom = player.getRoom();
-		game.board.moveToRoom(player); //THIS SHOULDN'T TELEPORT YOU!
+		game.board.moveToRoom(player, currentRoom.getOtherRoom()); //THIS SHOULDN'T TELEPORT YOU!
 		assertEquals(player.getRoom(), currentRoom);
 	}catch(CluedoGame.InvalidMove e){
 		fail(e.getMessage());
