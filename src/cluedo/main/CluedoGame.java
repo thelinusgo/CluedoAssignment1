@@ -50,23 +50,6 @@ public class CluedoGame {
 	}
 
 	/**
-	 * Alternative constructor to allow testing.
-	 */
-	public CluedoGame(boolean test){
-		if(test){
-			board = new Board();
-			currentPlayers = new ArrayList<Player>();
-			initializer = new Initializer();
-			initialSetup();
-			//runGame();
-
-		}else{
-			System.out.println("Game is not in test mode! Test mode must be set to true to run.");
-			System.exit(0);
-		}
-	}
-
-	/**
 	 * Gets the list of current Players
 	 * @return
 	 */
@@ -281,12 +264,6 @@ public class CluedoGame {
 		}
 		return count;
 	}
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * This makes an accusation.
