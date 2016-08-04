@@ -283,8 +283,8 @@ public class CluedoTests {
    }
 	
 	/**
-	 * Test that it requires a valid accusation object.
-	 * NOTE: requires user input to pass.
+	 * Test that you cannot make an invalid suggestion.
+	 * 
 	 */
 	@Test
 	public void testInvalidSuggestion(){
@@ -297,7 +297,6 @@ public class CluedoTests {
 			assertTrue(player.getRoom() == null);
 			Suggestion sug = game.makeSuggestion(player);
 			assertTrue(sug == null);
-			
 		}catch(CluedoGame.InvalidMove e){
 			fail(e.getMessage());
 		}

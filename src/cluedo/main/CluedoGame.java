@@ -225,42 +225,62 @@ public class CluedoGame {
 			//TODO: ALSO NEED TO FINISH THIS PART.
 			System.out.println("Player " + currentPlayer.getName() + " wishes to make an suggestion.");
 			Suggestion sugg = makeSuggestion(currentPlayer);
-
+			int amount = this.checkOtherPlayers(sugg);
+			if(amount == 1){
+				System.out.println("no extra cards were found");
+			}else{
+				System.out.println("At least one extra card was found");
+			}
+			
 			if(sugg == null){
 				break;
 			}
-			/**
-			 * TODO: casey, I feel like this is broken.
-			 */
-			CharacterCard cc = sugg.getCharacterCard();
-			WeaponCard wp = sugg.getWeaponCard();
-			RoomCard room = sugg.getRoomCard();
-			int count = 1;
-			//iterate over the players list backwards
-
-			for(Player pl : currentPlayers){
-				for(Card currentCard : pl.getCards()){
-					if(currentCard instanceof CharacterCard){
-						if(currentCard.equals(cc)){
-							System.out.println("Card matches!");
-							count++;
-						}
-					}else if(currentCard instanceof WeaponCard){
-						if(currentCard.equals(wp)){
-							System.out.println("Card matches!");
-							wp.getObject().addRoom(room.getObject());
-							
-							count++;
-						}
-					}
-				}
-			}
-			System.out.println("count:" + count);
 			prevOption = "s";
 			break;
 		}
 	}
+	
+	/**
+	 * For suggestion - check that the other players have at least one of that card.
+	 * TODO: casey please help me fix this!!
+	 * @param sugg
+	 */
+	public int checkOtherPlayers(Suggestion sugg){
+		
+		/**
+		 * TODO: casey, I feel like this is broken.
+		 */
+		CharacterCard cc = sugg.getCharacterCard();
+		WeaponCard wp = sugg.getWeaponCard();
+		RoomCard room = sugg.getRoomCard();
+		int count = 1;
+		//iterate over the players list backwards
 
+		for(Player pl : currentPlayers){
+			for(Card currentCard : pl.getCards()){
+				if(currentCard instanceof CharacterCard){
+					if(currentCard.equals(cc)){
+						System.out.println("Card matches!");
+						count++;
+					}
+				}else if(currentCard instanceof WeaponCard){
+					if(currentCard.equals(wp)){
+						System.out.println("Card matches!");
+						wp.getObject().addRoom(room.getObject());
+						count++;
+					}
+				}
+			}
+		}
+		return count;
+	}
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * This makes an accusation.
 	 * @param current Player
