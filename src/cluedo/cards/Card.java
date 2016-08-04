@@ -42,19 +42,12 @@ public abstract class Card<E> {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Card other = (Card) obj;
-		if (item == null) {
-			if (other.item != null)
-				return false;
-		} else if (!item.equals(other.item))
-			return false;
-		return true;
+		if(obj instanceof Card){
+			if(((Card) obj).getName().equals(this.getName())){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
