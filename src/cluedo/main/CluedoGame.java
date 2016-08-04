@@ -190,7 +190,7 @@ public class CluedoGame {
 			currentPlayer.setNumberofMoves(diceRoll());
 			System.out.println(currentPlayer.getName() + " rolls a " + currentPlayer.numberofMoves() + ".");
 			System.out.println(currentPlayer.getName() + "  has " + currentPlayer.numberofMoves() + " moves.");
-			if(currentPlayer.isInRoom()){
+			if(currentPlayer.isInRoom() && currentPlayer.getRoom().hasStairs()){
 				System.out.println("Do you want to take the stairs or do you want to get out of the room?");
 				System.out.println("Press Y for stairs and N for exiting the room");
 				String choice = TextClient.inputString();
@@ -202,6 +202,9 @@ public class CluedoGame {
 					board.exitRoom(p);
 					break;
 				}
+			}else if(currentPlayer.isInRoom()){
+				System.out.println("You must exit the room now as the room does not have any stairs for you to take.");
+				board.exitRoom(p);
 			}else{
 				while(currentPlayer.numberofMoves() > 0){
 					System.out.println(currentPlayer.getName() + " (" + currentPlayer.getCharacterName() + ")" + " currently has " + currentPlayer.numberofMoves() + " moves left.");

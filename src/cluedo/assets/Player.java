@@ -13,8 +13,7 @@ import cluedo.main.CluedoGame;
  */
 public class Player {
 
-	private List<Card> hand; //Holds the hand 
-	private boolean isOut = false;
+	private List<Card> hand; //Holds the hand
 	private String name;
 	private String characterName;
 	private Position position;
@@ -145,13 +144,6 @@ public class Player {
 		for(int i = 0; i < hand.size(); i++){
 			System.out.println(String.valueOf(i) + " : " + hand.get(i).toString());
 		}
-	}
-
-	/**
-	 * This sets the current player to be out.
-	 */
-	public void setOut(){
-		this.isOut = true;
 	}
 
 	/**
