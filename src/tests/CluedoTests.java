@@ -5,6 +5,7 @@ import cluedo.assets.*;
 import cluedo.assets.Character;
 import cluedo.cards.Card;
 import cluedo.main.*;
+import cluedo.main.CluedoGame.InvalidMove;
 
 import static org.junit.Assert.*;
 import java.util.*;
@@ -114,11 +115,11 @@ public class CluedoTests {
 	 * Test that I can go inside of a room.
 	 */
 	@Test
-	public void testGoingInRoom(){
+	public void testGoingInRoom_1(){
 		CluedoGame game = new CluedoGame();
 		try{
 			Player player = setupMockPlayer("Lamuel", "Professor Plum", new Position(0,17));
-			player.setLookBack("|_");
+			player.setLookBack("|_|");
 			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
 			game.board.move(6, -2, player);
 			System.out.println(player.position().toString());
@@ -126,6 +127,44 @@ public class CluedoTests {
 		}catch(CluedoGame.InvalidMove e){
 			fail(e.getMessage());
 		}
+	}
+	
+	@Test
+	public void testGoingInRoom_2(){
+		CluedoGame game = new CluedoGame();
+		try {
+			Player player1 = setupMockPlayer("Ralf", "Professor Plum", new Position(6,18));
+			Player player2 = setupMockPlayer("Homer", "Miss Scarlett", new Position(6,17));
+			player1.setLookBack("_|");
+			player2.setLookBack("_|");
+			game.board.move(0, 1, player1);
+			game.board.move(0, 1, player2);
+			game.board.move(0, 1, player2);
+			Player player3 = setupMockPlayer("Sam", "Colonel Mustard", new Position(6,18));
+			Player player4 = setupMockPlayer("Kumar", "Mrs. White", new Position(6,17));
+			player3.setLookBack("_|");
+			player4.setLookBack("_|");
+			game.board.move(0, 1, player3);
+			game.board.move(0, 1, player4);
+			game.board.move(0, 1, player4);
+			Player player5 = setupMockPlayer("Flo", "The Reverend Green", new Position(6,18));
+			Player player6 = setupMockPlayer("Peter", "Mrs. Peacock", new Position(6,17));
+			player5.setLookBack("_|");
+			player6.setLookBack("_|");
+			game.board.move(0, 1, player5);
+			game.board.move(0, 1, player6);
+			game.board.move(0, 1, player6);
+			System.out.println(player1.position().toString());
+			System.out.println(player2.position().toString());
+			System.out.println(player3.position().toString());
+			System.out.println(player4.position().toString());
+			System.out.println(player5.position().toString());
+			System.out.println(player6.position().toString());
+			
+		} catch (InvalidMove e) {
+			fail(e.getMessage());
+		}
+		
 	}
 	
 	/**
