@@ -15,7 +15,7 @@ public class Player {
 
 	private List<Card> hand; //Holds the hand
 	private String name;
-	private String characterName;
+	private Character character;
 	private Position position;
 	private int numberofMoves;
 	private boolean isInRoom = false;
@@ -70,7 +70,7 @@ public class Player {
 	 * @param c
 	 */
 	public void setCharacter(Character c){
-		this.characterName = c.getName();
+		this.character = c;
 	}
 
 	/**
@@ -121,11 +121,19 @@ public class Player {
 	}
 
 	/**
-	 * Return name of character name.
+	 * Returns the name of the character.
 	 * @return
 	 */
 	public String getCharacterName(){
-		return this.characterName;
+		return this.character.getName();
+	}
+	
+	/**
+	 * Retuns the character that this player is playing.
+	 * @return
+	 */
+	public Character getCharacter(){
+		return this.character;
 	}
 
 	/**
@@ -222,6 +230,6 @@ public class Player {
 	}
 
 	public String toString(){
-		return "Name: " + this.name + ", Character Piece: " + this.characterName;
+		return "Name: " + this.name + ", Character Piece: " + this.character.getName();
 	}
 }

@@ -12,6 +12,11 @@ public class Weapon{
 	private String weaponName;
 	
 	/**
+	 * The room that this weapon is in.
+	 */
+	private Room room;
+	
+	/**
 	 * Create a new weapon. The string name cannot be null.
 	 * @param w
 	 */
@@ -25,6 +30,21 @@ public class Weapon{
 	 * @return
 	 */
 	public String weaponName(){return this.weaponName;}
+	
+	/**
+	 * Stores the room that this weapon is in.
+	 * @param rm
+	 */
+	public void addRoom(Room rm){
+		this.room = rm;
+	}
+	/**
+	 * Returns the room that this weapon is in.
+	 * @return
+	 */
+	public Room getRoom(){
+		return this.room;
+	}
 	
 	@Override
 	public String toString(){

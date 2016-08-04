@@ -18,6 +18,11 @@ public class Room {
 	 * The weapon that the room is in.
 	 */
 	private Weapon weapon = null;
+	
+	/**
+	 * The Character that is in the room.
+	 */
+	private Character character = null;
 
 	/**
 	 * The x position of this room.
@@ -126,6 +131,10 @@ public class Room {
 		i++;
 	}
 	
+	/**
+	 * Removes player from the room.
+	 * @param p
+	 */
 	public void removePlayer(Player p){
 		for(int i = 0; i < playerCoords.length; i++){
 			if(p.position().equals(playerCoords[i])){
@@ -140,6 +149,14 @@ public class Room {
 	 */
 	public void addWeapon(Weapon w){
 		this.weapon = w;
+	}
+	
+	/**
+	 * Add Character to room.
+	 * @param c
+	 */
+	public void addCharacter(Character c){
+		this.character = c;
 	}
 
 	/**

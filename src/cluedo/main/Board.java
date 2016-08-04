@@ -747,7 +747,7 @@ public class Board {
 				}
 			}
 		} catch (InvalidMove e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 			return false;
 		}
 		return true;

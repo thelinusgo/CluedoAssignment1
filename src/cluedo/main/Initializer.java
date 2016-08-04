@@ -102,9 +102,12 @@ public class Initializer {
 		Collections.shuffle(rooms); //shuffle it
 
 		for(int i = 0; i < weapons.size(); i++){
-			rooms.get(i).addWeapon(weapons.get(i));
+			Room r = rooms.get(i);
+			Weapon w = weapons.get(i);
+			r.addWeapon(w);
+			w.addRoom(r);
 		}
-
+		
 		Collections.shuffle(weapons, new Random(seed));
 	}
 
@@ -190,6 +193,18 @@ public class Initializer {
 		cards.remove(roomCard);
 		cards.remove(weaponCard);
 		cards.remove(characterCard);
+	}
+	
+	public void setCharacters(){
+		Collections.shuffle(rooms, new Random(seed));
+		for(Player p : CluedoGame.getCurrentPlayers()){
+			for(int i = 0; i < characters.size(); i++){
+				Character c = characters.get(i);
+				if(!p.getCharacter().equals(c)){
+					rooms.get(i).addCharacter(c);
+				}
+			}
+		}
 	}
 
 	public void distributeCharacters(){

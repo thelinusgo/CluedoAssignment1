@@ -31,12 +31,12 @@ public class CluedoGame {
 
 	/** If player has made a move*/
 	private boolean moveMade = false;
-	
+
 	/**
 	 * Stores the cards of players who have been kicked out of the game because they made an inccorect accusation.
 	 */
 	private List<List<Card>> showCards = new ArrayList<>();
-	
+
 	/** This helps generate a random shuffle for the lists */
 	private long seed = System.nanoTime();
 
@@ -59,13 +59,13 @@ public class CluedoGame {
 			initializer = new Initializer();
 			initialSetup();
 			//runGame();
-			
+
 		}else{
 			System.out.println("Game is not in test mode! Test mode must be set to true to run.");
 			System.exit(0);
 		}
 	}
-	
+
 	/**
 	 * Gets the list of current Players
 	 * @return
@@ -73,12 +73,12 @@ public class CluedoGame {
 	public static List<Player> currentPlayers(){
 		return currentPlayers;
 	}
-	
+
 	public int numPlayers(){
 		return this.numPlayers;
 	}
-	
-	
+
+
 	/**
 	 * Add new player to current players.
 	 * @param name
@@ -94,7 +94,7 @@ public class CluedoGame {
 	public static List<Player> getCurrentPlayers(){
 		return currentPlayers;
 	}
-	
+
 	/**
 	 * Returns a random value between 2-12.
 	 * @return
@@ -116,7 +116,7 @@ public class CluedoGame {
 		board.setPlayerPosition(currentPlayers);
 		board.drawBoard();
 	}
-	
+
 	/**
 	 * Test class for the initial setup.
 	 */
@@ -192,43 +192,7 @@ public class CluedoGame {
 	public void doOption(String option, Player p) throws InvalidMove{
 		switch(option){
 		case "m":
-			currentPlayer.setNumberofMoves(diceRoll());
-			System.out.println(currentPlayer.getName() + " rolls a " + currentPlayer.numberofMoves() + ".");
-			System.out.println(currentPlayer.getName() + "  has " + currentPlayer.numberofMoves() + " moves.");
-			if(currentPlayer.isInRoom() && currentPlayer.getRoom().hasStairs()){
-				System.out.println("Do you want to take the stairs or do you want to get out of the room?");
-				System.out.println("Press Y for stairs and N for exiting the room");
-				String choice = TextClient.inputString();
-				switch(choice){
-				case "y":
-					board.moveToRoom(p);
-					break;
-				case "n":
-					board.exitRoom(p);
-					break;
-				}
-			}else if(currentPlayer.isInRoom()){
-				System.out.println("You must exit the room now as the room does not have any stairs for you to take.");
-				board.exitRoom(p);
-			}else{
-				while(currentPlayer.numberofMoves() > 0){
-					System.out.println(currentPlayer.getName() + " (" + currentPlayer.getCharacterName() + ")" + " currently has " + currentPlayer.numberofMoves() + " moves left.");
-					System.out.println("current location: " + currentPlayer.position().getX() + ", " + currentPlayer.position().getY());
-					TextClient.movementListener(currentPlayer);
-					if(currentPlayer.isInRoom()){
-						System.out.println("You have entered a room. You will need to wait for your next turn to be able to");
-						System.out.println("take the stairs or exit the room.");
-						break;
-					}
-					if(!board.canMove(p) && !p.coordinatesTaken().isEmpty()){
-						System.out.println("Sorry you do not have anywhere to move now.");
-						break;
-					}
-				}
-				if(currentPlayer.numberofMoves() <= 0){
-					System.out.println(currentPlayer.getName() + " has run out of moves.");
-				}
-			}
+			doMove(p);
 			moveMade = true;
 			break;
 		case "c":
@@ -261,9 +225,8 @@ public class CluedoGame {
 			//TODO: ALSO NEED TO FINISH THIS PART.
 			System.out.println("Player " + currentPlayer.getName() + " wishes to make an suggestion.");
 			Suggestion sugg = makeSuggestion(currentPlayer);
-			
+
 			if(sugg == null){
-				System.out.println("You are not in a room to make a suggestion.");
 				break;
 			}
 			/**
@@ -274,21 +237,19 @@ public class CluedoGame {
 			RoomCard room = sugg.getRoomCard();
 			int count = 1;
 			//iterate over the players list backwards
-			
+
 			for(Player pl : currentPlayers){
 				for(Card currentCard : pl.getCards()){
 					if(currentCard instanceof CharacterCard){
 						if(currentCard.equals(cc)){
-							System.out.println(currentCard.toString());
-							System.out.println(cc.toString());
 							System.out.println("Card matches!");
 							count++;
 						}
 					}else if(currentCard instanceof WeaponCard){
 						if(currentCard.equals(wp)){
-							System.out.println(currentCard.toString());
-							System.out.println(wp.toString());
 							System.out.println("Card matches!");
+							wp.getObject().addRoom(room.getObject());
+							
 							count++;
 						}
 					}
@@ -305,22 +266,194 @@ public class CluedoGame {
 	 * @param current Player
 	 */
 	public Suggestion makeSuggestion(Player p){
-		return TextClient.askSuggestion(p);
+		if(p.getRoom() == null){
+			System.out.println("ERROR: Sorry, you must be in a room to make a suggestion.");
+			return null;
+		}
+		System.out.println("-----------SUGGESTION!-------------");
+		System.out.println("What cards do you want to nominate?");
+		System.out.println("----------------------------------");
+		System.out.println("AVAILABLE CARDS:");
+		//the objects for creating a suggestion.
+		//TODO: needs to be based on room he's in..
+		WeaponCard weapon = null;
+		CharacterCard character = null;
+		RoomCard room = new RoomCard(p.getRoom());
+		int indexChoice;
+
+		List<WeaponCard> weapons = Initializer.getWeaponCards();
+		List<CharacterCard> suspects = Initializer.getCharacterCards();
+
+		System.out.println("Instructions: Enter index of the item you want to nominate.");
+		for(int i = 0; i < 2;){
+			if(i == 0){
+				System.out.println("Step 1) Choose from available weapons: ");
+				int index = 0;
+				for(WeaponCard ww : weapons){
+					System.out.println(index + " "  + ww.toString());				
+					index++;
+				}
+				indexChoice = TextClient.askIndex(weapons);
+				weapon = (WeaponCard) weapons.get(indexChoice);
+				i++;
+			}
+			else if(i == 1){
+				System.out.println("Step 2) Choose from available Suspects: ");
+				int index = 0;
+				for(CharacterCard cc : suspects){
+					System.out.println(index + " "  + cc.toString());
+					index++;
+				}
+				indexChoice = TextClient.askIndex(weapons);
+				character = (CharacterCard) suspects.get(indexChoice);
+				i++;
+			}
+		}
+		System.out.println("----------------------------------");
+		System.out.println(" CONFIRMED Suggestion Pieces:     ");
+		System.out.println(" weapon: " + weapon);
+		System.out.println(" character: " + character);
+		System.out.println(" room: " + room);
+		System.out.println("----------------------------------");
+		return new Suggestion(weapon, room, character, p);
+		//return TextClient.askSuggestion(p);
 	}
-	
+
 	/**
 	 * This makes a suggestion.
 	 * @param p
 	 */
 	public Accusation makeAccusation(Player p){
-		return TextClient.askAccusation(p);
+		System.out.println("-----------ACCUSATION!-------------");
+		System.out.println("What cards do you want to nominate?");
+		System.out.println("----------------------------------");
+		System.out.println("AVAILABLE CARDS:");
+
+		//the objects for creating a suggestion.
+		WeaponCard weapon = null;
+		CharacterCard character = null;
+		RoomCard room = null;
+		int indexChoice = -1;
+
+		//sublists containing cards of a certain category.
+		List<WeaponCard> weapons = Initializer.getWeaponCards();
+		List<RoomCard> rooms = Initializer.getRoomCards();
+		List<CharacterCard> suspects = Initializer.getCharacterCards();
+		System.out.println("Instructions: Enter index of the item you want to nominate.");
+		for(int i = 0; i < 3;){
+			if(i == 0){
+				System.out.println("Step 1) Choose from available weapons: ");
+				int index = 0;
+				for(WeaponCard ww : weapons){
+					System.out.println(index + " "  + ww.toString());				
+					index++;
+				}
+				indexChoice = TextClient.askIndex(weapons);
+				weapon = (WeaponCard) weapons.get(indexChoice);
+				i++;
+			}else if(i == 1){
+				System.out.println("Step 2) Choose from available Rooms: ");
+				int index = 0;
+				for(RoomCard rr : rooms){
+					System.out.println(index + " "  + rr.toString());
+					index++;
+				}
+				indexChoice = TextClient.askIndex(rooms);
+				room = (RoomCard) rooms.get(indexChoice);
+				i++;
+			}else{
+				System.out.println("Step 3) Choose from available Suspects: ");
+				int index = 0;
+				for(CharacterCard cc : suspects){
+					System.out.println(index + " "  + cc.toString());
+					index++;
+				}
+				indexChoice = TextClient.askIndex(suspects);
+				character = (CharacterCard) suspects.get(indexChoice);
+				i++;
+			}
+		}
+
+		Card[] env = Initializer.getEnvelope().getEnvelope();
+
+		int count = 0;
+		for(Card card : env){
+			if(card instanceof WeaponCard){
+				if(card.equals(weapon)){
+					count++;
+				}
+			}else if(card instanceof CharacterCard){
+				if(card.equals(character)){
+					count++;
+				}
+			}else if(card instanceof RoomCard){
+				if(card.equals(room)){
+					count++;
+				}
+			}
+		}
+		Accusation accusation = null;
+		if(count == 3){
+			//TODO: come and fix this later!
+			System.out.println("----------------------------------");
+			System.out.println(" CONFIRMED Accusation Pieces:     ");
+			System.out.println(" weapon: " + weapon);
+			System.out.println(" character: " + character);
+			System.out.println(" room: " + room);
+			System.out.println("----------------------------------");
+			accusation = new Accusation(weapon, room, character, p);
+			accusation.setArgumentStatus(true);
+			return accusation;
+		}
+
+		return accusation;	
+		//return TextClient.askAccusation(p);
 	}
 
+	public void doMove(Player p) throws InvalidMove{
+		currentPlayer.setNumberofMoves(diceRoll());
+		System.out.println(currentPlayer.getName() + " rolls a " + currentPlayer.numberofMoves() + ".");
+		System.out.println(currentPlayer.getName() + "  has " + currentPlayer.numberofMoves() + " moves.");
+		if(currentPlayer.isInRoom() && currentPlayer.getRoom().hasStairs()){
+			System.out.println("Do you want to take the stairs or do you want to get out of the room?");
+			System.out.println("Press Y for stairs and N for exiting the room");
+			String choice = TextClient.inputString();
+			switch(choice){
+			case "y":
+				board.moveToRoom(p);
+				break;
+			case "n":
+				board.exitRoom(p);
+				break;
+			}
+		}else if(currentPlayer.isInRoom()){
+			System.out.println("You must exit the room now as the room does not have any stairs for you to take.");
+			board.exitRoom(p);
+		}else{
+			while(currentPlayer.numberofMoves() > 0){
+				System.out.println(currentPlayer.getName() + " (" + currentPlayer.getCharacterName() + ")" + " currently has " + currentPlayer.numberofMoves() + " moves left.");
+				System.out.println("current location: " + currentPlayer.position().getX() + ", " + currentPlayer.position().getY());
+				TextClient.movementListener(currentPlayer);
+				if(currentPlayer.isInRoom()){
+					System.out.println("You have entered a room. You will need to wait for your next turn to be able to");
+					System.out.println("take the stairs or exit the room.");
+					break;
+				}
+				if(!board.canMove(p) && !p.coordinatesTaken().isEmpty()){
+					System.out.println("Sorry you do not have anywhere to move now.");
+					break;
+				}
+			}
+			if(currentPlayer.numberofMoves() <= 0){
+				System.out.println(currentPlayer.getName() + " has run out of moves.");
+			}
+		}
+	}
 
 	public boolean isGameOver(){
 		return false;
 	}
-	
+
 	/**
 	 * Indicates an attempt to make an invalid move.
 	 *
