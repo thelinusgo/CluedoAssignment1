@@ -297,6 +297,7 @@ public class CluedoTests {
 	CluedoGame game = new CluedoGame();
 	try{
 		Player player = setupMockPlayer("Xamuel", "Miss Scarlett", new Position(0,17));
+		player.addCard(c);
 		player.setLookBack("|_");
 		CluedoGame.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|";
 		CluedoGame.board.move(6, -2, player);
