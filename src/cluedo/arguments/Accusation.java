@@ -13,10 +13,10 @@ import cluedo.cards.WeaponCard;
  *
  */
 public class Accusation extends Argument{
-	
+
 	private boolean validAccusation = false;
 	private Envelope env;
-	
+
 	public Accusation(WeaponCard weapon, RoomCard room, CharacterCard character, Player p, Envelope env) {
 		super(weapon, room, character, p);
 		this.env = env;
@@ -32,32 +32,30 @@ public class Accusation extends Argument{
 		RoomCard room = super.getRoomCard();
 		CharacterCard character = super.getCharacterCard();
 		boolean valid = false;
-		for(Card cards: env.getEnvelope()){
-			for(Card playersCard : p.getCards()){
-				if(playersCard instanceof RoomCard){
-					if(playersCard.equals(room)){
-						valid = true;
-					}else{
-						valid = false;
-					}
-				}else if(playersCard instanceof WeaponCard){
-					if(playersCard.equals(weapon)){
-						valid = true;
-					}else{
-						valid = false;
-					}
-				}else if(playersCard instanceof CharacterCard){
-					if(playersCard.equals(character)){
-						valid = true;
-					}else{
-						valid = false;
-					}
+		for(Card card: env.getEnvelope()){
+			if(card instanceof RoomCard){
+				if(card.equals(room)){
+					valid = true;
+				}else{
+					valid = false;
+				}
+			}else if(card instanceof WeaponCard){
+				if(card.equals(weapon)){
+					valid = true;
+				}else{
+					valid = false;
+				}
+			}else if(card instanceof CharacterCard){
+				if(card.equals(character)){
+					valid = true;
+				}else{
+					valid = false;
 				}
 			}
 		}
 		return valid;
 	}
-	
+
 	/**
 	 * Returns the status of this accusation.
 	 * @return
@@ -65,9 +63,9 @@ public class Accusation extends Argument{
 	public boolean accusationStatus(){
 		return this.validAccusation;
 	}
-	
-	
-	
+
+
+
 	@Override
 	public String toString(){
 		return "Player: " + super.getCurrentPlayer().getName() + " accuses " + super.getCharacterCard().getName() + " of murder; using a " + super.getWeaponCard().getName() +

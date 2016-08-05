@@ -17,7 +17,7 @@ import java.util.List;
  *
  */
 public class Suggestion extends Argument {
-	
+
 	/**
 	 * Construct a new suggestion.
 	 * @param w
@@ -27,7 +27,7 @@ public class Suggestion extends Argument {
 	public Suggestion(WeaponCard w, RoomCard r, CharacterCard c, Player p) {
 		super(w, r, c, p);
 	}
-	
+
 	/**
 	 * This checks if the suggestion is Correct by iterating over the list of players, and their hand.
 	 * @param players
@@ -37,18 +37,26 @@ public class Suggestion extends Argument {
 	public boolean checkSuggestion(List<Player> players){
 		if(players == null) throw new IllegalArgumentException("List of players cannot be null");
 		List<Card> playerHand;
+		boolean correct = false;
 		RoomCard roomCard = super.getRoomCard();
-		Room room = roomCard.getObject();
 		CharacterCard cc = super.getCharacterCard();
-		Character c = cc.getObject();
+		WeaponCard wp = super.getWeaponCard();
+
 		for(Player p : players){
 			playerHand = p.getCards();
 			for(Card card : playerHand){
 				if(card.equals(super.getCharacterCard())){
-					room.getWeapon().addRoom(cc.getObject().getRoom());
-					cc.getObject().getRoom().addCharacter(room.getCharacter());
-					room.addCharacter(cc.getObject());
-					cc.getObject().addRoom(room);
+					Room r1 = roomCard.getObject();
+					Room r2 = cc.getObject().getRoom();
+					Character c1 = cc.getObject();
+					Character c2 = r1.getCharacter();
+					c1.addRoom(r2);
+					if(c2 != null){
+						c2.addRoom(r1);
+					}
+					r1.addCharacter(c2);
+					r2.addCharacter(c1);
+					cc.getObject().addRoom(roomCard.getObject());
 					for(Player player : CluedoGame.getCurrentPlayers()){
 						if(!player.equals(p)){
 							if(player.getCharacter().equals(cc.getObject())){
@@ -56,20 +64,25 @@ public class Suggestion extends Argument {
 							}
 						}
 					}
-					return true;
+					correct = true;
 				}else if(card.equals(super.getWeaponCard())){
-					WeaponCard wp = super.getWeaponCard();
-					roomCard.getObject().getWeapon().addRoom(wp.getObject().getRoom());
-					wp.getObject().getRoom().addWeapon(roomCard.getObject().getWeapon());
-					roomCard.getObject().addWeapon(wp.getObject());
-					wp.getObject().addRoom(roomCard.getObject());
-					return true;
+					Room r1 = roomCard.getObject();
+					Room r2 = wp.getObject().getRoom();
+					Weapon w1 = wp.getObject();
+					Weapon w2 = r1.getWeapon();
+					w1.addRoom(r2);
+					if(w2 !=  null){
+						w2.addRoom(r1);
+					}
+					r1.addWeapon(w2);
+					r2.addWeapon(w1);
+					correct = true;
 				}else if(card.equals(super.getRoomCard())){
-					return true;
+					correct = true;
 				}
 			}
 		}
-		return false;
+		return correct;
 	}
-	
+
 }

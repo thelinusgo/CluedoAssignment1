@@ -142,6 +142,14 @@ public class Room {
 			}
 		}
 	}
+	
+	/**
+	 * Returns the map of players who are currently in this room.
+	 * @return
+	 */
+	public Map<Position, Player> getMap(){
+		return playerMap;
+	}
 
 	/**
 	 * Add weapon to room

@@ -47,7 +47,7 @@ public class CluedoTests {
 		 
 		CluedoGame game = new CluedoGame();
 		try {
-			Player player = setupMockPlayer("Rodolfo", "Miss Scarlett", new Position(23, 13));
+			Player player = setupMockPlayer("Ralf", "Miss Scarlett", new Position(23, 13));
 			player.setLookBack("_|");
 			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
 			game.board.move(-4, 0, player);
@@ -65,8 +65,8 @@ public class CluedoTests {
 		 
 		CluedoGame game = new CluedoGame();
 		try{
-			Player player = setupMockPlayer("Samuel", "Professor Plum", new Position(0,17));
-			player.setLookBack("|_");
+			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(0,17));
+			player.setLookBack("|_|");
 			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
 			game.board.move(-1, 0, player);
 			assertEquals(new Position(0, 17), player.position());
@@ -84,8 +84,8 @@ public class CluedoTests {
 		 
 		CluedoGame game = new CluedoGame();
 		try{
-			Player player = setupMockPlayer("Namuel", "Professor Plum", new Position(7,24));
-			player.setLookBack("__");
+			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(7,24));
+			player.setLookBack("/|");
 			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
 			for(int i = 0; i < 10; i++){
 			game.board.move(0, -1, player);	
@@ -105,8 +105,8 @@ public class CluedoTests {
 		CluedoGame game = new CluedoGame();
 		int diceRoll = game.diceRoll();
 		try{
-			Player player = setupMockPlayer("Xamuel", "Professor Plum", new Position(0,17));
-			player.setLookBack("_|");
+			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(0,17));
+			player.setLookBack("|_|");
 			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
 			for(int i = 0; i < diceRoll; i++){
 				game.board.move(1, 0, player);
@@ -124,11 +124,10 @@ public class CluedoTests {
 	public void testGoingInRoom_1(){
 		CluedoGame game = new CluedoGame();
 		try{
-			Player player = setupMockPlayer("Lamuel", "Professor Plum", new Position(0,17));
+			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(0,17));
 			player.setLookBack("|_|");
 			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
 			game.board.move(6, -2, player);
-			System.out.println(player.position().toString());
 			assertTrue(player.isInRoom());
 		}catch(CluedoGame.InvalidMove e){
 			fail(e.getMessage());
@@ -160,17 +159,30 @@ public class CluedoTests {
 			game.board.move(0, 1, player5);
 			game.board.move(0, 1, player6);
 			game.board.move(0, 1, player6);
-			System.out.println(player1.position().toString());
-			System.out.println(player2.position().toString());
-			System.out.println(player3.position().toString());
-			System.out.println(player4.position().toString());
-			System.out.println(player5.position().toString());
-			System.out.println(player6.position().toString());
-			
+			assertEquals(6, player1.getRoom().getMap().size());
 		} catch (InvalidMove e) {
 			fail(e.getMessage());
 		}
-		
+	}
+	
+	@Test
+	public void testGoingInRoom_3(){
+		CluedoGame game = new CluedoGame();
+		try{
+			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(0,17));
+			game.getCurrentPlayers().add(player);
+			Player player2 = setupMockPlayer("Pete", "Mrs. White", new Position(1,17));
+			game.getCurrentPlayers().add(player2);
+			player.setLookBack("|/|");
+			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
+			game.board.move(6, -2, player);
+			assertTrue(player.isInRoom());
+			
+			game.board.exitRoom(player);
+			assertFalse(player.isInRoom());
+		}catch(CluedoGame.InvalidMove e){
+			fail(e.getMessage());
+		}
 	}
 	
 	/**
@@ -180,8 +192,8 @@ public class CluedoTests {
 	public void testLeavingRoom(){
 		CluedoGame game = new CluedoGame();
 		try{
-			Player player = setupMockPlayer("Lamuel", "Professor Plum", new Position(0,17));
-			player.setLookBack("|_");
+			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(0,17));
+			player.setLookBack("|_|");
 			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
 			game.board.move(6, -2, player); //moving diagonally but who cares anyway?
 			System.out.println(player.position().toString());
@@ -197,8 +209,8 @@ public class CluedoTests {
 	public void testGoingInStairs(){
 		CluedoGame game = new CluedoGame();
 		try{
-			Player player = setupMockPlayer("Lamuel", "Professor Plum", new Position(0,17));
-			player.setLookBack("|_");
+			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(0,17));
+			player.setLookBack("|_|");
 			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
 			game.board.move(6, 2, player); //moving diagonally but who cares anyway?
 			assertTrue(player.isInRoom());
@@ -225,7 +237,7 @@ public class CluedoTests {
 	 */
 	try{
 		Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(23,6));
-		player.setLookBack("|_|");
+		player.setLookBack("_|");
 		game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
 		game.board.move(0, -1, player);
 		assertFalse(player.isInRoom());
@@ -242,8 +254,7 @@ public class CluedoTests {
 	public void testInvalidCharacterName(){
 		CluedoGame game = new CluedoGame();
 		try{
-			Player player = setupMockPlayer("Namuel", "Professor Poo Poo Head", new Position(0,17));
-			System.out.println(player.getCharacterName());
+			Player player = setupMockPlayer("Ralf", "Professor Pulm", new Position(0,17));
 			assertTrue(player.getCharacterName() == null);
 		}catch(CluedoGame.InvalidMove e){
 			fail(e.getMessage());
@@ -257,8 +268,7 @@ public class CluedoTests {
 	public void testValidCharacterTa(){
 		CluedoGame game = new CluedoGame();
 		try{
-			Player player = setupMockPlayer("Namuel", "Professor Plum", new Position(0,17));
-			System.out.println(player.getCharacterName());
+			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(0,17));
 			assertTrue(player.getCharacterName() == null);
 		}catch(CluedoGame.InvalidMove e){
 			fail(e.getMessage());
@@ -273,8 +283,8 @@ public class CluedoTests {
 	public void testValidSuggestion_01(){
 	CluedoGame game = new CluedoGame();
 	try{
-		Player player = setupMockPlayer("Xamuel", "Miss Scarlett", new Position(0,17));
-		player.setLookBack("|_");
+		Player player = setupMockPlayer("Ralf", "Miss Scarlett", new Position(0,17));
+		player.setLookBack("|_|");
 		game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|";
 		game.board.move(6, -2, player);
 		assertTrue(player.getRoom() != null);
@@ -287,7 +297,7 @@ public class CluedoTests {
 	
 	/**
 	 * This tests that the user makes a correct suggestion, and it will iterate over the other players hands.
-	 * Not Finished
+	 * - To make this test past, must choose Dagger as weapon and Professor Plum and Character.
 	 * 
 	 */
 	@Test
@@ -297,9 +307,13 @@ public class CluedoTests {
 	try{
 		List<Player> playerList = game.getCurrentPlayers();
 		Player player = setupMockPlayer("A", "Miss Scarlett", new Position(0,17));
+		player.setLookBack("|_|");
+		game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|";
+		game.board.move(6, -2, player);
 		RoomCard rc = new RoomCard(new Room("Kitchen"));
 		WeaponCard wp = new WeaponCard(new Weapon("Rope"));
 		CharacterCard cc = new CharacterCard(new Character("Miss Scarlett"));
+		
 		player.addCard(cc);
 		player.addCard(wp);
 		player.addCard(rc);
@@ -330,16 +344,10 @@ public class CluedoTests {
 		
 		game.initializer.distributeCharacters();
 		game.initializer.setCharacters();
-		
-		player.setLookBack("|_|");
-		game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|";
-		game.board.move(6, -2, player);
 		assertTrue(player.getRoom() != null);
 		Suggestion sug = game.makeSuggestion(player);
-		
 		assertTrue(sug.checkSuggestion(playerList));
-		
-		
+		assertEquals(player.getRoom(), sug.getCharacterCard().getObject().getRoom());
 	}catch(CluedoGame.InvalidMove e){
 		fail(e.getMessage());
 	}
@@ -352,8 +360,8 @@ public class CluedoTests {
 	public void testInvalidSuggestion(){
 		CluedoGame game = new CluedoGame();
 		try{
-			Player player = setupMockPlayer("Xamuel", "Miss Scarlett", new Position(0,17));
-			player.setLookBack("|_");
+			Player player = setupMockPlayer("Ralf", "Miss Scarlett", new Position(0,17));
+			player.setLookBack("|_|");
 			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|";
 			game.board.move(+2, 0, player);
 			assertTrue(player.getRoom() == null);
@@ -378,9 +386,9 @@ public class CluedoTests {
 			env.add(wep);
 			env.add(room);
 			env.add(character);
-			Player player = setupMockPlayer("Xamuel", "Miss Scarlett", new Position(0,17));
+			Player player = setupMockPlayer("Ralf", "Miss Scarlett", new Position(0,17));
 			game.addPlayer("player");
-			player.setLookBack("|_");
+			player.setLookBack("|_|");
 			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|";
 			Accusation accu = new Accusation(wep,room,character,player, env);
 			assertTrue(accu != null);
@@ -404,9 +412,9 @@ public class CluedoTests {
 			env.add(wep);
 			env.add(room);
 			env.add(character);
-			Player player = setupMockPlayer("Xamuel", "Miss Scarlett", new Position(0,17));
+			Player player = setupMockPlayer("Ralf", "Miss Scarlett", new Position(0,17));
 			game.addPlayer("player");
-			player.setLookBack("|_");
+			player.setLookBack("|_|");
 			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|";
 			Accusation accu = new Accusation(wep,room,character,player,env);
 			assertTrue(accu != null);
@@ -432,9 +440,9 @@ public class CluedoTests {
 			env.add(wep);
 			env.add(room);
 			env.add(character);
-			Player player = setupMockPlayer("Xamuel", "Miss Scarlett", new Position(0,17));
+			Player player = setupMockPlayer("Ralf", "Miss Scarlett", new Position(0,17));
 			game.addPlayer("player");
-			player.setLookBack("|_");
+			player.setLookBack("|_|");
 			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|";
 			Accusation accu = new Accusation(wep,room,(new CharacterCard(new Character("Professor Plum"))), player, env);
 			assertTrue(accu != null);
