@@ -98,7 +98,7 @@ public class CluedoGame {
 		TextClient.askPlayers();
 		initializer.distributeCharacters();
 		initializer.distributeCards();
-		
+
 		board.setPlayerPosition(currentPlayers);
 		initializer.setCharacters();
 		board.drawBoard();
@@ -145,8 +145,8 @@ public class CluedoGame {
 	 */
 	public void runGame() throws InvalidMove{
 		if(askSuccess){
-			while(!isGameOver()){
-				for(int i = 0; i < currentPlayers.size(); i++){
+			for(int i = 0; i < currentPlayers.size(); i++){
+				while(!isGameOver()){
 					moveMade = false;
 					currentPlayer = currentPlayers.get(i);
 					if(!currentPlayer.out()){
@@ -172,6 +172,10 @@ public class CluedoGame {
 							}
 							doOption(option, currentPlayer);
 						}
+					}
+					if(isGameOver()){
+						System.out.println("Game is over.");
+						printEnvelope();
 					}
 				}
 			}
@@ -478,6 +482,13 @@ public class CluedoGame {
 		}
 		return false;
 	}
+	
+	public void printEnvelope(){
+		System.out.println("The envelope consisted of these cards: ");
+		for(Card c : initializer.getEnvelope().getEnvelope()){
+			System.out.println(c.toString());
+		}
+	}
 
 	/**
 	 * Indicates an attempt to make an invalid move.
@@ -506,6 +517,6 @@ public class CluedoGame {
 		CluedoGame game = new CluedoGame();
 		game.initialSetup();
 		game.runGame();
-		
+
 	}
 }
