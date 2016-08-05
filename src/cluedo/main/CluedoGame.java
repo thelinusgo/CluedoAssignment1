@@ -415,6 +415,7 @@ public class CluedoGame {
 					System.out.println("Sorry you do not have anywhere to move now.");
 					break;
 				}
+				board.drawBoard();
 			}
 			if(currentPlayer.numberofMoves() <= 0){
 				System.out.println(currentPlayer.getName() + " has run out of moves.");
