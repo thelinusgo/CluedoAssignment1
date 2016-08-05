@@ -155,13 +155,13 @@ public class CluedoGame {
 						loop: while(!moveMade){
 							String option;
 							if(prevOption.equals("s")){
+								prevOption = "";
 								System.out.println("Do you want to end your turn or make an accusation? (Press Y for ending your turn or N for making an accusation)");
 								option = TextClient.inputString();
 								switch(option){
 								case "y":
 									System.out.println("You have ended your turn.");
 									moveMade = true;
-									prevOption = "";
 									break loop;
 								case "n":
 									option = "a";
