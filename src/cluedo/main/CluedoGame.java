@@ -145,8 +145,8 @@ public class CluedoGame {
 	 */
 	public void runGame() throws InvalidMove{
 		if(askSuccess){
-			for(int i = 0; i < currentPlayers.size(); i++){
-				while(!isGameOver()){
+			while(!isGameOver()){
+				for(int i = 0; i < currentPlayers.size(); i++){
 					moveMade = false;
 					currentPlayer = currentPlayers.get(i);
 					if(!currentPlayer.out()){
@@ -176,6 +176,7 @@ public class CluedoGame {
 					if(isGameOver()){
 						System.out.println("Game is over.");
 						printEnvelope();
+						return;
 					}
 				}
 			}
@@ -218,17 +219,17 @@ public class CluedoGame {
 			//TODO: ALSO NEED TO FINISH THIS PART.
 			System.out.println("Player " + currentPlayer.getName() + " wishes to make an suggestion.");
 			Suggestion sugg = makeSuggestion(currentPlayer);
-			
+
 			if(sugg == null){
 				break;
 			}
-			
+
 			if(sugg.checkSuggestion(currentPlayers)){
 				System.out.println("At least one extra card was found");
 			}else{
 				System.out.println("no extra cards were found");
 			}
-			
+
 			prevOption = "s";
 			break;
 		}
@@ -434,7 +435,7 @@ public class CluedoGame {
 		}
 		return false;
 	}
-	
+
 	public void printEnvelope(){
 		System.out.println("The envelope consisted of these cards: ");
 		for(Card c : initializer.getEnvelope().getEnvelope()){
