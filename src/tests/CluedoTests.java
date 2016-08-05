@@ -272,7 +272,7 @@ public class CluedoTests {
 	 * NOTE: REQUIRES USER INPUT to pass.
 	 */
 	@Test
-	public void testValidSuggestion(){
+	public void testValidSuggestion_01(){
 	CluedoGame game = new CluedoGame();
 	try{
 		Player player = setupMockPlayer("Xamuel", "Miss Scarlett", new Position(0,17));
@@ -287,6 +287,26 @@ public class CluedoTests {
 	}
    }
 	
+	/**
+	 * This tests that the user makes a correct suggestion, and it will iterate over the other players hands.
+	 * Not Finished
+	 * Requires user input.
+	 */
+	@Test
+	public void testValidSuggestion_02(){
+	CluedoGame game = new CluedoGame();
+	try{
+		Player player = setupMockPlayer("Xamuel", "Miss Scarlett", new Position(0,17));
+		player.setLookBack("|_");
+		CluedoGame.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|";
+		CluedoGame.board.move(6, -2, player);
+		assertTrue(player.getRoom() != null);
+		Suggestion sug = game.makeSuggestion(player);
+		sug.checkSuggestion(game.getCurrentPlayers());
+	}catch(CluedoGame.InvalidMove e){
+		fail(e.getMessage());
+	}
+   }	
 	/**
 	 * Test that you cannot make an invalid suggestion.
 	 * 
@@ -353,7 +373,7 @@ public class CluedoTests {
 			CluedoGame.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|";
 			Accusation accu = new Accusation(wep,room,character,player,env);
 			assertTrue(accu != null);
-			assertTrue(accu.argumentStatus());
+			assertTrue(accu.accusationStatus());
 			//assertTrue(accu.checkAccusation(env, player));
 			//assertTrue(game.isGameOver());
 		}catch(CluedoGame.InvalidMove e){
@@ -381,7 +401,7 @@ public class CluedoTests {
 			CluedoGame.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|";
 			Accusation accu = new Accusation(wep,room,(new CharacterCard(new Character("Professor Plum"))), player, env);
 			assertTrue(accu != null);
-			assertFalse(accu.argumentStatus());
+			assertFalse(accu.accusationStatus());
 		}catch(CluedoGame.InvalidMove e){
 			fail(e.getMessage());
 		}

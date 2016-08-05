@@ -13,7 +13,6 @@ public class Argument {
 	private WeaponCard weapon;
 	private RoomCard room;
 	private CharacterCard character;
-	private boolean isArgumentCorrect = false;
 	private Player currentPlayer;
 	
 	/**
@@ -28,23 +27,6 @@ public class Argument {
 		this.character = c;
 		this.currentPlayer = p;
 	}
-	
-	/**
-	 * Returns the status of the argument.
-	 * @return
-	 */
-	public boolean argumentStatus(){
-		return this.isArgumentCorrect;
-	}
-	
-	/**
-	* Sets the status of this argument.
-	 * @return
-	 */
-	public void setArgumentStatus(boolean val){
-		this.isArgumentCorrect = val;
-	}
-	
 	
 	/**
 	 * gets the WeaponCard object.
