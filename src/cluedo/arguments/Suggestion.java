@@ -6,6 +6,8 @@ import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
 import cluedo.main.CluedoGame;
 import cluedo.assets.*;
+import cluedo.assets.Character;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,15 +38,17 @@ public class Suggestion extends Argument {
 		if(players == null) throw new IllegalArgumentException("List of players cannot be null");
 		List<Card> playerHand;
 		RoomCard roomCard = super.getRoomCard();
+		Room room = roomCard.getObject();
+		CharacterCard cc = super.getCharacterCard();
+		Character c = cc.getObject();
 		for(Player p : players){
 			playerHand = p.getCards();
 			for(Card card : playerHand){
 				if(card.equals(super.getCharacterCard())){
-					CharacterCard cc = super.getCharacterCard();
-					roomCard.getObject().getWeapon().addRoom(cc.getObject().getRoom());
-					cc.getObject().getRoom().addCharacter(roomCard.getObject().getCharacter());
-					roomCard.getObject().addCharacter(cc.getObject());
-					cc.getObject().addRoom(roomCard.getObject());
+					room.getWeapon().addRoom(cc.getObject().getRoom());
+					cc.getObject().getRoom().addCharacter(room.getCharacter());
+					room.addCharacter(cc.getObject());
+					cc.getObject().addRoom(room);
 					for(Player player : CluedoGame.getCurrentPlayers()){
 						if(!player.equals(p)){
 							if(player.getCharacter().equals(cc.getObject())){
