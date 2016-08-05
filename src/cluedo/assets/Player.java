@@ -25,6 +25,7 @@ public class Player {
 	private List<Position> coordinates = new ArrayList<Position>();
 	private List<Position> possibleCoords = new ArrayList<Position>();
 	private Door door;
+	private boolean out;
 
 	/**
 	 * Create a Player with a given name, a hand, a current character, and their x and y position.
@@ -39,6 +40,7 @@ public class Player {
 		this.name = name;
 		hand = new ArrayList<>();
 		door = null;
+		out = false;
 	}
 
 	/**
@@ -227,6 +229,18 @@ public class Player {
 	 */
 	public Door door(){
 		return this.door;
+	}
+	
+	/**
+	 * Returns whether the player is out of the game - cannot make a move.
+	 * @return
+	 */
+	public boolean out(){
+		return this.out;
+	}
+	
+	public void setOut(boolean b) {
+		this.out  = b;
 	}
 
 	public String toString(){

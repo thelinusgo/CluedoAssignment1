@@ -146,27 +146,29 @@ public class CluedoGame {
 				for(int i = 0; i < currentPlayers.size(); i++){
 					moveMade = false;
 					currentPlayer = currentPlayers.get(i);
-					System.out.println("Player " + currentPlayer.getName() + " starts.");
-					System.out.println(currentPlayer.getName() + "'s character piece is " + currentPlayer.getCharacterName() + ".");
-					loop: while(!moveMade){
-						String option;
-						if(prevOption.equals("s")){
-							System.out.println("Do you want to end your turn or make an accusation? (Press Y for ending your turn or N for making an accusation)");
-							option = TextClient.inputString();
-							switch(option){
-							case "y":
-								System.out.println("You have ended your turn.");
-								moveMade = true;
-								prevOption = "";
-								break loop;
-							case "n":
-								option = "a";
-								break;
+					if(!currentPlayer.out()){
+						System.out.println("Player " + currentPlayer.getName() + " starts.");
+						System.out.println(currentPlayer.getName() + "'s character piece is " + currentPlayer.getCharacterName() + ".");
+						loop: while(!moveMade){
+							String option;
+							if(prevOption.equals("s")){
+								System.out.println("Do you want to end your turn or make an accusation? (Press Y for ending your turn or N for making an accusation)");
+								option = TextClient.inputString();
+								switch(option){
+								case "y":
+									System.out.println("You have ended your turn.");
+									moveMade = true;
+									prevOption = "";
+									break loop;
+								case "n":
+									option = "a";
+									break;
+								}
+							}else{
+								option = TextClient.askOption();
 							}
-						}else{
-							option = TextClient.askOption();
+							doOption(option, currentPlayer);
 						}
-						doOption(option, currentPlayer);
 					}
 				}
 			}
@@ -200,7 +202,7 @@ public class CluedoGame {
 				System.out.println("The accusation pieces did not match."); 
 				System.out.println("You have now been kicked out of the game.");
 				showCards.add(p.getCards());
-				currentPlayers().remove(p);
+				p.setOut(true);
 				board.getBoard()[p.position().getX()][p.position().getY()] = p.getLookBack();
 			}
 			moveMade = true;
@@ -215,7 +217,7 @@ public class CluedoGame {
 			}else{
 				System.out.println("At least one extra card was found");
 			}
-			
+
 			if(sugg == null){
 				break;
 			}
@@ -223,7 +225,7 @@ public class CluedoGame {
 			break;
 		}
 	}
-	
+
 	/**
 	 * For suggestion - check that the other players have at least one of that card.
 	 * TODO: casey please help me fix this!!
@@ -272,7 +274,7 @@ public class CluedoGame {
 		}
 		return count;
 	}
-	
+
 	/**
 	 * This makes an accusation.
 	 * @param current Player
@@ -332,7 +334,7 @@ public class CluedoGame {
 	}
 
 	/**
-	 * This makes a suggestion.
+	 * This makes an accusation.
 	 * @param p
 	 */
 	public Accusation makeAccusation(Player p){
