@@ -219,7 +219,10 @@ public class CluedoGame {
 			moveMade = true;
 			break;
 		case "s":
-			//TODO: ALSO NEED TO FINISH THIS PART.
+			if(!p.isInRoom()){
+				System.out.println("ERROR: Sorry, you must be in a room to make a suggestion.");
+				break;
+			}
 			System.out.println("Player " + currentPlayer.getName() + " wishes to make an suggestion.");
 			Suggestion sugg = makeSuggestion(currentPlayer);
 
@@ -243,10 +246,7 @@ public class CluedoGame {
 	 * @param current Player
 	 */
 	public Suggestion makeSuggestion(Player p){
-		if(p.getRoom() == null){
-			System.out.println("ERROR: Sorry, you must be in a room to make a suggestion.");
-			return null;
-		}
+		
 		System.out.println("-----------SUGGESTION!-------------");
 		System.out.println("What cards do you want to nominate?");
 		System.out.println("----------------------------------");
