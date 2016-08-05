@@ -650,8 +650,6 @@ public class Board {
 		}else{
 			isValidMove = false;
 		}
-
-		drawBoard();
 	}
 
 	/**
@@ -667,7 +665,6 @@ public class Board {
 		p.setRoom(rm);
 		p.getRoom().addPlayer(p);
 		board[p.position().getX()][p.position().getY()] = p.getCharacterName() + " ";
-		drawBoard();
 	}
 
 	/**
@@ -694,7 +691,6 @@ public class Board {
 		if(x == p.position().getX() && y == p.position().getY()){
 			System.out.println("Cannot exit room.");
 		}
-		drawBoard();
 	}
 
 	/**

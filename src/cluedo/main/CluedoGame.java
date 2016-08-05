@@ -171,6 +171,9 @@ public class CluedoGame {
 								option = TextClient.askOption();
 							}
 							doOption(option, currentPlayer);
+							if(moveMade){
+								board.drawBoard();
+							}
 						}
 					}
 					if(isGameOver()){
@@ -451,19 +454,6 @@ public class CluedoGame {
 		public InvalidMove(String msg) {
 			super(msg);
 		}
-	}
-
-
-	/**
-	 * TODO: Casey, you need to decide how moving is implemented.
-	 * Pathfinding, or basic WSAD movement?
-	 * This displays the instructions to move
-	 */
-	public void displayInstructions(){
-		System.out.println("Type W to move UP.");
-		System.out.println("Type S to move DOWN.");
-		System.out.println("Type A to move LEFT.");
-		System.out.println("Type D to move RIGHT.");
 	}
 
 	public static void main(String[] args) throws InvalidMove{
