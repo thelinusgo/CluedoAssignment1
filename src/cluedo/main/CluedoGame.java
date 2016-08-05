@@ -407,21 +407,14 @@ public class CluedoGame {
 			}
 		}
 		Accusation accusation = null;
-		if(count == 3){
-			//TODO: come and fix this later!
 			System.out.println("----------------------------------");
 			System.out.println(" CONFIRMED Accusation Pieces:     ");
 			System.out.println(" weapon: " + weapon);
 			System.out.println(" character: " + character);
 			System.out.println(" room: " + room);
 			System.out.println("----------------------------------");
-			accusation = new Accusation(weapon, room, character, p);
-			accusation.setArgumentStatus(true);
+			accusation = new Accusation(weapon, room, character, p,  Initializer.getEnvelope());
 			return accusation;
-		}
-
-		return accusation;	
-		//return TextClient.askAccusation(p);
 	}
 
 	public void doMove(Player p) throws InvalidMove{

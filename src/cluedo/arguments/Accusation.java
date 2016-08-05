@@ -1,7 +1,5 @@
 package cluedo.arguments;
 
-import java.util.List;
-
 import cluedo.assets.Player;
 import cluedo.cards.Card;
 import cluedo.cards.CharacterCard;
@@ -15,9 +13,14 @@ import cluedo.cards.WeaponCard;
  *
  */
 public class Accusation extends Argument{
-
-	public Accusation(WeaponCard weapon, RoomCard room, CharacterCard character, Player p) {
+	
+	private boolean validAccusation = false;
+	private Envelope env;
+	
+	public Accusation(WeaponCard weapon, RoomCard room, CharacterCard character, Player p, Envelope env) {
 		super(weapon, room, character, p);
+		this.env = env;
+		validAccusation = checkAccusation(env, p);
 	}
 
 	/**
@@ -54,6 +57,17 @@ public class Accusation extends Argument{
 		}
 		return valid;
 	}
+	
+	/**
+	 * Returns the status of this accusation.
+	 * @return
+	 */
+	public boolean accusationStatus(){
+		return this.validAccusation;
+	}
+	
+	
+	
 	@Override
 	public String toString(){
 		return "Player: " + super.getCurrentPlayer().getName() + " accuses " + super.getCharacterCard().getName() + " of murder; using a " + super.getWeaponCard().getName() +
