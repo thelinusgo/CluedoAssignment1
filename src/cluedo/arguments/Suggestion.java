@@ -56,7 +56,6 @@ public class Suggestion extends Argument {
 					}
 					r1.addCharacter(c1);
 					r2.addCharacter(c2);
-					cc.getObject().addRoom(roomCard.getObject());
 					for(Player player : CluedoGame.getCurrentPlayers()){
 						if(!player.equals(p)){
 							if(player.getCharacter().equals(cc.getObject())){

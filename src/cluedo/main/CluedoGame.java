@@ -214,7 +214,6 @@ public class CluedoGame {
 				System.out.println("You can no longer make a move.");
 				showCards.add(p.getCards());
 				p.setOut(true);
-				board.getBoard()[p.position().getX()][p.position().getY()] = p.getLookBack();
 			}
 			moveMade = true;
 			break;

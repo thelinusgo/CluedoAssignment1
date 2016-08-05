@@ -184,7 +184,7 @@ public class Board {
 		board[1][10] = "2 ";
 
 		Door d1 = new Door(true, width-1, 12, CluedoGame.initializer.diningrm, "<");
-		Door d2 = new Door(true, width-2, y+height-1, CluedoGame.initializer.diningrm, "^");
+		Door d2 = new Door(false, width-2, y+height-1, CluedoGame.initializer.diningrm, "^");
 		d1.setInFront(new Position(width, 12));
 		d2.setInFront(new Position(width-2, y+height));
 		doors.add(d1);
