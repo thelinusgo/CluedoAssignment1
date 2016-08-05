@@ -43,6 +43,7 @@ public class CluedoGame {
 
 	/**Stores player's previous option*/
 	private String prevOption = "";
+	private Accusation accusation = null;
 
 	public CluedoGame(){
 		currentPlayers = new ArrayList<Player>();
@@ -97,7 +98,9 @@ public class CluedoGame {
 		TextClient.askPlayers();
 		initializer.distributeCharacters();
 		initializer.distributeCards();
+		
 		board.setPlayerPosition(currentPlayers);
+		initializer.setCharacters();
 		board.drawBoard();
 	}
 
@@ -197,10 +200,10 @@ public class CluedoGame {
 			break;
 		case "a":
 			System.out.println("Player " + currentPlayer.getName() + " wishes to make an accusation.");
-			Accusation accusation = makeAccusation(currentPlayer);
+			accusation = makeAccusation(currentPlayer);
 			if(accusation == null){
 				System.out.println("The accusation pieces did not match."); 
-				System.out.println("You have now been kicked out of the game.");
+				System.out.println("You can no longer make a move.");
 				showCards.add(p.getCards());
 				p.setOut(true);
 				board.getBoard()[p.position().getX()][p.position().getY()] = p.getLookBack();
@@ -406,15 +409,17 @@ public class CluedoGame {
 				}
 			}
 		}
-		Accusation accusation = null;
-			System.out.println("----------------------------------");
-			System.out.println(" CONFIRMED Accusation Pieces:     ");
-			System.out.println(" weapon: " + weapon);
-			System.out.println(" character: " + character);
-			System.out.println(" room: " + room);
-			System.out.println("----------------------------------");
-			accusation = new Accusation(weapon, room, character, p,  Initializer.getEnvelope());
-			return accusation;
+		System.out.println("----------------------------------");
+		System.out.println(" CONFIRMED Accusation Pieces:     ");
+		System.out.println(" weapon: " + weapon);
+		System.out.println(" character: " + character);
+		System.out.println(" room: " + room);
+		System.out.println("----------------------------------");
+		Accusation ac = new Accusation(weapon, room, character, p,  Initializer.getEnvelope());
+		if(ac.accusationStatus()){
+			return ac;
+		}
+		return null;
 	}
 
 	public void doMove(Player p) throws InvalidMove{
@@ -458,6 +463,19 @@ public class CluedoGame {
 	}
 
 	public boolean isGameOver(){
+		if(accusation != null && accusation.accusationStatus()){
+			return true;
+		}else{
+			int count = currentPlayers.size();
+			for(Player p : currentPlayers){
+				if(p.out()){
+					count--;
+				}
+			}
+			if(count == 1){
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -488,5 +506,6 @@ public class CluedoGame {
 		CluedoGame game = new CluedoGame();
 		game.initialSetup();
 		game.runGame();
+		
 	}
 }

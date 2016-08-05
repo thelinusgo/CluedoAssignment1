@@ -659,9 +659,11 @@ public class Board {
 	 * @param p
 	 */
 	public void moveToRoom(Player p, Room rm){
-		board[p.position().getX()][p.position().getY()] = p.getLookBack();
-		p.setLookBack(board[p.position().getX()][p.position().getY()]);
-		p.getRoom().removePlayer(p);
+		if(p.position() != null){
+			board[p.position().getX()][p.position().getY()] = p.getLookBack();
+			p.setLookBack(board[p.position().getX()][p.position().getY()]);
+			p.getRoom().removePlayer(p);
+		}
 		p.setRoom(rm);
 		p.getRoom().addPlayer(p);
 		board[p.position().getX()][p.position().getY()] = p.getCharacterName() + " ";

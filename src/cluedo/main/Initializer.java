@@ -26,11 +26,12 @@ public class Initializer {
 	private static List<Weapon> weapons = new ArrayList<>();
 	private static List<Card> cards = new ArrayList<>();
 	private static List<Character> characters = new ArrayList<>();
+	private static Player[] players = new Player[6];
 	private static Envelope envelope = new Envelope();
 	private static List<RoomCard> roomCards = new ArrayList<>();
 	private static List<WeaponCard> weaponCards = new ArrayList<>();
 	private static List<CharacterCard> characterCards = new ArrayList<>();
-	
+
 	/** This helps generating a random shuffle for the lists */
 	private long seed = System.nanoTime();
 
@@ -44,7 +45,7 @@ public class Initializer {
 	Room study = new Room("Study", 17, 21, 8, 4, true);
 	Room hall = new Room("Hall", 9, 18, 6, 7, false);
 	Room lounge = new Room("Lounge", 0, 19, 7, 6, true);
-	
+
 	/**
 	 * Construct a new Board
 	 */
@@ -55,18 +56,18 @@ public class Initializer {
 		fillList();
 		initializeEnvelope();
 	}
-	
+
 	public static Envelope getEnvelope(){
 		return envelope;
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Initializes the weapons list.
 	 */
-	public void initializeWeapons(){
+	private void initializeWeapons(){
 		/*Fill the arraylist with weapons*/
 		weapons.add(new Weapon("Candlestick"));
 		weapons.add(new Weapon("Dagger"));
@@ -82,7 +83,7 @@ public class Initializer {
 	/**
 	 * Initializes the rooms list.
 	 */
-	public void initializeRooms(){
+	private void initializeRooms(){
 		/*Add rooms to rooms list*/
 		rooms.add(kitchen);
 		rooms.add(diningrm);
@@ -93,7 +94,7 @@ public class Initializer {
 		rooms.add(study);
 		rooms.add(hall);
 		rooms.add(lounge);
-		
+
 		/*Set connecting rooms*/
 		kitchen.setRoom(study);
 		conservatory.setRoom(lounge);
@@ -107,14 +108,14 @@ public class Initializer {
 			r.addWeapon(w);
 			w.addRoom(r);
 		}
-		
+
 		Collections.shuffle(weapons, new Random(seed));
 	}
 
 	/**
 	 * Initializes the characters list.
 	 */
-	public void initializeCharacters(){
+	private void initializeCharacters(){
 		/*Fill the ArrayList with people.. */
 		characters.add(new Character("Miss Scarlett"));
 		characters.add(new Character("Colonel Mustard"));
@@ -128,7 +129,7 @@ public class Initializer {
 	/**
 	 * Put all cards in cards list.
 	 */
-	public void fillList(){
+	private void fillList(){
 		/*Fill the cards arrayList with Room Cards */
 		for(Room r : rooms){
 			cards.add(new RoomCard(r));
@@ -143,7 +144,7 @@ public class Initializer {
 		for(Character p : characters){
 			cards.add(new CharacterCard(p));
 		}
-		
+
 		for(Card c : cards){
 			if(c instanceof RoomCard){
 				roomCards.add((RoomCard) c);
@@ -160,7 +161,7 @@ public class Initializer {
 	/**
 	 * Initializes the envelope list.
 	 */
-	public void initializeEnvelope(){
+	private void initializeEnvelope(){
 
 		RoomCard roomCard = null;
 		CharacterCard characterCard = null;
@@ -194,21 +195,22 @@ public class Initializer {
 		cards.remove(weaponCard);
 		cards.remove(characterCard);
 	}
-	
+
 	/**
 	 * Store character in room and room in character.
 	 */
 	public void setCharacters(){
 		Collections.shuffle(rooms, new Random(seed));
-		for(Player p : CluedoGame.getCurrentPlayers()){
-			for(int i = 0; i < characters.size(); i++){
-				Character c = characters.get(i);
-				if(!p.getCharacter().equals(c)){
-					Room rm = rooms.get(i);
-					rm.addCharacter(c);
-					c.addRoom(rm);
-				}
+		for(int i = 3; i < players.length; i++){
+			Player p = players[i];
+			Character c = p.getCharacter();
+			if(p.getName().equals("none")){
+				Room rm = rooms.get(i);
+				rm.addCharacter(c);
+				c.addRoom(rm);
+				CluedoGame.board.moveToRoom(p, rm);
 			}
+
 		}
 	}
 
@@ -217,9 +219,15 @@ public class Initializer {
 	 */
 	public void distributeCharacters(){
 		Collections.shuffle(characters, new Random(seed)); 
-		for(int i = 0; i < CluedoGame.getCurrentPlayers().size(); i++){	
-			Player p = CluedoGame.getCurrentPlayers().get(i);
+		for(int i = 0; i < players.length; i++){	
+			Player p = null;
+			if(i < CluedoGame.getCurrentPlayers().size()){
+				p = CluedoGame.getCurrentPlayers().get(i);
+			}else{
+				p = new Player("none");
+			}
 			p.setCharacter(characters.get(i));
+			players[i] = p;
 		}
 	}
 
@@ -248,14 +256,14 @@ public class Initializer {
 			Player currentPlayer = CluedoGame.getCurrentPlayers().get(i);
 			currentPlayer.addCard(characterCards.get(j));
 		}
-		
+
 		for(Player p : CluedoGame.getCurrentPlayers()){
 			for(Card c : p.getCards()){
 				System.out.println(c);
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns the list of RoomCards
 	 * @return
@@ -263,7 +271,7 @@ public class Initializer {
 	public static List<RoomCard> getRoomCards(){
 		return Initializer.roomCards;
 	}
-	
+
 	/**
 	 * Returns the list of WeaponCards
 	 * @return
@@ -271,7 +279,7 @@ public class Initializer {
 	public static List<WeaponCard> getWeaponCards(){
 		return Initializer.weaponCards;
 	}
-	
+
 	/**
 	 * Returns the list of CharacterCards
 	 * @return
@@ -279,7 +287,7 @@ public class Initializer {
 	public static List<CharacterCard> getCharacterCards(){
 		return Initializer.characterCards;
 	}
-	
+
 	public static List<Room> getRooms(){
 		return Initializer.rooms;
 	}

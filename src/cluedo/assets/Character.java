@@ -10,6 +10,11 @@ public class Character {
 	
 	private Room room;
 	
+	/**
+	 * Stores the player that this character object belongs to.
+	 */
+	private Player player;
+	
 	public Character(String name){
 		this.name = name;
 	}
@@ -51,6 +56,22 @@ public class Character {
 	 */
 	public Room getRoom(){
 		return this.room;
+	}
+	
+	/**
+	 * Returns the player that this character object belongs to.
+	 * @return
+	 */
+	public Player player(){
+		return this.player;
+	}
+	
+	/**
+	 * Set player that this character object belongs to.
+	 * @param p
+	 */
+	public void setPlayer(Player p){
+		this.player = p;
 	}
 	
 	@Override
