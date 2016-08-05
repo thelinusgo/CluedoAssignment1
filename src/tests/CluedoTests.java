@@ -290,24 +290,42 @@ public class CluedoTests {
 	/**
 	 * This tests that the user makes a correct suggestion, and it will iterate over the other players hands.
 	 * Not Finished
-	 * Requires user input.
+	 * 
 	 */
 	@Test
 	public void testValidSuggestion_02(){
 	CluedoGame game = new CluedoGame();
 	try{
-		Player player = setupMockPlayer("Xamuel", "Miss Scarlett", new Position(0,17));
-		player.addCard(c);
+		Player player = setupMockPlayer("A", "Miss Scarlett", new Position(0,17));
+		player.addCard(new CharacterCard(new Character("Miss Scarlett")));
+		player.addCard(new WeaponCard(new Weapon("Rope")));
+		player.addCard(new RoomCard(new Room("Dining Room")));
+		
+		Player player2 = setupMockPlayer("B", "Professor Plum", new Position(0,25));
+		player2.addCard(new CharacterCard(new Character("Miss Scarlett")));
+		player2.addCard(new WeaponCard(new Weapon("Rope")));
+		player2.addCard(new RoomCard(new Room("Dining Room")));
+		
+		
+		Player player3 = setupMockPlayer("C", "The Reverend Green", new Position(7,24));
+		player3.addCard(new CharacterCard(new Character("Miss Scarlett")));
+		player3.addCard(new WeaponCard(new Weapon("Rope")));
+		player3.addCard(new RoomCard(new Room("Dining Room")));
+
+		
+		
+		
 		player.setLookBack("|_");
 		CluedoGame.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|";
 		CluedoGame.board.move(6, -2, player);
 		assertTrue(player.getRoom() != null);
 		Suggestion sug = game.makeSuggestion(player);
-		sug.checkSuggestion(game.getCurrentPlayers());
+		
+		game.checkOtherPlayers(sug);
 	}catch(CluedoGame.InvalidMove e){
 		fail(e.getMessage());
 	}
-   }	
+	}
 	/**
 	 * Test that you cannot make an invalid suggestion.
 	 * 
