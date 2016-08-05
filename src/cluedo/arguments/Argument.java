@@ -11,7 +11,7 @@ import cluedo.cards.*;
  */
 public class Argument {
 	private WeaponCard weapon;
-	private RoomCard room;
+	private RoomCard roomCard;
 	private CharacterCard character;
 	private Player currentPlayer;
 	
@@ -23,7 +23,7 @@ public class Argument {
 	 */
 	public Argument(WeaponCard w, RoomCard r, CharacterCard c, Player p){
 		this.weapon = w;
-		this.room = r;
+		this.roomCard = r;
 		this.character = c;
 		this.currentPlayer = p;
 	}
@@ -41,7 +41,7 @@ public class Argument {
 	 * @return
 	 */
 	public RoomCard getRoomCard() {
-		return room;
+		return roomCard;
 	}
 	
 	/**

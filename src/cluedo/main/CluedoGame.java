@@ -218,68 +218,20 @@ public class CluedoGame {
 			//TODO: ALSO NEED TO FINISH THIS PART.
 			System.out.println("Player " + currentPlayer.getName() + " wishes to make an suggestion.");
 			Suggestion sugg = makeSuggestion(currentPlayer);
-			int amount = this.checkOtherPlayers(sugg);
-			if(amount == 1){
-				System.out.println("no extra cards were found");
-			}else{
-				System.out.println("At least one extra card was found");
-			}
-
+			
 			if(sugg == null){
 				break;
 			}
+			
+			if(sugg.checkSuggestion(currentPlayers)){
+				System.out.println("At least one extra card was found");
+			}else{
+				System.out.println("no extra cards were found");
+			}
+			
 			prevOption = "s";
 			break;
 		}
-	}
-
-	/**
-	 * For suggestion - check that the other players have at least one of that card.
-	 * TODO: casey please help me fix this!!
-	 * @param sugg
-	 */
-	public int checkOtherPlayers(Suggestion sugg){
-		//balls
-		/**
-		 * TODO: casey, I feel like this is broken.
-		 */
-		CharacterCard cc = sugg.getCharacterCard();
-		WeaponCard wp = sugg.getWeaponCard();
-		RoomCard room = sugg.getRoomCard();
-		int count = 1;
-		//iterate over the players list backwards
-
-		for(Player p : currentPlayers){
-			for(Card currentCard : p.getCards()){
-				if(currentCard instanceof CharacterCard){
-					if(currentCard.equals(cc)){
-						System.out.println("Card matches!");
-						room.getObject().getWeapon().addRoom(cc.getObject().getRoom());
-						cc.getObject().getRoom().addCharacter(room.getObject().getCharacter());
-						room.getObject().addCharacter(cc.getObject());
-						cc.getObject().addRoom(room.getObject());
-						for(Player player : currentPlayers){
-							if(!player.equals(p)){
-								if(player.getCharacter().equals(cc.getObject())){
-									board.moveToRoom(p, room.getObject());
-								}
-							}
-						}
-						count++;
-					}
-				}else if(currentCard instanceof WeaponCard){
-					if(currentCard.equals(wp)){
-						System.out.println("Card matches!");
-						room.getObject().getWeapon().addRoom(wp.getObject().getRoom());
-						wp.getObject().getRoom().addWeapon(room.getObject().getWeapon());
-						room.getObject().addWeapon(wp.getObject());
-						wp.getObject().addRoom(room.getObject());
-						count++;
-					}
-				}
-			}
-		}
-		return count;
 	}
 
 	/**

@@ -4,6 +4,7 @@ import cluedo.cards.Card;
 import cluedo.cards.CharacterCard;
 import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
+import cluedo.main.CluedoGame;
 import cluedo.assets.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,15 +35,37 @@ public class Suggestion extends Argument {
 	public boolean checkSuggestion(List<Player> players){
 		if(players == null) throw new IllegalArgumentException("List of players cannot be null");
 		List<Card> playerHand;
-		for(Player player : players){
-			playerHand = player.getCards();
+		RoomCard roomCard = super.getRoomCard();
+		for(Player p : players){
+			playerHand = p.getCards();
 			for(Card card : playerHand){
-				if(card.equals(super.getCharacterCard()) || card.equals((super.getRoomCard())) || card.equals(((super.getWeaponCard())))){
+				if(card.equals(super.getCharacterCard())){
+					CharacterCard cc = super.getCharacterCard();
+					roomCard.getObject().getWeapon().addRoom(cc.getObject().getRoom());
+					cc.getObject().getRoom().addCharacter(roomCard.getObject().getCharacter());
+					roomCard.getObject().addCharacter(cc.getObject());
+					cc.getObject().addRoom(roomCard.getObject());
+					for(Player player : CluedoGame.getCurrentPlayers()){
+						if(!player.equals(p)){
+							if(player.getCharacter().equals(cc.getObject())){
+								CluedoGame.board.moveToRoom(p, roomCard.getObject());
+							}
+						}
+					}
+					return true;
+				}else if(card.equals(super.getWeaponCard())){
+					WeaponCard wp = super.getWeaponCard();
+					roomCard.getObject().getWeapon().addRoom(wp.getObject().getRoom());
+					wp.getObject().getRoom().addWeapon(roomCard.getObject().getWeapon());
+					roomCard.getObject().addWeapon(wp.getObject());
+					wp.getObject().addRoom(roomCard.getObject());
+					return true;
+				}else if(card.equals(super.getRoomCard())){
 					return true;
 				}
 			}
 		}
-	return false;
+		return false;
 	}
 	
 }
