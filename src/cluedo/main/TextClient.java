@@ -32,8 +32,10 @@ public class TextClient {
 	private static boolean correctInput = false; //set to true if the correct input has been provided.
 
 	private static Scanner sc = new Scanner(System.in); //field containing the scanner.
+	
 	/**
 	 * Get string from System.in
+	 * @return
 	 */
 	public static String inputString() {
 		String choice = "z";
@@ -49,8 +51,9 @@ public class TextClient {
 	/**
 	 * Listen for direction movement. W, S, A, D are valid directions.
 	 * 
-	 * @param Player to move.
-	 * @throws InvalidMove 
+	 * @param p
+	 * @param currentPlayers
+	 * @throws InvalidMove
 	 */
 	public static void movementListener(Player p, List<Player> currentPlayers) throws InvalidMove{
 		String dir = "z";
@@ -92,8 +95,8 @@ public class TextClient {
 	}
 
 	/**
-	 * Asks the user input about creating an accusation.
-	 * @param p
+	 * Asks the player for which index of a list they want to choose.
+	 * @param list
 	 * @return
 	 */
 	public static int askIndex(List<? extends Card> list){
@@ -114,8 +117,6 @@ public class TextClient {
 
 	/**
 	 * Ask for initial players, and their names.
-	 * Returns a list of players. Sequence begins and ends with a backslash "/".
-	 * @return String of players.
 	 */
 	public static void askPlayers(){
 		/*Local variables */
@@ -165,25 +166,6 @@ public class TextClient {
 			}
 		}
 		return option;
-	}
-
-	/**
-	 * Get integer from System.in
-	 * @param msg
-	 * @return
-	 */
-	public static int inputNumber(String msg) {
-		System.out.print(msg + " ");
-		while (true) {
-			BufferedReader input = new BufferedReader(new InputStreamReader(
-					System.in));
-			try {
-				String v = input.readLine();
-				return Integer.parseInt(v);
-			} catch (IOException e) {
-				System.out.println("Please enter a number!");
-			}
-		}
 	}
 
 	/**
