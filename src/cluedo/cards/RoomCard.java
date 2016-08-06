@@ -8,6 +8,10 @@ import cluedo.assets.Room;
  *
  */
 public class RoomCard extends Card<Room>{
+	/**
+	 * Constructs a new RoomCard object
+	 * @param room
+	 */
 	public RoomCard(Room r){
 		super(r);
 	}

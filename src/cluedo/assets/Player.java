@@ -245,10 +245,16 @@ public class Player {
 		return this.out;
 	}
 	
+	/**
+	 * This sets the flag for whether the player is or isn't out.
+	 * @param boolean bool.
+	 */
 	public void setOut(boolean b) {
 		this.out  = b;
 	}
-
+	/**
+	 * Returns the toString representation of this player.
+	 */
 	public String toString(){
 		return "Name: " + this.name + ", Character Piece: " + this.character.getName();
 	}

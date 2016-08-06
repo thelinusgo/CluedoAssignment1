@@ -74,7 +74,9 @@ public class Accusation extends Argument{
 	}
 
 
-
+	/**
+	 * Returns the String representation of this accusation.
+	 */
 	@Override
 	public String toString(){
 		return "Player: " + super.getCurrentPlayer().getName() + " accuses " + super.getCharacterCard().getName() + " of murder; using a " + super.getWeaponCard().getName() +

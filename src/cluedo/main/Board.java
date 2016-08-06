@@ -62,7 +62,7 @@ public class Board {
 	 * Fill board with rooms
 	 */
 	public void initialiseBoard(){
-		drawBoarder();
+		drawBorder();
 		drawKitchen();
 		drawDiningRoom();
 		drawLounge();
@@ -78,9 +78,9 @@ public class Board {
 	}
 
 	/**
-	 * Draws the boarder.
+	 * Draws the border.
 	 */
-	private void drawBoarder(){
+	private void drawBorder(){
 		for(int i = 0; i < this.board.length; i++){
 			board[i][0] = "#|";
 			board[i][board.length-1] = "#|";
@@ -609,7 +609,7 @@ public class Board {
 
 	/**
 	 * Initializes each player's position.
-	 * @param currentPlayers
+	 * @param list of currentPlayers
 	 */
 	public void setPlayerPosition(List<Player> currentPlayers){
 		for(int i = 0; i < currentPlayers.size(); i++){

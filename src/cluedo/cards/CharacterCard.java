@@ -8,7 +8,10 @@ import cluedo.assets.Character;
  *
  */
 public class CharacterCard extends Card<Character>{
-	
+	/**
+	 * Constructs a new CharacterCard object.
+	 * @param itm
+	 */
 	public CharacterCard(Character itm) {
 		super(itm);
 	}

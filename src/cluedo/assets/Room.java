@@ -244,7 +244,10 @@ public class Room {
 		}
 		return "[Room: " + name + " | Weapon: null]";
 	}
-
+	/**
+	 * Returns the name of this room formatted nicely.
+	 * @return
+	 */
 	public String stringName(){
 		return "[Room: " + name + "]";
 	}

@@ -16,25 +16,53 @@ import cluedo.cards.WeaponCard;
  *
  */
 public class CluedoGame {
+	/**
+	 * Initializes all of the data
+	 */
 	public static Initializer initializer; //initializes all of the data
+	
+	/**
+	 * An instance of the board.
+	 */
 	public static Board board; //an instance of the board.
-
-	private int numPlayers = 0; //stores the amount of players.
+	/**
+	 * stores the amount of players.
+	 */
+	private int numPlayers = 0; 
 	private static List<Player> currentPlayers; //a list of the current players.
 
-	public TextClient textClient; //an instance of the textClient.
-	public static boolean askSuccess; //TODO? WHAT IS THIS??
-	private static boolean hasAsked = false; //if a player has asked or not.
-
+	/**
+	 * an instance of the textClient.
+	 */
+	public TextClient textClient; 
+	
+	/**
+	 * Flag for stating whether asking was a success or not.
+	 */
+	public static boolean askSuccess; 
+	/**
+	 * If a player has asked or not.
+	 */
+	private static boolean hasAsked = false;
+	
+	/**
+	 * List of sequencial numbers. This allows a random number to be chosen.
+	 */
 	private List<Integer> diceList = new ArrayList<Integer>(Arrays.asList(2,3,4,5,6,7,8,9,10,11,12));
+	/**
+	 * This rolls the dice, obtains the first element in the array.
+	 */
 	private int currentRoll = diceList.get(0);
+	/**
+	 * The current player of the round.
+	 */
 	private Player currentPlayer; //the current player of the round.
 
 	/** If player has made a move*/
 	private boolean moveMade = false;
 
 	/**
-	 * Stores the cards of players who have been kicked out of the game because they made an inccorect accusation.
+	 * Stores the cards of players who have been kicked out of the game because they made an incorrect accusation.
 	 */
 	private List<List<Card>> showCards = new ArrayList<>();
 
@@ -43,8 +71,13 @@ public class CluedoGame {
 
 	/**Stores player's previous option*/
 	private String prevOption = "";
+	/**
+	 * Current accusation object.
+	 */
 	private Accusation accusation = null;
-
+	/**
+	 * Construct a new instance of the cluedo game. Initialize the fields.
+	 */
 	public CluedoGame(){
 		currentPlayers = new ArrayList<Player>();
 		initializer = new Initializer();
@@ -58,7 +91,10 @@ public class CluedoGame {
 	public static List<Player> currentPlayers(){
 		return currentPlayers;
 	}
-
+	/**
+	 * Returns the number of players that are playing.
+	 * @return
+	 */
 	public int numPlayers(){
 		return this.numPlayers;
 	}
@@ -107,7 +143,6 @@ public class CluedoGame {
 	}
 
 	/**
-	 * Fun little thing I tried doing. It works!
 	 * This method draws "CLUEDO GAME" in ascii representative form.
 	 * @author Linus Go
 	 */
@@ -125,7 +160,9 @@ public class CluedoGame {
 		System.out.println(art);
 		System.out.println("Welcome to the Cluedo Game.");
 	}
-
+	/**
+	 * This sets the players position on the game. It places them strategically in a random location each round.
+	 */
 	public void setPlayerPosition(){
 		Collections.shuffle(currentPlayers, new Random(seed)); 
 		board.setPlayerPosition(currentPlayers);
@@ -178,7 +215,13 @@ public class CluedoGame {
 			}
 		}
 	}
-
+	/**
+	 * This method performs a given option, based off the users input.
+	 * m is move, c is current cards, d is show previous player cards, a is accusation and s is for suggestion.
+	 * @param option
+	 * @param p
+	 * @throws InvalidMove
+	 */
 	public void doOption(String option, Player p) throws InvalidMove{
 		switch(option){
 		case "m":
@@ -375,7 +418,11 @@ public class CluedoGame {
 		}
 		return null;
 	}
-
+	/**
+	 * This performs a move, given a player.
+	 * @param p
+	 * @throws InvalidMove
+	 */
 	public void doMove(Player p) throws InvalidMove{
 		p.coordinatesTaken().clear();
 		currentPlayer.setNumberofMoves(diceRoll());
@@ -417,7 +464,10 @@ public class CluedoGame {
 			}
 		}
 	}
-
+	/**
+	 * This checks if the game over. Returns true if so, returns false otherwise.
+	 * @return
+	 */
 	public boolean isGameOver(){
 		if(accusation != null && accusation.accusationStatus()){
 			return true;
@@ -434,7 +484,9 @@ public class CluedoGame {
 		}
 		return false;
 	}
-
+	/**
+	 * This prints out the contents of the envelope.
+	 */
 	public void printEnvelope(){
 		System.out.println("The envelope consisted of these cards: ");
 		for(Card c : initializer.getEnvelope().getCards()){
@@ -451,7 +503,11 @@ public class CluedoGame {
 			super(msg);
 		}
 	}
-
+	/**
+	 * The main method. This must be run/invoked to play the game.
+	 * @param args
+	 * @throws InvalidMove
+	 */
 	public static void main(String[] args) throws InvalidMove{
 		CluedoGame game = new CluedoGame();
 		game.initialSetup();

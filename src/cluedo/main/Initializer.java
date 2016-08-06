@@ -56,7 +56,10 @@ public class Initializer {
 		fillList();
 		initializeEnvelope();
 	}
-
+	/**
+	 * Returns the envelope object.
+	 * @return
+	 */
 	public static Envelope getEnvelope(){
 		return envelope;
 	}

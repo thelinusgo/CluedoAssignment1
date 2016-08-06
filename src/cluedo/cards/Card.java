@@ -9,7 +9,9 @@ import cluedo.assets.Room;
  *
  */
 public abstract class Card<E> {
-	
+	/**
+	 * The item being held by the card.
+	 */
 	private E item; //This represents the Item being held in the card.
 	
 	/**

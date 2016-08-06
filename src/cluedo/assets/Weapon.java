@@ -45,7 +45,9 @@ public class Weapon{
 	public Room getRoom(){
 		return this.room;
 	}
-	
+	/**
+	 * Returns the toString representation of this weapon - and the room it is currently in.
+	 */
 	@Override
 	public String toString(){
 		return "Weapon: " + this.weaponName + " Room: " + this.getRoom();
