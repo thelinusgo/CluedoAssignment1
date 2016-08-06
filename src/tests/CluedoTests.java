@@ -297,7 +297,7 @@ public class CluedoTests {
 	
 	/**
 	 * This tests that the user makes a correct suggestion, and it will iterate over the other players hands.
-	 * - To make this test past, must choose Dagger as weapon and Professor Plum and Character.
+	 * - To make this test past, must choose cards that don't belong to any player.
 	 * 
 	 */
 	@Test
