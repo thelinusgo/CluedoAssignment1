@@ -377,6 +377,7 @@ public class CluedoGame {
 	}
 
 	public void doMove(Player p) throws InvalidMove{
+		p.coordinatesTaken().clear();
 		currentPlayer.setNumberofMoves(diceRoll());
 		System.out.println(currentPlayer.getName() + " rolls a " + currentPlayer.numberofMoves() + ".");
 		System.out.println(currentPlayer.getName() + "  has " + currentPlayer.numberofMoves() + " moves.");

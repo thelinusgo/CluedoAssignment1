@@ -618,17 +618,17 @@ public class Board {
 	}
 
 	/**
-	 * Moves player.
-	 * @param x
-	 * @param y
+	 * Moves Player.
+	 * @param directionX
+	 * @param directionY
 	 * @param p
-	 * @throws InvalidMove 
+	 * @param currentPlayers
+	 * @throws InvalidMove
 	 */
 	public void move(int directionX, int directionY, Player p, List<Player> currentPlayers) throws InvalidMove{
 		List<Room> rooms = CluedoGame.initializer.getRooms();
 		int x = p.position().getX() + directionX;
 		int y = p.position().getY() + directionY;
-		p.coordinatesTaken().clear();
 		if(isValidMove(new Position(x, y), directionX, directionY, p, currentPlayers)){
 			isValidMove = true;
 			board[p.position().getX()][p.position().getY()] = p.getLookBack();
@@ -654,8 +654,9 @@ public class Board {
 	}
 
 	/**
-	 * Move player to other room.
+	 * Moves player to another room.
 	 * @param p
+	 * @param rm
 	 */
 	public void moveToRoom(Player p, Room rm){
 		if(p.position() != null){
@@ -671,6 +672,7 @@ public class Board {
 	/**
 	 * Make player exit room.
 	 * @param p
+	 * @param currentPlayers
 	 */
 	public void exitRoom(Player p, List<Player> currentPlayers){
 		int x = p.position().getX();
@@ -704,6 +706,7 @@ public class Board {
 	 * @param directionX - how much the player is moving by in the x direction
 	 * @param directionY - how much the player is moving by in the y direction
 	 * @param p - current player
+	 * @param currentPlayers - list of current players
 	 * @return
 	 */
 	public boolean isValidMove(Position position, int directionX, int directionY, Player p, List<Player> currentPlayers){
@@ -757,13 +760,12 @@ public class Board {
 	/**
 	 * Determines if player can still move or not.
 	 * @param p
-	 * @param position
 	 * @return
 	 */
 	public boolean canMove(Player p){
 		for(Position position : p.getPossibleCoords()){
-			for(Position pos : p.coordinatesTaken()){
-				if(!pos.equals(position)){
+			if(position != null){
+				if(!p.coordinatesTaken().contains(position)){
 					return true;
 				}
 			}
@@ -778,10 +780,10 @@ public class Board {
 	public boolean validPos(Position pos, Player p){
 		int x = pos.getX();
 		int y = pos.getY();
-		if(x < 25 && x >= 0 && y < 25 && y >= 0){
-			if(board[x][y].equals("|#|") || board[x][y].equals("#|") || board[x][y].equals("|X|") || board[x][y].equals("X|")){
-				return false;
-			}
+		if(x > 24 || x < 0 || y > 24 || y < 0){
+			return false;
+		}else if(board[x][y].equals("|#|") || board[x][y].equals("#|") || board[x][y].equals("|X|") || board[x][y].equals("X|")){
+			return false;
 		}
 		return true;
 	}
@@ -805,9 +807,4 @@ public class Board {
 	public String[][] getBoard(){
 		return board;
 	}
-
-	public static void main(String[] args) {
-		new Board();
-	}
-
 }

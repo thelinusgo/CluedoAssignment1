@@ -125,7 +125,7 @@ public class CluedoTests {
 		CluedoGame game = new CluedoGame();
 		try{
 			Player player = setupMockPlayer("Ralf", "Professor Plum", new Position(0,17));
-			player.setLookBack("|_|");
+			player.setLookBack("|/|");
 			game.board.getBoard()[player.position().getX()][player.position().getY()] = player.getCharacterName() + "|"; 
 			game.board.move(6, -2, player, game.currentPlayers());
 			assertTrue(player.isInRoom());
@@ -482,6 +482,24 @@ public class CluedoTests {
 			Accusation accu1 = new Accusation(wep,room,(new CharacterCard(new Character("Professor Plum"))), player1, env);
 			Accusation accu2 = new Accusation(wep,(new RoomCard(new Room("Dining Room"))), character, player2, env);
 			assertTrue(game.isGameOver());
+		}catch(CluedoGame.InvalidMove e){
+			fail(e.getMessage());
+		}
+	}
+	
+	/**
+	 * Test if player can move.
+	 */
+	@Test
+	public void testCanMove_01(){
+		CluedoGame game = new CluedoGame();
+		try{
+			Player player1 = setupMockPlayer("Ralf", "Miss Scarlett", new Position(24,19));
+			game.board.move(-1, 0, player1, game.currentPlayers());
+			game.board.move(-1, 0, player1, game.currentPlayers());
+			game.board.move(0, 1, player1, game.currentPlayers());
+			game.board.move(1, 0, player1, game.currentPlayers());
+			assertFalse(game.board.canMove(player1));
 		}catch(CluedoGame.InvalidMove e){
 			fail(e.getMessage());
 		}
