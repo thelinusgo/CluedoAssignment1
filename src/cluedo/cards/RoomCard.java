@@ -4,7 +4,7 @@ import cluedo.assets.Room;
 
 /**
  * This class represents a Card holding a Room object.
- * @author linus
+ * @author Linus
  *
  */
 public class RoomCard extends Card<Room>{

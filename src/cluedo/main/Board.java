@@ -4,6 +4,12 @@ import java.util.*;
 import cluedo.assets.*;
 import cluedo.main.CluedoGame.InvalidMove;
 
+/**
+ * Fills up the board of the game and is used to move a character piece around the board.
+ * 
+ * @author Casey
+ *
+ */
 public class Board {
 	/**
 	 * Represents the board in 2d array form.

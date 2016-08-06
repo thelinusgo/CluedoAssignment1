@@ -17,7 +17,7 @@ import cluedo.cards.RoomCard;
 import cluedo.cards.WeaponCard;
 /**
  * Class that represents the Board. Contains fields and methods regarding setting up the board.
- * @author linus & casey
+ * @author Casey & Linus
  *
  */
 public class Initializer {

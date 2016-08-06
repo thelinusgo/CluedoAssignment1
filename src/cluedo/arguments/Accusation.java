@@ -9,7 +9,7 @@ import cluedo.cards.WeaponCard;
 
 /**
  * Class that represents an Accusation. It extends an Argument, and has a checkAccusation method.
- * @author linus
+ * @author Casey & Linus
  *
  */
 public class Accusation extends Argument{
@@ -41,7 +41,7 @@ public class Accusation extends Argument{
 		WeaponCard weapon = super.getWeaponCard();
 		RoomCard room = super.getRoomCard();
 		CharacterCard character = super.getCharacterCard();
-		for(Card card: this.env.getEnvelope()){
+		for(Card card: this.env.getCards()){
 			if(card instanceof RoomCard){
 				if(card.equals(room)){
 					validAccusation = true;

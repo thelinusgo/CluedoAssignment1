@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * Class that represents a suggestion. It is a subtype of an argument.
- * @author linus
+ * @author Linus
  *
  */
 public class Suggestion extends Argument {

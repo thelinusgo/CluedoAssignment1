@@ -3,7 +3,7 @@ package cluedo.assets;
 /**
  * Door object for determining which way a door is facing.
  * 
- * @author oznaprazzi
+ * @author Casey
  *
  */
 public class Door {

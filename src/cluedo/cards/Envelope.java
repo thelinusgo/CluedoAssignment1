@@ -4,6 +4,7 @@ package cluedo.cards;
  * Class that holds three Cards. It is backed by an array.
  * This data structure is special because it is limited to 3 elements.
  * 
+ * @author Casey & Linus
  */
 public class Envelope{
 	/**
@@ -48,7 +49,7 @@ public class Envelope{
 	 * Returns a copy of the envelope array. Modification of this array does not affect the real envelope.
 	 * @return
 	 */
-	public Card[] getEnvelope(){
+	public Card[] getCards(){
 		Card[] temp = this.envelope;
 		return temp;
 	}

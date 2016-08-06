@@ -4,7 +4,7 @@ import java.util.*;
 
 /**
  * Room Class. Stores the name of the room, and the weapon it is currently holding.
- * @author linus
+ * @author Casey & Linus
  *
  */
 public class Room {

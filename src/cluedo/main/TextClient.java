@@ -16,13 +16,18 @@ import cluedo.assets.Player;
 import cluedo.cards.*;
 import cluedo.main.CluedoGame.InvalidMove;
 
-
+/**
+ * Reads user input and feeds the data back to the main game.
+ * 
+ * @author Casey
+ *
+ */
 public class TextClient {
 	private static Board board = CluedoGame.board;
 
 	private static String MOVES = "w|a|s|d"; //pattern describing the possible moves.
 	private static String OPTIONS = "m|s|a|c|d"; //patterns describing the possible options.
-	private static String CHOICE = "y|n";
+	private static String CHOICE = "y|n"; //pattern for the user's choice
 
 	private static boolean correctInput = false; //set to true if the correct input has been provided.
 
@@ -143,7 +148,7 @@ public class TextClient {
 
 	/**
 	 * Ask player what they want to do, i.e. show cards, move, make a suggestion or make an accusation.
-	 * @param p
+	 * @return
 	 */
 	public static String askOption(){
 		String option = "z";
@@ -164,6 +169,8 @@ public class TextClient {
 
 	/**
 	 * Get integer from System.in
+	 * @param msg
+	 * @return
 	 */
 	public static int inputNumber(String msg) {
 		System.out.print(msg + " ");
@@ -179,6 +186,11 @@ public class TextClient {
 		}
 	}
 
+	/**
+	 * Determines whether the user has inputed an integer.
+	 * @param input
+	 * @return
+	 */
 	public static boolean isInteger(String input){
 		try{
 			Integer.parseInt( input );

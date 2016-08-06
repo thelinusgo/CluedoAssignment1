@@ -8,7 +8,7 @@ import cluedo.main.CluedoGame;
 /**
  * Class that represents a player in Cluedo.
  * This consists of a hand, and a players name, and if they're out of the game or not.
- * @author linus
+ * @author Casey & Linus
  *
  */
 public class Player {

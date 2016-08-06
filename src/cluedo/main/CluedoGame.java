@@ -345,7 +345,7 @@ public class CluedoGame {
 			}
 		}
 
-		Card[] env = Initializer.getEnvelope().getEnvelope();
+		Card[] env = Initializer.getEnvelope().getCards();
 
 		int count = 0;
 		for(Card card : env){
@@ -437,7 +437,7 @@ public class CluedoGame {
 
 	public void printEnvelope(){
 		System.out.println("The envelope consisted of these cards: ");
-		for(Card c : initializer.getEnvelope().getEnvelope()){
+		for(Card c : initializer.getEnvelope().getCards()){
 			System.out.println(c.toString());
 		}
 	}

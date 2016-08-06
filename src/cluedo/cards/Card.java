@@ -4,7 +4,7 @@ import cluedo.assets.Room;
 
 /**
  * Abstract class that contains all of the Cards.
- * @author linus
+ * @author Casey & Linus
  * @param <E>
  *
  */

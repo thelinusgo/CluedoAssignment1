@@ -1,7 +1,7 @@
 package cluedo.assets;
 /**
  * Class that represents the position. It holds an x and a y tuple of data.
- * @author oznaprazzi
+ * @author Casey
  *
  */
 public class Position {

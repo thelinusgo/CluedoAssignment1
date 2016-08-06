@@ -1,7 +1,7 @@
 package cluedo.assets;
 /**
  * Class that represents a player in the game. Contains a name.
- * @author linus
+ * @author Casey & Linus
  *
  */
 public class Character {

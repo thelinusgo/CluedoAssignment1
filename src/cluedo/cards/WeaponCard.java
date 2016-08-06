@@ -3,7 +3,7 @@ import cluedo.assets.Weapon;
 
 /**
  * This class represents a card holding a Weapon object.
- * @author linus
+ * @author Linus
  *
  */
 public class WeaponCard extends Card<Weapon>{

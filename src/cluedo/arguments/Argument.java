@@ -6,7 +6,7 @@ import cluedo.cards.*;
 /**
  * Class that represents arguments - that is, either a suggestion or an accusation in Cluedo.
  * 
- * @author linus + casey
+ * @author Casey & Linus
  *
  */
 public class Argument {

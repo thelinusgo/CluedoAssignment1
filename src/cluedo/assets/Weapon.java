@@ -2,7 +2,7 @@ package cluedo.assets;
 /**
  * Class that represents a Weapon.
  * A weapon belongs to a room.
- * @author linus
+ * @author Casey & Linus
  *
  */
 public class Weapon{
