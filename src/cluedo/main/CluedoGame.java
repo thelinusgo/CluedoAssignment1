@@ -66,18 +66,10 @@ public class CluedoGame {
 
 	/**
 	 * Add new player to current players.
-	 * @param name
+	 * @param player1
 	 */
-	public static void addPlayer(String name){
-		currentPlayers.add(new Player(name));
-	}
-
-	/**
-	 * Returns currentPlayers list.
-	 * @param name
-	 */
-	public static List<Player> getCurrentPlayers(){
-		return currentPlayers;
+	public static void addPlayer(Player player){
+		currentPlayers.add(player);
 	}
 
 	/**
@@ -96,8 +88,8 @@ public class CluedoGame {
 	public void initialSetup(){
 		drawAsciiArt();
 		TextClient.askPlayers();
-		initializer.distributeCharacters();
-		initializer.distributeCards();
+		initializer.distributeCharacters(currentPlayers);
+		initializer.distributeCards(currentPlayers);
 
 		board.setPlayerPosition(currentPlayers);
 		initializer.setCharacters();
@@ -108,8 +100,8 @@ public class CluedoGame {
 	 * Test class for the initial setup.
 	 */
 	public void testInitialSetup(){
-		initializer.distributeCharacters();
-		initializer.distributeCards();
+		initializer.distributeCharacters(currentPlayers);
+		initializer.distributeCards(currentPlayers);
 		board.setPlayerPosition(currentPlayers);
 		board.drawBoard();
 	}
@@ -177,6 +169,7 @@ public class CluedoGame {
 						}
 					}
 					if(isGameOver()){
+						System.out.println("Congratulations!! Player " + currentPlayer.getName() + " won!");
 						System.out.println("Game is over.");
 						printEnvelope();
 						return;
@@ -199,11 +192,15 @@ public class CluedoGame {
 			}
 			break;
 		case "d":
-			System.out.println("Show all previous players' cards");
-			for(List<Card> lc : showCards){
-				for(Card c : lc){
-					System.out.println(c.toString());
+			if(!showCards.isEmpty()){
+				System.out.println("Show all previous players' cards");
+				for(List<Card> lc : showCards){
+					for(Card c : lc){
+						System.out.println(c.toString());
+					}
 				}
+			}else{
+				System.out.println("No cards to show.");
 			}
 			break;
 		case "a":
@@ -213,15 +210,11 @@ public class CluedoGame {
 				System.out.println("The accusation pieces did not match."); 
 				System.out.println("You can no longer make a move.");
 				showCards.add(p.getCards());
-				p.setOut(true);
 			}
 			moveMade = true;
 			break;
 		case "s":
-			if(!p.isInRoom()){
-				System.out.println("ERROR: Sorry, you must be in a room to make a suggestion.");
-				break;
-			}
+			
 			System.out.println("Player " + currentPlayer.getName() + " wishes to make an suggestion.");
 			Suggestion sugg = makeSuggestion(currentPlayer);
 
@@ -245,7 +238,10 @@ public class CluedoGame {
 	 * @param current Player
 	 */
 	public Suggestion makeSuggestion(Player p){
-		
+		if(!p.isInRoom()){
+			System.err.println("ERROR: Sorry, you must be in a room to make a suggestion.");
+			return null;
+		}
 		System.out.println("-----------SUGGESTION!-------------");
 		System.out.println("What cards do you want to nominate?");
 		System.out.println("----------------------------------");
@@ -292,7 +288,6 @@ public class CluedoGame {
 		System.out.println(" room: " + room);
 		System.out.println("----------------------------------");
 		return new Suggestion(weapon, room, character, p);
-		//return TextClient.askSuggestion(p);
 	}
 
 	/**
@@ -394,17 +389,17 @@ public class CluedoGame {
 				board.moveToRoom(p, p.getRoom().getOtherRoom());
 				break;
 			case "n":
-				board.exitRoom(p);
+				board.exitRoom(p, currentPlayers);
 				break;
 			}
 		}else if(currentPlayer.isInRoom()){
 			System.out.println("You must exit the room now as the room does not have any stairs for you to take.");
-			board.exitRoom(p);
+			board.exitRoom(p, currentPlayers);
 		}else{
 			while(currentPlayer.numberofMoves() > 0){
 				System.out.println(currentPlayer.getName() + " (" + currentPlayer.getCharacterName() + ")" + " currently has " + currentPlayer.numberofMoves() + " moves left.");
 				System.out.println("current location: " + currentPlayer.position().getX() + ", " + currentPlayer.position().getY());
-				TextClient.movementListener(currentPlayer);
+				TextClient.movementListener(currentPlayer, currentPlayers);
 				if(currentPlayer.isInRoom()){
 					System.out.println("You have entered a room. You will need to wait for your next turn to be able to");
 					System.out.println("take the stairs or exit the room.");

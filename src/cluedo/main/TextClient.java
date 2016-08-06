@@ -47,7 +47,7 @@ public class TextClient {
 	 * @param Player to move.
 	 * @throws InvalidMove 
 	 */
-	public static void movementListener(Player p) throws InvalidMove{
+	public static void movementListener(Player p, List<Player> currentPlayers) throws InvalidMove{
 		String dir = "z";
 		System.out.println("Please enter the letters W, A, S or D to move.");
 		System.out.println("W - Up");
@@ -62,16 +62,16 @@ public class TextClient {
 			if(dir.matches(MOVES)){
 				switch(dir){
 				case "w":
-					board.move(0, -1, p);
+					board.move(0, -1, p, currentPlayers);
 					break;
 				case "s": 
-					board.move(0, 1, p);
+					board.move(0, 1, p, currentPlayers);
 					break;
 				case "a": 
-					board.move(-1, 0, p);
+					board.move(-1, 0, p, currentPlayers);
 					break;
 				case "d": 
-					board.move(1, 0, p);
+					board.move(1, 0, p, currentPlayers);
 					break;
 				}
 				if(board.isValidMove()){
@@ -135,7 +135,7 @@ public class TextClient {
 		for(int i = 0 ; i != Integer.parseInt(amount); ++i){
 			System.out.println("Please enter Player "  + String.valueOf(i+1) + "'s name");
 			singleName = sc.next();
-			CluedoGame.addPlayer(singleName);
+			CluedoGame.addPlayer(new Player(singleName));
 		}
 		System.out.println("Please note that every player will be assigned a random character.");
 		CluedoGame.askSuccess = true;

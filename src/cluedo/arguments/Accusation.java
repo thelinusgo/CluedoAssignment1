@@ -20,40 +20,42 @@ public class Accusation extends Argument{
 	public Accusation(WeaponCard weapon, RoomCard room, CharacterCard character, Player p, Envelope env) {
 		super(weapon, room, character, p);
 		this.env = env;
-		validAccusation = checkAccusation(env, p);
+		if(!this.checkAccusation()){
+			validAccusation = false;
+			p.setOut(true);
+		}
 	}
 
 	/**
 	 * This checks if the current accusation was correct.
 	 * @return
 	 */
-	public boolean checkAccusation(Envelope env, Player p){
+	public boolean checkAccusation(){
 		WeaponCard weapon = super.getWeaponCard();
 		RoomCard room = super.getRoomCard();
 		CharacterCard character = super.getCharacterCard();
-		boolean valid = false;
-		for(Card card: env.getEnvelope()){
+		for(Card card: this.env.getEnvelope()){
 			if(card instanceof RoomCard){
 				if(card.equals(room)){
-					valid = true;
+					validAccusation = true;
 				}else{
-					valid = false;
+					return false;
 				}
 			}else if(card instanceof WeaponCard){
 				if(card.equals(weapon)){
-					valid = true;
+					validAccusation = true;
 				}else{
-					valid = false;
+					return false;
 				}
 			}else if(card instanceof CharacterCard){
 				if(card.equals(character)){
-					valid = true;
+					validAccusation = true;
 				}else{
-					valid = false;
+					return false;
 				}
 			}
 		}
-		return valid;
+		return validAccusation;
 	}
 
 	/**

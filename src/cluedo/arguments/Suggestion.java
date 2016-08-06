@@ -33,13 +33,13 @@ public class Suggestion extends Argument {
 
 	/**
 	 * This checks if the suggestion is Correct by iterating over the list of players, and their hand.
-	 * @param players
+	 * @param currentPlayers
 	 * @return
 	 */
 	@SuppressWarnings("rawtypes")
-	public boolean checkSuggestion(List<Player> players){
-		if(players == null) throw new IllegalArgumentException("List of players cannot be null");
-		checkCards(players);
+	public boolean checkSuggestion(List<Player> currentPlayers){
+		if(currentPlayers == null) throw new IllegalArgumentException("List of players cannot be null");
+		checkCards(currentPlayers);
 		boolean correct = false;
 		RoomCard roomCard = super.getRoomCard();
 		CharacterCard cc = super.getCharacterCard();
@@ -53,11 +53,12 @@ public class Suggestion extends Argument {
 			c1.addRoom(r1);
 			if(c2 != null){
 				c2.addRoom(r2);
-			}else if(r2 != null){
+			}
+			if(r2 != null){
 				r2.addCharacter(c2);
 			}
 			r1.addCharacter(c1);
-			for(Player player : CluedoGame.getCurrentPlayers()){
+			for(Player player : currentPlayers){
 				if(!player.equals(super.getCurrentPlayer())){
 					if(player.getCharacter().equals(cc.getObject())){
 						CluedoGame.board.moveToRoom(player, roomCard.getObject());

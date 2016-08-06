@@ -624,12 +624,12 @@ public class Board {
 	 * @param p
 	 * @throws InvalidMove 
 	 */
-	public void move(int directionX, int directionY, Player p) throws InvalidMove{
+	public void move(int directionX, int directionY, Player p, List<Player> currentPlayers) throws InvalidMove{
 		List<Room> rooms = CluedoGame.initializer.getRooms();
 		int x = p.position().getX() + directionX;
 		int y = p.position().getY() + directionY;
 		p.coordinatesTaken().clear();
-		if(isValidMove(new Position(x, y), directionX, directionY, p)){
+		if(isValidMove(new Position(x, y), directionX, directionY, p, currentPlayers)){
 			isValidMove = true;
 			board[p.position().getX()][p.position().getY()] = p.getLookBack();
 			if(p.door() != null){
@@ -650,6 +650,7 @@ public class Board {
 		}else{
 			isValidMove = false;
 		}
+		drawBoard();
 	}
 
 	/**
@@ -671,15 +672,17 @@ public class Board {
 	 * Make player exit room.
 	 * @param p
 	 */
-	public void exitRoom(Player p){
+	public void exitRoom(Player p, List<Player> currentPlayers){
 		int x = p.position().getX();
 		int y = p.position().getY();
 		board[p.position().getX()][p.position().getY()] = p.getLookBack();
 		p.setLookBack(board[p.position().getX()][p.position().getY()]);
-		for(Player player : CluedoGame.getCurrentPlayers()){
-			if(player.position().getX() != p.door().getInFront().getX() && player.position().getY() != p.door().getInFront().getY()){
-				x = p.door().getInFront().getX();
-				y = p.door().getInFront().getY();
+		for(Player player : currentPlayers){
+			if(player != p){
+				if(player.position().getX() != p.door().getInFront().getX() && player.position().getY() != p.door().getInFront().getY()){
+					x = p.door().getInFront().getX();
+					y = p.door().getInFront().getY();
+				}
 			}
 		}
 		p.setPos(x, y);
@@ -703,7 +706,7 @@ public class Board {
 	 * @param p - current player
 	 * @return
 	 */
-	public boolean isValidMove(Position position, int directionX, int directionY, Player p){
+	public boolean isValidMove(Position position, int directionX, int directionY, Player p, List<Player> currentPlayers){
 		int x = position.getX();
 		int y = position.getY();
 		try {
@@ -735,7 +738,7 @@ public class Board {
 					}
 				}
 
-				for(Player player : CluedoGame.getCurrentPlayers()){
+				for(Player player : currentPlayers){
 					if(!player.getName().equals(p.getName())){
 						if(position.equals(player.position())){
 							throw new CluedoGame.InvalidMove("Cannot move into existing player's square!");
