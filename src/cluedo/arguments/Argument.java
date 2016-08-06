@@ -51,7 +51,10 @@ public class Argument {
 	public CharacterCard getCharacterCard() {
 		return character;
 	}
-	
+	/**
+	 * Returns the current player that this argument object is associated with.
+	 * @return
+	 */
 	public Player getCurrentPlayer(){
 		return this.currentPlayer;
 	}

@@ -16,7 +16,14 @@ public class Accusation extends Argument{
 
 	private boolean validAccusation = false;
 	private Envelope env;
-
+	/**
+	 * Construct a new Accusation object.
+	 * @param weapon
+	 * @param room
+	 * @param character
+	 * @param p
+	 * @param env
+	 */
 	public Accusation(WeaponCard weapon, RoomCard room, CharacterCard character, Player p, Envelope env) {
 		super(weapon, room, character, p);
 		this.env = env;

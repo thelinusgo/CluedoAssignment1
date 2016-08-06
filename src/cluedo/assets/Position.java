@@ -1,25 +1,43 @@
 package cluedo.assets;
-
+/**
+ * Class that represents the position. It holds an x and a y tuple of data.
+ * @author oznaprazzi
+ *
+ */
 public class Position {
 	
 	private int x;
 	private int y;
 	
+	/**
+	 * Construct a new Position object with x and y.
+	 * @param x
+	 * @param y
+	 */
 	public Position(int x, int y){
 		this.x = x;
 		this.y = y;
 	}
-	
+	/**
+	 * Retrieves the X value.
+	 * @return
+	 */
 	public int getX(){
 		return this.x;
 	}
 	
+	/**
+	 * Retrieves the Y value.
+	 * @return
+	 */
 	public int getY(){
 		return this.y;
 	}
 
 	
-	
+	/**
+	 *	Returns a unique hashcode value for this position.
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -28,7 +46,9 @@ public class Position {
 		result = prime * result + y;
 		return result;
 	}
-
+	/**
+	 * Check if this position object is equal with another position object.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Position){
@@ -38,7 +58,9 @@ public class Position {
 		}
 		return false;
 	}
-
+	/**
+	 * Returns a toString representation of this Position.
+	 */
 	public String toString(){
 		return this.x + " " + this.y;
 	}

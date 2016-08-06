@@ -39,7 +39,9 @@ public abstract class Card<E> {
 	public String getName(){
 		return item.toString();
 	}
-	
+	/**
+	 * Returns if this card is equal to another card. This works by checking the name of the card and seeing if they match.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Card){

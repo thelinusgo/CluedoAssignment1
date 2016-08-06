@@ -17,8 +17,13 @@ import java.util.List;
  *
  */
 public class Suggestion extends Argument {
-	
+	/**
+	 * Boolean flag to check if the weapon is correct
+	 */
 	private boolean wpcorrect = false;
+	/**
+	 * Boolean flag to check if the character is correct
+	 */
 	private boolean charcorrect = false;
 
 	/**
@@ -82,6 +87,11 @@ public class Suggestion extends Argument {
 		return correct;
 	}
 	
+	
+	/**
+	 * Iterates over all of the players and checks if they have one of the matching suggestion cards.
+	 * @param players
+	 */
 	public void checkCards(List<Player> players){
 		List<Card> playerHand;
 		wpcorrect = false;

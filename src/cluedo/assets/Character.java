@@ -5,22 +5,29 @@ package cluedo.assets;
  *
  */
 public class Character {
-	
+	/**
+	 * The name of this character.
+	 */
 	private String name;
-	
+	/**
+	 * The room that this character object is in (if in a room).
+	 */
 	private Room room;
 	
 	/**
 	 * Stores the player that this character object belongs to.
 	 */
 	private Player player;
-	
+	/**
+	 * Construct a new character with a given name.
+	 * @param name
+	 */
 	public Character(String name){
 		this.name = name;
 	}
 	
 	/**
-	 * Returns the name of the character.
+	 * Returns the name of the character. This will return a character piece on the board.
 	 * @return
 	 */
 	public String getName(){
@@ -73,7 +80,9 @@ public class Character {
 	public void setPlayer(Player p){
 		this.player = p;
 	}
-	
+	/**
+	 * Returns a toString representation of this character.
+	 */
 	@Override
 	public String toString(){
 		return "Character: " + name;
